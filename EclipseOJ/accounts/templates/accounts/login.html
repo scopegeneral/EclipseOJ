@@ -10,16 +10,17 @@
 </div>
 {% endif %}
 
-
+<table align="center">
+<tr><td align="center"><h2>Log In</h2></td></tr>
 <form method="post" action="{% url 'login' %}">
 {% csrf_token %}
-<label for="username">{{ form.username.label_tag }}</label>
-{{ form.username }}
-<label for="password">{{ form.password.label_tag }}</label>
+<tr><th><p><label for="username">{{ form.username.label_tag }}</label><br>
+{{ form.username }}<br></p></th></tr>
+<tr><th><p><label for="password">{{ form.password.label_tag }}</label><br>
 {{ form.password }}
-
-<button class="btn btn-default" type="submit">Login</button>
+<br></p></th></tr>
+<tr><td align="center"><button class="btn btn-success" type="submit">Login</button>
 <input type="hidden" name="next" value="/" />
 </form>
-
+</table>
 {% endblock %}
