@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import views as auth_views
 from django.shortcuts import render
+from django.core.urlresolvers import reverse
 
 def signup(request):
     if request.method == 'POST':
@@ -15,7 +16,7 @@ def signup(request):
                                     password=form.cleaned_data['password1'],
                                     )
             login(request, new_user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect(reverse('homepage'))
     args = {}
     args.update(csrf(request))
     args['form'] = SignupForm()

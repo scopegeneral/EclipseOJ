@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 
 {%block title %}Login{% endblock %}
 
@@ -10,17 +11,15 @@
 </div>
 {% endif %}
 
-<table align="center">
-<tr><td align="center"><h2>Log In</h2></td></tr>
-<form method="post" action="{% url 'login' %}">
-{% csrf_token %}
-<tr><th><p><label for="username">{{ form.username.label_tag }}</label><br>
-{{ form.username }}<br></p></th></tr>
-<tr><th><p><label for="password">{{ form.password.label_tag }}</label><br>
-{{ form.password }}
-<br></p></th></tr>
-<tr><td align="center"><button class="btn btn-success" type="submit">Login</button>
-<input type="hidden" name="next" value="/" />
-</form>
-</table>
+<h2 align="center">Log In</h2>
+  <div class="col-md-5"></div>
+  <div class="col-md-2">
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success">Log In</button></td></tr>
+    {% endbuttons %}
+  </form>
+</div>
 {% endblock %}
