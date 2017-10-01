@@ -6,11 +6,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>EclipseOJ</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <link rel="stylesheet" type="text/css" href="{% static 'homepage/main.css' %}">
-       <script>
+       <!-- <script>
 		$(document).ready(function() {
 
             function f1() {
@@ -31,9 +29,9 @@
             f2();
             f3();
 		});
-	</script>
+	</script> -->
 	</head>
-    <body>
+    <body class="loaded">
       <div id="loader-wrapper">
 	    <div id="loader"></div>
 	    <div class="loader-section section-left"></div>
@@ -46,8 +44,9 @@
            </div>
         </div>
         <div id="button-container" class="button-container">
-        <a id="bt1" class="button" href="#">Log In</a>
-        <a id="bt2" class="button" href="#">Sign Up</a>
+        <a id="bt1" class="button" href="{% url 'login' %}">Welcome {{ request.user.username }}</a>
+        <a id="bt2" class="button" href="{% url 'signup' %}">Sign Up</a>
     </div>
+    <h2 style="align:center;color:white;z-index:10000">Welcome {{ request.user.username }}</h2>
     </body>
 </html>

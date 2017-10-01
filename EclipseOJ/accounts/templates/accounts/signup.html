@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{%block title %}Signup{% endblock %}
+
+{{% block content %}
+{% if form.errors %}
+<div class="alert alert-danger">
+  Something's wrong. Please try again.
+</div>
+{% endif %}
+<h2 align="center">Sign Up</h2>
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+  <form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    {% bootstrap_form user_form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}
