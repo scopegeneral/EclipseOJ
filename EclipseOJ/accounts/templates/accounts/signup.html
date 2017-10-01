@@ -15,7 +15,6 @@
   <form method="post" action="{% url 'signup' %}">
     {% csrf_token %}
     {% bootstrap_form user_form %}
-    {% bootstrap_form profile_form %}
     {% buttons %}
       <button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
     {% endbuttons %}
