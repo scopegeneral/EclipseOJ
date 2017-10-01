@@ -6,8 +6,9 @@
 </head>
 <body style="background-color: black">
     <div style="text-align: center">
-        <a class="button" href="#">Log In</a>
-        <a class="button" href="#">Sign Up</a>
+        <a class="button" href="{% url 'login' %}">Log In</a>
+        <a class="button" href="{% url 'signup' %}">Sign Up</a>
+        <a class="button" href="{% url 'logout' %}">Log Out</a>
     </div>
     <h2 style="color:white;">Welcome {{ request.user.username }}</h2>
 </body>

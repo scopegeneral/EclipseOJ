@@ -12,13 +12,12 @@
 {% endif %}
 
 <h2 align="center">Log In</h2>
-  <div class="col-md-5"></div>
-  <div class="col-md-2">
+  <div class="col-md-offset-4 col-md-4">
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-      <button type="submit" class="btn btn-success">Log In</button></td></tr>
+      <button type="submit" class="btn btn-success center-block">Log In</button></td></tr>
     {% endbuttons %}
   </form>
 </div>

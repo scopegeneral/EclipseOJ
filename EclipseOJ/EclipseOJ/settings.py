@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'homepage',
     'accounts',
     'bootstrap3',
+    'django_countries'
 ]
 
 MIDDLEWARE = [
