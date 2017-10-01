@@ -1,0 +1,18 @@
+<h1 style="align:center">{{ problem.problem_name }}</h1>
+<h2>This Problem belongs to contest {{ problem.contest.contest_id }}</h2>
+{{ problem.problem_body | safe}}
+
+also we have test cases :D
+So you wanna se them
+here they are
+
+<ul>
+  fff
+{% for test in problem.testcases_set.all %}
+  aa
+  <li>
+    {{ test }}
+  </li>
+{% endfor %}
+</ul>
+fff
