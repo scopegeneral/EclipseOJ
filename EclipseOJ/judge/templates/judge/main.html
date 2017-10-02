@@ -1,0 +1,8 @@
+<ul>
+
+  {% for submission in main_queue.submission_set.all %}
+    <li>
+      {{ submission }}
+    </li>
+  {% endfor %}
+</ul>
