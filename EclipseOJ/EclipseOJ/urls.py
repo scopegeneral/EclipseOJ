@@ -20,5 +20,7 @@ urlpatterns = [
     url(r'^$', include('homepage.urls')),
     url(r'^profile/', include('profiles.urls')),
     url(r'^accounts/', include('accounts.urls')),
+    url(r'^problems/', include('problems.urls')),
+    url(r'^contest/', include('contest.urls')),
     url(r'^admin/', admin.site.urls),
 ]

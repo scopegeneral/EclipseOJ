@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'bootstrap3',
     'django_countries',
     'profiles',
+    'problems',
+    'contest',
 ]
 
 MIDDLEWARE = [
