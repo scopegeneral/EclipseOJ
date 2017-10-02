@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 from django.db import models
 from django.utils.timezone import now
 from problems.models import Problems,TestCases
-#import django.db.models.signals.post_init
-
+from django.db.models import signals
+from django.dispatch import Signal
 
 grader_running = 0
 # Create your models here.
@@ -33,9 +33,7 @@ class Submission(models.Model):
         ('Py2' , 'Python 2'),
         ('Py3' , 'Python 3')
     )
-    lang = models.CharField(max_length=4,choices=lang_choices)
-    #total_test_cases = models.IntegerField(default=Problems.object.get(problemID=problemid).testcases_set.size)
-    #^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^check once abhi cant compile :P
+    lang = models.CharField(max_length=4,choices=lang_choices,default='C')
     testcases_passed = models.IntegerField(default=0)
     verdict = models.CharField(max_length=20,default='Pending')
     def __str__(self):
@@ -46,20 +44,22 @@ class Submission(models.Model):
         else :
             return self.problemid + ': ' + self.verdict
 
-    def __init__(self, *args, **kwargs):
-        print('in')
+def submission_post_save(sender, instance, created, *args, **kwargs):
+    if created:
         if (not grader_running): grader()
-        super(Submission, self).__init__(*args, **kwargs)
+
+signals.post_save.connect(submission_post_save,sender=Submission)
 
 def grader():
     grader_running = 1
     queue = Queue.objects.get(pk=1)
-    while(queue.submission_set.filter(status='P').count()):# || Queue.submission_set.filter(phase='R')):
-        queue.submission_set.all()[0].status = 'C'
-        queue.submission_set.all()[0].verdict = 'Accepted'
-        #if (submission==NULL) : print('a')
-        #else : print('b')
+    #print('before while')
+    while(queue.submission_set.filter(status='P').count()):
+        #print(str(queue.submission_set.filter(status='P').count()))
+        submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
+        #print(submission)
         #bashfunc(pending_submission)
-        #submission.status = 'C'
-        #submission.verdict = 'Accepted'
+        submission.status = 'C'
+        submission.verdict = 'Accepted'
+        submission.save()
     grader_running = 0
