@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils.timezone import now
-#from problems.model import Problems,Testcases
+from problems.models import Problems,TestCases
 
 """Commented some code here as problems arent from this branch"""
 

@@ -1,0 +1,14 @@
+<h1>Queue</h1>
+<ul>
+  {% for submission in main_queue.submission_set.all %}
+    {% if submission.userid == username %}
+      <li style="color:red">
+        {{ submission }}
+      </li>
+    {% else %}
+      <li>
+        {{ submission }}
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>
