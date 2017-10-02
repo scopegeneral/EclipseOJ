@@ -1,4 +1,5 @@
 {% load static %}
+{% load bootstrap3 %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -47,6 +48,7 @@
         <a id="bt1" class="button" href="{% url 'login' %}">Welcome {{ request.user.username }}</a>
         <a id="bt2" class="button" href="{% url 'signup' %}">Sign Up</a>
     </div>
+    {% bootstrap_messages %}
     <h2 style="align:center;color:white;z-index:10000">Welcome {{ request.user.username }}</h2>
     </body>
 </html>
