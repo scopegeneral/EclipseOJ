@@ -1,8 +1,8 @@
 from django.conf.urls import url
-from . import views
+from . import views as profiles_views
 
 urlpatterns = [
-    url(r'^$',views.index, name='index'),
-    url(r'^(?P<nickname>[a-zA-Z0-9_@.+-]+)/$',views.detail, name='detail'),
-    #url(r'^admin/', admin.site.urls),
+    url(r'^$', profiles_views.index, name='index'),
+    url(r'^update/$', profiles_views.ProfileUpdateView.as_view(), name='profiles_update'),
+    url(r'^(?P<nickname>[a-zA-Z0-9_@.+-]+)/$', profiles_views.detail, name='detail'),
 ]

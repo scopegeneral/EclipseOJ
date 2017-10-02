@@ -1,13 +1,21 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-#from django.template import loader
+from django.shortcuts import render, render_to_response, redirect, get_object_or_404
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 from django.http import Http404
-# Create your views here.
+from . import forms as profiles_forms
+from django.template.context_processors import csrf
+from django.core.urlresolvers import reverse
+from django.contrib.auth.decorators import login_required
+from django.views.generic import UpdateView
+from accounts.models import Profile
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.models import User, Permission
+from django.db.models import Q
 
 def index(request):
     #return HttpResponse("<h1>Yo i'll probably put list of users here</h1>")
-    all_users = User.objects.all()
+    all_users = User.objects.filter(Q(is_superuser=False))
     #template = loader.get_template('profiles/index.html') no bro we'll use shortcut
     context = {'all_users': all_users }  #context is a dictionary here!!!
     return render(request, 'profiles/index.html', context)
@@ -15,7 +23,49 @@ def index(request):
 def detail(request,nickname):
     #return HttpResponse("<p>I have to display about user " + str(nickname) + "</p>")
     try:
-        user = User.objects.get(username=nickname)
+        user = User.objects.filter(Q(is_superuser=False)).get(username=nickname)
     except User.DoesNotExist:
         raise Http404("There is no such username :/ Please check again :P")
     return render(request, 'profiles/detail.html', { 'user': user })
+
+class ProfileUpdateView(SuccessMessageMixin, UpdateView):
+    #context_object_name = 'variable_used_in `profiles/update.html`'
+    model = Profile
+    form_class = profiles_forms.ProfileUpdateForm
+    template_name = 'profiles/update.html'
+    success_url = '/profile/update'
+    success_message = 'Updated Succesfully'
+
+    def get_initial(self):
+        initial = super(ProfileUpdateView, self).get_initial()
+        #print('initial data', initial)
+        habit_object = self.get_object()
+        initial['city'] = habit_object.city
+        initial['country'] = habit_object.country
+        initial['institute'] = habit_object.institute
+        return initial
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(self.model, user=self.request.user)
+#
+# @login_required
+# class UserUpdateView(UpdateView):
+#     model = User
+#     fields = ('first_name', 'last_name', 'email')
+#     template_name = 'profiles/update.html'
+#
+# @login_required
+# def update(request):
+#     if request.method == 'POST':
+#         profile_update_form = profiles_forms.ProfileUpdateForm(request.POST, instance=request.user)
+#         user_update_form = profiles_forms.UserUpdateForm(request.POST, instance=request.user.profile)
+#         if user_update_form.is_valid() and profile_update_form.is_valid():
+#             update_form.save()
+#             profile_update_form.save()
+#             #messages.success(request, _('Your profile was successfully updated!'))
+#             return redirect(reverse('index'))
+#     args = {}
+#     args.update(csrf(request))
+#     args['user_update_form'] = profiles_forms.UserUpdateForm()
+#     args['profile_update_form'] = profiles_forms.ProfileUpdateForm()
+#     return render_to_response('profiles/update.html', args)
