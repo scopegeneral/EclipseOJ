@@ -1,3 +1,10 @@
-<h1 style="align:center">{{ problem.problem_name }}</h1>
-<h2>This Problem belongs to contest {{ problem.contest.contest_id }}</h2>
-{{ problem.problem_body | safe}}
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{%block title %}Problem {{ problem.problem_ID }}{% endblock %}
+
+{% block content %}
+<h1>{{ problem.name }}</h1>
+<h2>This Problem belongs to contest {{ problem.contest.contest_ID }}</h2>
+{{ problem.body | safe}}
+{% endblock %}

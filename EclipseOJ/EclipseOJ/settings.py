@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django_countries',
     'profiles',
     'problems',
-    'contest',
+    'contests',
     'judge',
 ]
 

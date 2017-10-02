@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{%block title %}{{user.username}}{% endblock %}
+
+{% block content %}
+
+<p>Welcome {{ user.username }} !!!</p>
+<p>This is your authenticated view</p>
+
+<h1>Hello to profile of {{user.username}}</h1>
+<h2>First Name : {{ user.profile.first_name}}</h2>
+<h2>Last Name : {{ user.profile.last_name}}</h2>
+
+{% endblock %}

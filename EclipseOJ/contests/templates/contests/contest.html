@@ -1,0 +1,10 @@
+<h1 style="align:center">{{ contest.contest_ID }}</h1>
+<ul>
+{% for problem in problems %}
+  <li>
+    <a href="/problems/{{ problem.problem_ID }}">
+      Problem {{ problem.name }}
+    </a>
+  </li>
+{% endfor %}
+</ul>

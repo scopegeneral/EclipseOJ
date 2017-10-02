@@ -2,7 +2,7 @@
   <h1>Here's a list of all our problems :D </h1>
   <ul>
     {% for problem in all_problems %}
-      <li><a href="/problems/{{ problem.problemID }}">{{ problem.problem_name }}</a></li>
+      <li><a href="/problems/{{ problem.problem_ID }}">{{ problem.name }}</a></li>
     {% endfor %}
   </ul>
 {% else %}
