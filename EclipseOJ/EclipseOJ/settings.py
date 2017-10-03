@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django_countries',
     'profiles',
     'problems',
-    'contest',
+    'contests',
     'judge',
 ]
 
@@ -127,3 +127,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
+MEDIA_ROOT = os.path.abspath(os.path.join(os.getcwd(), 'uploads'))

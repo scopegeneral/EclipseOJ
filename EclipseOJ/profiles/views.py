@@ -12,6 +12,7 @@ from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User, Permission
 from django.db.models import Q
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 def index(request):
     #return HttpResponse("<h1>Yo i'll probably put list of users here</h1>")
@@ -26,14 +27,17 @@ def detail(request,nickname):
         user = User.objects.filter(Q(is_superuser=False)).get(username=nickname)
     except User.DoesNotExist:
         raise Http404("There is no such username :/ Please check again :P")
-    return render(request, 'profiles/detail.html', { 'user': user })
+    if user == request.user:
+        return render(request, 'profiles/self_detail.html', { 'user': user })
+    else:
+        return render(request, 'profiles/other_detail.html', { 'user': user })
 
-class ProfileUpdateView(SuccessMessageMixin, UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     #context_object_name = 'variable_used_in `profiles/update.html`'
     model = Profile
     form_class = profiles_forms.ProfileUpdateForm
     template_name = 'profiles/update.html'
-    success_url = '/profile/update'
+    success_url = '/profile/update/'
     success_message = 'Updated Succesfully'
 
     def get_initial(self):

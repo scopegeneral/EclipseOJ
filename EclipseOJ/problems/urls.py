@@ -1,7 +1,7 @@
 from django.conf.urls import url, include
-from . import views
+from . import views as problems_views
 
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
-    url(r'^(?P<problemID>[0-9]+[A-E])/$', views.problem, name='problem'),
+    url(r'^$', problems_views.index, name='problems_index'),
+    url(r'^(?P<problemID>[0-9]+[A-E])/$', problems_views.problem, name='problem'),
 ]
