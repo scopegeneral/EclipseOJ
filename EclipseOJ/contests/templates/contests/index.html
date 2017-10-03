@@ -1,0 +1,25 @@
+<h1>Here's a list of all our contests :D </h1>
+  {% if past_contests.exists %}
+  <h1>PAST CONTESTS</h1>
+  <ul>
+    {% for contest in past_contests %}
+      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if current_contests.exists %}
+  <h1>CURRENT CONTESTS</h1>
+  <ul>
+    {% for contest in current_contests %}
+      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% if upcoming_contests.exists %}
+  <h1>UPCOMING CONTESTS</h1>
+  <ul>
+    {% for contest in upcoming_contests %}
+      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+    {% endfor %}
+  </ul>
+{% endif %}

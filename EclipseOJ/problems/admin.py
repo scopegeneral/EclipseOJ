@@ -1,6 +1,8 @@
 from django.contrib import admin
-from . import models
-# Register your models here.
+from .models import Problem, TestCase
 
-admin.site.register(models.Problems)
-admin.site.register(models.TestCases)
+@admin.register(Problem)
+class ProblemAdmin(admin.ModelAdmin):
+    exclude = ('problem_ID', )
+
+admin.site.register(TestCase)
