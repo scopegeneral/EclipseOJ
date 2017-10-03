@@ -19,7 +19,7 @@ class Problem(models.Model):
     body = models.TextField()
 
     def save(self):
-        self.problem_ID = str(self.contest.contest_ID)+str(self.number)
+        self.problem_ID = str(self.contest.id)+str(self.number)
         super().save()
 
     def __str__(self):

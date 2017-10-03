@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^problems/', include('problems.urls')),
     url(r'^contests/', include('contests.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^judge/',include('judge.urls')),
+    url(r'^submissions/',include('judge.urls')),
 ]

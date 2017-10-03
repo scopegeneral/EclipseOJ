@@ -127,3 +127,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
+MEDIA_ROOT = os.path.abspath(os.path.join(os.getcwd(), 'uploads'))
