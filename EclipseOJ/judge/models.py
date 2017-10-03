@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.db.models import signals
 from django.dispatch import Signal
 import os, re
+from .check import bashfunc
 
 # Create your models here.
 class Queue(models.Model):
@@ -75,8 +76,19 @@ def grader():
         #print(str(queue.submission_set.filter(status='P').count()))
         submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
         #print(submission)
-        #bashfunc(pending_submission)
+        print(submission.uploaded_file.name)
+        testcase = "uploads/testcases/testcases_{0}/".format(submission.problem.problem_ID)
+        print(int(TestCase.objects.filter(problem=submission.problem).count()/2))
+        output = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()/2))
+        print(submission.uploaded_file.name)
+        print(testcase)
+        print(output)
+        if (output == 'Wrong Answer'):
+            submission.verdict = 'WA'
+        elif (output == 'Accepted'):
+            submission.verdict = 'AC'
+        elif (output == 'Compilation Error'):
+            submission.verdict = 'CE'
         submission.status = 'C'
-        submission.verdict = 'Accepted'
         submission.save()
     grader_running = False
