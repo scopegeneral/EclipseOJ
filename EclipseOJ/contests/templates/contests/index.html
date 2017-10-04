@@ -3,7 +3,7 @@
   <h1>PAST CONTESTS</h1>
   <ul>
     {% for contest in past_contests %}
-      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
@@ -11,7 +11,7 @@
   <h1>CURRENT CONTESTS</h1>
   <ul>
     {% for contest in current_contests %}
-      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
     {% endfor %}
   </ul>
   {% endif %}
@@ -19,7 +19,7 @@
   <h1>UPCOMING CONTESTS</h1>
   <ul>
     {% for contest in upcoming_contests %}
-      <li><a href="{% url 'contest' contest %}">{{ contest.contest_ID }}</a></li>
+      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
     {% endfor %}
   </ul>
 {% endif %}
