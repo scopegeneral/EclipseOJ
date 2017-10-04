@@ -51,7 +51,7 @@ class Submission(models.Model):
         ('RE', 'Runtime Error'),
         ('AC', 'Accepted'),
     )
-    verdict = models.CharField(max_length=1,choices=verdict_choices, default='AC')
+    verdict = models.CharField(max_length=2,choices=verdict_choices, default='AC')
     def __str__(self):
         if self.status == 'Pending':
             return self.problem.problem_ID + ': ' + 'Pending'
