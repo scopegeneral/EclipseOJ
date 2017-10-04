@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from django.utils import timezone
 from problems.models import Problem, TestCase
 from django.contrib.auth.models import User
 from django.db.models import signals
@@ -29,7 +28,7 @@ class Submission(models.Model):
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     uploaded_file = models.FileField(upload_to=upload_to)
-    submission_time = models.DateTimeField(default=timezone.now())
+    submission_time = models.DateTimeField(auto_now_add=True)
     status_choices = (
         ('P' , 'Pending'),
         ('R' , 'Running'),
@@ -76,19 +75,8 @@ def grader():
         #print(str(queue.submission_set.filter(status='P').count()))
         submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
         #print(submission)
-        print(submission.uploaded_file.name)
         testcase = "uploads/testcases/testcases_{0}/".format(submission.problem.problem_ID)
-        print(int(TestCase.objects.filter(problem=submission.problem).count()/2))
-        output = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()/2))
-        print(submission.uploaded_file.name)
-        print(testcase)
-        print(output)
-        if (output == 'Wrong Answer'):
-            submission.verdict = 'WA'
-        elif (output == 'Accepted'):
-            submission.verdict = 'AC'
-        elif (output == 'Compilation Error'):
-            submission.verdict = 'CE'
+        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()))
         submission.status = 'C'
         submission.save()
     grader_running = False

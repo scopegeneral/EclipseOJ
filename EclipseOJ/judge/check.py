@@ -5,7 +5,7 @@ def bashfunc(filename,testcase,number):
         bashCommand = "g++ -std=c++14 {0}".format(filename)
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         if process.communicate()[1]:
-            return "Compilation Error"
+            return "CE"
         else:
             inputs = testcase + "input_"
             outputs = testcase + "output_"
@@ -20,8 +20,8 @@ def bashfunc(filename,testcase,number):
                 if os.stat("diff.txt").st_size == 0:
                     correct += 1
                 else:
-                    return "Wrong Answer"
-            return "Accepted"
+                    return "WA"
+            return "AC"
     if filename.endswith('.py'):
         inputs = testcase + "input_"
         outputs = testcase + "output_"
@@ -36,13 +36,13 @@ def bashfunc(filename,testcase,number):
             if os.stat("diff.txt").st_size == 0:
                 correct += 1
             else:
-                return "Wrong Answer"
-        return "Accepted"
+                return "WA"
+        return "AC"
     if filename.endswith('.java'):
         bashCommand = "javac {0}".format(filename)
         process = subprocess.Popen(bashCommand.split(), stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         if process.communicate()[1]:
-            return "Compilation Error"
+            return "CE"
         else:
             inputs = testcase + "input_"
             outputs = testcase + "output_"
@@ -58,5 +58,5 @@ def bashfunc(filename,testcase,number):
                 if os.stat("diff.txt").st_size == 0:
                     correct += 1
                 else:
-                    return "Wrong Answer"
-            return "Accepted"
+                    return "WA"
+            return "AC"

@@ -25,11 +25,16 @@ class Problem(models.Model):
     def __str__(self):
         return self.name #+ '\n' + self.problem_body
 
-def testcases_directory_path(instance, filename):
-    return 'testcases/testcases_{0}/{1}'.format(instance.problem.problem_ID, filename)
+def testcases_input_path(instance, filename):
+    name = 'input_' + str(TestCase.objects.count()+1)
+    return 'testcases/testcases_{0}/{1}'.format(instance.problem.problem_ID, name)
+def testcases_output_path(instance, filename):
+    name = 'output_' + str(TestCase.objects.count()+1)
+    return 'testcases/testcases_{0}/{1}'.format(instance.problem.problem_ID, name)
 
 class TestCase(models.Model):
     class Meta:
         verbose_name_plural = "TestCases"
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
-    testcase_body = models.FileField(upload_to=testcases_directory_path)
+    input_file = models.FileField(upload_to=testcases_input_path)
+    output_file = models.FileField(upload_to=testcases_output_path)
