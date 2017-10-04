@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from django.utils import timezone
 from problems.models import Problem, TestCase
 from django.contrib.auth.models import User
 from django.db.models import signals
@@ -29,7 +28,7 @@ class Submission(models.Model):
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     uploaded_file = models.FileField(upload_to=upload_to)
-    submission_time = models.DateTimeField(default=timezone.now())
+    submission_time = models.DateTimeField(auto_now_add=True)
     status_choices = (
         ('P' , 'Pending'),
         ('R' , 'Running'),
