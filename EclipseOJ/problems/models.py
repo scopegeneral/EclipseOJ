@@ -26,10 +26,10 @@ class Problem(models.Model):
         return self.name #+ '\n' + self.problem_body
 
 def testcases_input_path(instance, filename):
-    name = 'input_' + str(TestCase.objects.count()+1)
+    name = 'input_' + str(TestCase.objects.filter(problem = instance.problem).count()+1)    ##better to use foreign key mechanism (eficient :/)
     return 'testcases/testcases_{0}/{1}'.format(instance.problem.problem_ID, name)
 def testcases_output_path(instance, filename):
-    name = 'output_' + str(TestCase.objects.count()+1)
+    name = 'output_' + str(TestCase.objects.filter(problem = instance.problem).count()+1)
     return 'testcases/testcases_{0}/{1}'.format(instance.problem.problem_ID, name)
 
 class TestCase(models.Model):
@@ -38,3 +38,5 @@ class TestCase(models.Model):
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
     input_file = models.FileField(upload_to=testcases_input_path)
     output_file = models.FileField(upload_to=testcases_output_path)
+    def __str__(self):
+        return "Problem : \"" + str(self.problem) + "\" Testcase number : " + str(TestCase.objects.filter(problem=self.problem).count())

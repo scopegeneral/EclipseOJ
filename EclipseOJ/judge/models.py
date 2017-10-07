@@ -69,7 +69,7 @@ signals.post_save.connect(submission_post_save,sender=Submission)
 grader_running = False
 def grader():
     grader_running = True
-    queue = Queue.objects.get(pk=1)
+    queue = Queue.objects.all()[0]
     #print('before while')
     while(queue.submission_set.filter(status='P').count()):
         #print(str(queue.submission_set.filter(status='P').count()))
