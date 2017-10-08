@@ -25,7 +25,7 @@ def problem(request, problemID):
             submission = submit_form.save(commit=False)
             submission.user = User.objects.get(username=request.user)
             submission.problem = problem
-            submission.queue = Queue.objects.get(pk=1)
+            submission.queue = Queue.objects.all()[0]
             submission.save()
             messages.success(request, 'Successfully Submitted')
             return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
