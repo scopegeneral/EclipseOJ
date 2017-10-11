@@ -24,4 +24,4 @@ def create_user(sender, instance, created, **kwargs):
         return
     # profile = Profile(user=instance)
     # profile.save()
-    os.mkdir(os.path.join(os.path.join(os.getcwd(), 'uploads'), str(instance.get_username())))
+    os.mkdir(os.path.join(os.path.join(os.getcwd(), 'uploads/users/'), str(instance.get_username())))

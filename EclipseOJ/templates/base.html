@@ -1,8 +1,13 @@
+{% load bootstrap3 %}
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>{% block title %}{% endblock %} | EclipseOJ</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 </head>
 
@@ -10,7 +15,7 @@
   <nav class="navbar navbar-inverse">
   <div class="container-fluid">
   <div class="navbar-header">
-    <a class="navbar-brand" href="#">Eclipse OJ</a>
+    <a class="navbar-brand" href="{% url 'homepage' %}">Eclipse OJ</a>
   </div>
   <ul class="nav navbar-nav navbar-right">
     <li {% block contestactive %}{%endblock%}><a href="{% url 'contests_index' %}">Contests</a></li>
@@ -26,6 +31,7 @@
   </ul>
   </div>
   </nav>
+  {% bootstrap_messages %}
   {% block content %}
   {% endblock %}
 </body>

@@ -6,9 +6,16 @@
 
 <ul>
   {% for submission in submission_list %}
-    <li>
-      {{ submission }}
-    </li>
+    {% if submission.user == request.user %}
+      <li style="color:red;">
+        {{ submission }}
+      </li>
+    {% else %}
+      <li>
+        {{ submission }}
+      </li>
+    {% endif %}
   {% endfor %}
 </ul>
+
 {% endblock %}
