@@ -19,11 +19,16 @@
     {% endfor %}
 {% endif %}
 
-<h1>{{ problem.name }}</h1>
-<h2>This Problem belongs to contest {{ problem.contest.contest_ID }}</h2>
+<h1 class="text-center">{{ problem.name }}</h1>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
 {{ problem.body | safe}}
 {% bootstrap_messages %}
 <h2 align="center">Submit</h2>
+  </div>
+</div>
+  <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
@@ -33,5 +38,6 @@
     <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
   {% endbuttons %}
 </form>
+</div>
 </div>
 {% endblock %}
