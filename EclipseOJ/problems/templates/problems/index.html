@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title %}Problems{% endblock %}
+{% block problemsactive %}class="active"{% endblock %}
+{% block content %}
 {% if all_problems %}
   <h1>Here's a list of all our problems :D </h1>
   <ul>
@@ -8,3 +13,4 @@
 {% else %}
   <h1>Umm there are no problems, we are so screwed!!!</h1>
 {% endif %}
+{% endblock %}

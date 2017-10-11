@@ -1,3 +1,9 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title %}Judge{% endblock %}
+{% block judgeactive %}class="active"{% endblock %}
+{% block content %}
+
 <ul>
   {% for submission in main_queue.submission_set.all %}
     <li>
@@ -5,3 +11,4 @@
     </li>
   {% endfor %}
 </ul>
+{% endblock %}
