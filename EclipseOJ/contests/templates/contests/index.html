@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title %}Contests{% endblock %}
+{% block contestactive %}class="active"{% endblock %}
+{% block content %}
 <h1>Here's a list of all our contests :D </h1>
   {% if past_contests.exists %}
   <h1>PAST CONTESTS</h1>
@@ -23,3 +28,4 @@
     {% endfor %}
   </ul>
 {% endif %}
+{% endblock %}
