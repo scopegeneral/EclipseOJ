@@ -3,7 +3,7 @@
 {%block title %}Contests{% endblock %}
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
-<h1 style="align:center">{{ contest.id }}</h1>
+<h1 style="text-align:center">{{ contest.id }} {{contest.name}}</h1>
 <ul>
 {% for problem in problems %}
   <li>
