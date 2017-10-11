@@ -3,11 +3,15 @@
 {% block title %}{{user.username}}{% endblock %}
 {% block profileactive %}class="active"{% endblock %}
 {% block content %}
-<p>Welcome {{ user.username }} !!!</p>
-<p>This is your authenticated view</p>
+<!-- <p>Welcome {{ user.username }} !!!</p>
+<p>This is your authenticated view</p> -->
 
-<h1>Hello to profile of {{user.username}}</h1>
-<h2>First Name : {{ user.profile.first_name}}</h2>
-<h2>Last Name : {{ user.profile.last_name}}</h2>
+<h1>This is the profile of {{user.username}}</h1>
+<h4>First Name : {{ user.profile.first_name}}</h4>
+<h4>Last Name : {{ user.profile.last_name}}</h4>
+<h4>Email : {{ user.profile.email}}</h4>
+<h4>Institute : {{ user.profile.institute}}</h4>
+<h4>City : {{ user.profile.city}}</h4>
+<h4>Country : {{ user.profile.country.name}}</h4>
 
 {% endblock %}

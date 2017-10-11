@@ -25,12 +25,13 @@
   <div class="col-md-10">
 {{ problem.body | safe}}
 {% bootstrap_messages %}
-<h2 align="center">Submit</h2>
   </div>
 </div>
   <div class="row">
   <div class="col-md-4"></div>
   <div class="col-md-4">
+    {% if request.user.is_authenticated %}
+    <h2 align="center">Submit</h2>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
@@ -38,6 +39,11 @@
     <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
   {% endbuttons %}
 </form>
+{% else %}
+<div class="alert alert-info">
+  <strong><a href="{% url 'login' %}">Login</a></strong> to submit and verify your solution.
+</div>
+{% endif %}
 </div>
 </div>
 {% endblock %}
