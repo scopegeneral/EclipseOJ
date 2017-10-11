@@ -18,7 +18,7 @@ def contest(request,contestID):
     except Contest.DoesNotExist:
         raise Http404("There is no such contest :/ Please check again :P")
     if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
-        problems = Problem.objects.filter(contest=contest).order_by('number')
+        problems = Problem.objects.filter(contest=contest).order_by('letter')
         return render(request,"contests/contest.html", {'contest':contest, 'problems':problems})
     else:
         if request.method=='POST':

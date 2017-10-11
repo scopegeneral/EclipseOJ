@@ -1,6 +1,6 @@
 <h1>Queue</h1>
 <ul>
-  {% for submission in main_queue.submission_set.all %}
+  {% for submission in submission_list %}
     {% if submission.user == request.user %}
       <li style="color:red;">
         {{ submission }}

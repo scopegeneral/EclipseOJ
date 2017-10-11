@@ -18,11 +18,12 @@ class Queue(models.Model):
 
 
 def upload_to(instance, filename):
-    directory = os.path.join(os.path.abspath(os.path.join(os.getcwd(), 'uploads')), instance.user.username)
+    directory = os.path.join(os.path.join(os.getcwd(), 'uploads/users/'), instance.user.username)
     for f in os.listdir(directory):
-        if os.path.splitext(f)[0] == instance.problem.problem_ID:
+        if os.path.splitext(f)[0] == 'solution' + instance.problem.problem_ID:
             os.remove(os.path.join(directory, f))
-    return '%s/%s' % (instance.user.username, instance.problem.problem_ID +'.'+ instance.language)
+    return 'users/%s/%s.%s' % (instance.user.username, 'solution' + instance.problem.problem_ID, instance.language)
+
 class Submission(models.Model):
     queue = models.ForeignKey(Queue,on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
@@ -72,10 +73,8 @@ def grader():
     queue = Queue.objects.all()[0]
     #print('before while')
     while(queue.submission_set.filter(status='P').count()):
-        #print(str(queue.submission_set.filter(status='P').count()))
         submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
-        #print(submission)
-        testcase = "uploads/testcases/testcases_{0}/".format(submission.problem.problem_ID)
+        testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
         submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()))
         submission.status = 'C'
         submission.save()

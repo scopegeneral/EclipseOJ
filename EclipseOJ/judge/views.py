@@ -5,9 +5,10 @@ from django.shortcuts import render
 
 # Create your views here.
 def main(request):
-    main_queue = Queue.objects.all()[0]
-    return render(request,'judge/main.html',{'main_queue' : main_queue})
+    # main_queue = Queue.objects.all()[0].submission_set.order_by('submission_time')
+    submission_list = Submission.objects.order_by('-submission_time')
+    return render(request,'judge/main.html',{'submission_list' : submission_list})
 
 def userspecific(request,username):
-    main_queue = Queue.objects.all()[0]
-    return render(request,'judge/userspecific.html',{'main_queue' : main_queue, 'username' : username})
+    submission_list = Submission.objects.order_by('-submission_time')
+    return render(request,'judge/userspecific.html',{'submission_list' : submission_list, 'username' : username})
