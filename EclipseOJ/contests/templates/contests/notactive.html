@@ -1,3 +1,8 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title %}Contests{% endblock %}
+{% block contestactive %}class="active"{% endblock %}
+{% block content %}
 <h1 style="align:center">{{ contest.id }}</h1>
 <h2>This Contest Begins on {{contest.start_time}}</h2>
 <p>click here to register</p>
@@ -5,3 +10,4 @@
   {% csrf_token %}
     <button name="register" type="submit" onclick="alert(Registered successfully)">Register</button>
 </form>
+{% endblock %}
