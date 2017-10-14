@@ -30,8 +30,10 @@ def problem(request, problemID):
             submission.save()
             messages.success(request, 'Successfully Submitted')
             if not grader_running :
-                t = threading.Thread(target=grader_running,args=args,kwargs=kwargs)
+                #print('gonna call')
+                t = threading.Thread(target=grader)
                 t.start()
+                #print('probably')
             return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
         else:
             print([(field.label, field.errors) for field in submit_form] )

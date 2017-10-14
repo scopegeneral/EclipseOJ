@@ -53,9 +53,9 @@ class Submission(models.Model):
     )
     verdict = models.CharField(max_length=2,choices=verdict_choices, default='AC')
     def __str__(self):
-        if self.status == 'Pending':
+        if self.status == 'P':
             return self.problem.problem_ID + ': ' + 'Pending'
-        elif self.status == 'Running':
+        elif self.status == 'R':
             return self.problem.problem_ID + ': ' + 'Running on ' + str(testcases_passed + 1)
         else :
             return self.problem.problem_ID + ': ' + self.verdict
@@ -71,11 +71,14 @@ grader_running = False
 def grader():
     grader_running = True
     queue = Queue.objects.all()[0]
+    #print('Hey buddy i have been called!')
     #print('before while')
     while(queue.submission_set.filter(status='P').count()):
         submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
+        #print(str(submission))
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
         submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()))
+        #print('done')
         submission.status = 'C'
         submission.save()
     grader_running = False
