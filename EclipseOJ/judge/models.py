@@ -59,14 +59,14 @@ class Submission(models.Model):
             return self.problem.problem_ID + ': ' + 'Running on ' + str(testcases_passed + 1)
         else :
             return self.problem.problem_ID + ': ' + self.verdict
-
+"""
 def submission_post_save(sender, instance, created, *args, **kwargs):
     if not created:
         return
     if not grader_running:
         grader()
 signals.post_save.connect(submission_post_save,sender=Submission)
-
+"""
 grader_running = False
 def grader():
     grader_running = True
