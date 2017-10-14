@@ -7,7 +7,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
-from judge.models import Queue
+from judge.models import *
+import threading
 # Create your views here.
 def index(request):
     all_problems = Problem.objects.all()
@@ -28,6 +29,11 @@ def problem(request, problemID):
             submission.queue = Queue.objects.all()[0]
             submission.save()
             messages.success(request, 'Successfully Submitted')
+            if not grader_running :
+                #print('gonna call')
+                t = threading.Thread(target=grader)
+                t.start()
+                #print('probably')
             return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
         else:
             print([(field.label, field.errors) for field in submit_form] )
