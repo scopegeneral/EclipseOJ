@@ -41,7 +41,7 @@
 </form>
 {% else %}
 <div class="alert alert-info">
-  <strong><a href="{% url 'login_direct' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
+  <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
 </div>
 {% endif %}
 </div>
