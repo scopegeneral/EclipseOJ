@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from judge.models import Queue
+from django.utils.six.moves.urllib.parse import urlencode
 # Create your views here.
 def index(request):
     all_problems = Problem.objects.all()

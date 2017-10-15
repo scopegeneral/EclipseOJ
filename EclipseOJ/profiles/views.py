@@ -13,7 +13,6 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User, Permission
 from django.db.models import Q
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
-
 def index(request):
     #return HttpResponse("<h1>Yo i'll probably put list of users here</h1>")
     all_users = User.objects.filter(Q(is_superuser=False))

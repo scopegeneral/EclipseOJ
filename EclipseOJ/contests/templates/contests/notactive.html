@@ -5,9 +5,16 @@
 {% block content %}
 <h1 style="align:center">{{ contest.id }}</h1>
 <h2>This Contest Begins on {{contest.start_time}}</h2>
-<p>click here to register</p>
-<form action="{% url 'contest' contest.id %}" method="post">
-  {% csrf_token %}
-    <button name="register" type="submit" onclick="alert(Registered successfully)">Register</button>
-</form>
+{% if user.is_authenticated %}
+  <p>click here to register</p>
+  <form action="{% url 'contest' contest.id %}" method="post">
+    {% csrf_token %}
+      <button name="register" type="submit" onclick="alert(Registered successfully)">Register</button>
+  </form>
+{% else %}
+  <p>
+    Dude who have to login/signup first for registering
+  </p>
+  <a href="/accounts/login/?next={{ request.path }}">Click here for login and redirect back here</a>
+{% endif %}
 {% endblock %}
