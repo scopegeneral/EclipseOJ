@@ -8,8 +8,10 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from judge.models import Queue
+from datetime import datetime
 from django.utils.six.moves.urllib.parse import urlencode
 # Create your views here.
+now = datetime.now()
 def index(request):
     all_problems = Problem.objects.all()
     return render(request,"problems/index.html", {'all_problems' : all_problems})
@@ -37,4 +39,13 @@ def problem(request, problemID):
     args.update(csrf(request))
     args['submit_form'] = problems_forms.SubmitForm()
     args['problem'] = problem
-    return render(request,"problems/problem.html", args)
+    contest = problem.contest
+    args['contest'] = contest
+    if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+        return render(request,"problems/problem.html", args)
+    elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+        registered = contest.registered_user.filter(username = request.user.username)
+        args['registered'] = registered
+        return render(request,"problems/isactive.html", args)
+    else:
+        raise Http404("There is no such problem you prick, you can't hack the system the system hacks you -_- !!")

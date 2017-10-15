@@ -1,0 +1,59 @@
+{% block title %}Problem {{ problem.problem_ID }}{% endblock %}
+{% block contestactive %}class="active"{% endblock %}
+{% if registered %}
+{% block content %}
+
+{% if submit_form.errors %}
+    {% for field in submit_form %}
+        {% for error in field.errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for error in submit_form.non_field_errors %}
+        <div class="alert alert-danger">
+            <strong>{{ error|escape }}</strong>
+        </div>
+    {% endfor %}
+{% endif %}
+<h1>Time remaining (insert a clock here)</h1>
+<h2>All the best ^,,^</h2>
+<h1 class="text-center">{{ problem.name }}</h1>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+{{ problem.body | safe}}
+{% bootstrap_messages %}
+  </div>
+</div>
+  <div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    {% if request.user.is_authenticated %}
+    <h2 align="center">Submit</h2>
+<form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
+  {% csrf_token %}
+  {% bootstrap_form submit_form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+  {% endbuttons %}
+</form>
+{% else %}
+<div class="alert alert-info">
+  <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
+</div>
+{% endif %}
+</div>
+</div>
+{% endblock %}
+{% else %}
+<h1 class="text-center">{{ problem.name }}</h1>
+<div class="row">
+  <div class="col-md-1"></div>
+  <div class="col-md-10">
+{{ problem.body | safe}}
+{% bootstrap_messages %}
+  </div>
+</div>
+{% endif %}
