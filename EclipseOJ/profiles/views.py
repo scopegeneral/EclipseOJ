@@ -13,6 +13,9 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.models import User, Permission
 from django.db.models import Q
 from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 def index(request):
     #return HttpResponse("<h1>Yo i'll probably put list of users here</h1>")
     all_users = User.objects.filter(Q(is_superuser=False))
@@ -31,12 +34,28 @@ def detail(request,nickname):
     else:
         return render(request, 'profiles/other_detail.html', { 'user': user })
 
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('/profile')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'profiles/change_password.html', {
+        'form': form
+    })
+
 class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     #context_object_name = 'variable_used_in `profiles/update.html`'
     model = Profile
     form_class = profiles_forms.ProfileUpdateForm
     template_name = 'profiles/update.html'
-    success_url = '/profile/update/'
+    success_url = '/contests/'
     success_message = 'Updated Succesfully'
 
     def get_initial(self):
