@@ -3,7 +3,7 @@
 {% load static %}
 <link rel="stylesheet" href="{{ STATIC_URL }}problem.css>" />
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
-{% block contestactive %}class="active"{% endblock %}
+{% block problemsactive %}class="active"{% endblock %}
 {% block content %}
 
 {% if submit_form.errors %}
@@ -57,6 +57,12 @@
 		<pre id="editor">Height adjust krna! :| </pre>
 	</div>
 
+  <div class="form-group">
+        <label for="Input">Input:</label>
+        <textarea class="form-control" rows="5" id="input"></textarea>
+      </div>
+      <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
+      <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
 	<!-- load ace -->
 	<script src="{% static "problems/src-noconflict/ace.js" %}"></script>
 	<!-- load ace language tools -->
@@ -121,7 +127,7 @@ window.test_theme = function(e) {
   }
 	</script>
 
-    <h2 align="center">Submit</h2>
+    <h2 align="center">Or Direct file Submit</h2>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
