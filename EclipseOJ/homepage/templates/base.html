@@ -25,6 +25,7 @@
     <li {% block problemsactive %}{%endblock%}><a href="{% url 'problems_index' %}">Problems</a></li>
     <li {% block judgeactive %}{%endblock%}><a href="{% url 'judge_main' %}">Submissions</a></li>
     <li {% block leaderboardactive %}{%endblock%}><a href="#">Leaderboard</a></li>
+    <li ><a href="{% url 'discuss_index' %}">Discuss</a></li>
     {% if request.user.is_authenticated %}
     <li {% block profileactive %}{%endblock%}><a href="{% url 'detail' request.user.username %}">Profile</a></li>
     <li><a href="{% url 'logout' %}">Log Out</a></li>
@@ -37,11 +38,11 @@
   {% bootstrap_messages %}
   <div class="container-fluid" style="padding-left:50px; padding-right:50px;">
     <div class="row">
-      <div class="col-sm-8 box">
+      <div class="col-sm-8">
           {% block content %}
           {% endblock %}
       </div>
-      <div class="col-sm-4">
+      <div class="col-sm-4 box">
         <h1>HI.. LEADERVOARD</h1>
       </div>
     </div>

@@ -2,7 +2,7 @@
 {% block title %}Discuss{% endblock %}
 {% block content %}
 
-<div class="row">
+<div class="row box">
   <section>
     <header>
       <h2>{{ post.title }}</h2>
@@ -12,7 +12,7 @@
   </section>
 </div>
 <p>COMMENTS:</p><br>
-<div class="row">
+<div class="row box">
   {% for comment in all_comments %}
     <p>{{ comment.body }}</p>
     <p>Posted by {{ comment.author.profile.first_name }} {{ comment.author.profile.last_name }} on {{ comment.time }}</p>
