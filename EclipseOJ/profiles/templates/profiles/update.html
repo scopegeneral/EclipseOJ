@@ -3,14 +3,13 @@
 {% block title %}Update Profile{% endblock %}
 {% block profileactive %}class="active"{% endblock %}
 {% block content %}
-{% bootstrap_messages %}
 <h2 align="center">Update Profile</h2>
   <div class="col-md-offset-4 col-md-4">
   <form method="post" action="{% url 'profiles_update' %}">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-      <button type="submit" class="btn btn-success center-block">Update</button></td></tr>
+      <button type="submit" css="btn btn-success center-block">Update</button></td></tr>
     {% endbuttons %}
   </form>
 </div>

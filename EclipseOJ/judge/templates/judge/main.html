@@ -1,21 +1,51 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
-{%block title %}Judge{% endblock %}
+{%block title %}Submissions{% endblock %}
 {% block judgeactive %}class="active"{% endblock %}
-{% block content %}
 
-<ul>
+{% block content %}
+<div class="jumbotron">
+    <h1 class="text-center">Submissions</h1>
+  </div>
+<div class="container-fluid">
+  <div class="row box">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+<table class="table">
+  <thead>
+    <th>#</th>
+    <th>User</th>
+    <th>Problem</th>
+    <th>Submission Time</th>
+    <th>Verdict</th>
+  </thead>
   {% for submission in submission_list %}
     {% if submission.user == request.user %}
-      <li style="color:red;">
-        {{ submission }}
-      </li>
+    {% if submission.verdict == "AC" %}
+      <tr class="success">
+    {% elif submission.verdict == "WA" %}
+      <tr class="danger">
+    {% elif submission.verdict == "CE" or submission.verdict == "RE" %}
+      <tr class="warning">
+    {% endif %}
+        <td>{{ submission.id }}</td>
+        <td>{{ submission.user.username }}</td>
+        <td>{{ submission.problem }}</td>
+        <td>{{ submission.submission_time }}</td>
+        <td>{{ submission.verdict }}</td>
+      </tr>
     {% else %}
-      <li>
-        {{ submission }}
-      </li>
+    <tr>
+      <td>{{ submission.id }}</td>
+      <td>{{ submission.user.username }}</td>
+      <td>{{ submission.problem }}</td>
+      <td>{{ submission.submission_time }}</td>
+      <td>{{ submission.verdict }}</td>
+    </tr>
     {% endif %}
   {% endfor %}
-</ul>
-
+</table>
+</div>
+</div>
+</div>
 {% endblock %}

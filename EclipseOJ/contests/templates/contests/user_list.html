@@ -1,0 +1,12 @@
+Here are registerd users for {{ contest }}
+
+<ul>
+
+{% for user in registerd_user_list %}
+  {% if user == request.user %}
+    <li style="color:blue">{{ user }}</li>
+  {% else %}
+    <li>{{ user }}</li>
+  {% endif %}
+{% endfor %}
+</ul>

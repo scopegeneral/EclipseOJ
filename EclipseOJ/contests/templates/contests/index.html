@@ -3,29 +3,90 @@
 {%block title %}Contests{% endblock %}
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
-<h1>Here's a list of all our contests :D </h1>
-  {% if past_contests.exists %}
-  <h1>PAST CONTESTS</h1>
-  <ul>
-    {% for contest in past_contests %}
-      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% if current_contests.exists %}
-  <h1>CURRENT CONTESTS</h1>
-  <ul>
-    {% for contest in current_contests %}
-      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% if upcoming_contests.exists %}
-  <h1>UPCOMING CONTESTS</h1>
-  <ul>
-    {% for contest in upcoming_contests %}
-      <li><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></li>
-    {% endfor %}
-  </ul>
-{% endif %}
+<div class="jumbotron text-center">
+  <h1>Code Compete Learn</h1>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-8">
+      {% if current_contests.exists %}
+      <h3>Current Contests</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>CODE</th>
+            <th>NAME</th>
+            <th>START</th>
+            <th>END</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contest in current_contests %}
+          <tr>
+            <td><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></td>
+            <td><a href="{% url 'contest' contest.id %}">{{ contest.name }}</a></td>
+            <td>{{ contest.start_time }}</td>
+            <td>{{ contest.end_time }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+      {% if upcoming_contests.exists %}
+      <h3>Upcoming Contests</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>CODE</th>
+            <th>NAME</th>
+            <th>START</th>
+            <th>END</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contest in upcoming_contests %}
+          <tr>
+            <td><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></td>
+            <td><a href="{% url 'contest' contest.id %}">{{ contest.name }}</a></td>
+            <td>{{ contest.start_time }}</td>
+            <td>{{ contest.end_time }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+
+    {% if past_contests.exists %}
+    <h3>Past Contests</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>CODE</th>
+          <th>NAME</th>
+          <th>START</th>
+          <th>END</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for contest in past_contests %}
+        <tr>
+          <td><a href="{% url 'contest' contest.id %}">{{ contest.id }}</a></td>
+          <td><a href="{% url 'contest' contest.id %}">{{ contest.name }}</a></td>
+          <td>{{ contest.start_time }}</td>
+          <td>{{ contest.end_time }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+    <div class="col-md-2">
+    </div>
+  </div>
+  </div>
+
+
 {% endblock %}

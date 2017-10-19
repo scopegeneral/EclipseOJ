@@ -3,7 +3,7 @@
 {%block title %}Contests{% endblock %}
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
-<h1 style="align:center">{{ contest.id }}</h1>
+<h1 style="text-align:center">{{ contest.id }} {{contest.name}}</h1>
 <ul>
 {% for problem in problems %}
   <li>
@@ -13,4 +13,11 @@
   </li>
 {% endfor %}
 </ul>
+{% if registered %}
+  <p> Your performance stuff would come here registered user :D </p>
+  <p> To get a link to list of registered users <a href="{% url 'registered' contest.id %}">Click here</a> </p>
+{% else %}
+  <p>Go to hell you didnt participate in this contest</p>
+  <p>I dont wanna show but <a href="{% url 'registered' contest.id %}">here's the link</a> to registered users!</p>
+{% endif %}
 {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Discuss{% endblock %}
+{% block content %}
+
+<div class="row box">
+  <section>
+    <header>
+      <h2>{{ post.title }}</h2>
+      <p>Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}</p>
+    </header>
+    <p>{{ post.body }}</p>
+  </section>
+</div>
+<p>COMMENTS:</p><br>
+<div class="row box">
+  {% for comment in all_comments %}
+    <p>{{ comment.body }}</p>
+    <p>Posted by {{ comment.author.profile.first_name }} {{ comment.author.profile.last_name }} on {{ comment.time }}</p>
+  {% endfor %}
+</div>
+{% endblock %}
