@@ -2,15 +2,17 @@
 {% block title %}Discuss{% endblock %}
 {% block content %}
 
+<div class="row" style="padding-right:18px">
 <div class="jumbotron text-center">
-  <h2>Discussion Forum</h2>
+  <h2>DISCUSSION FORUM</h2>
 </div>
-
+<a href="{% url 'add_post' %}" class="btn btn-success pull-right">Add new post</a>
+</div>
 {% for post in all_posts %}
 <div class="row box">
   <section>
     <header>
-      <h2><a href="{% url 'post_detail' post.post_ID %}">{{ post.title }}</a></h2>
+      <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
       <p>Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}</p>
     </header>
     <p>{{ post.body|truncatechars:250 }}</p>

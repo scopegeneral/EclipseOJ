@@ -6,10 +6,12 @@ class Post(models.Model):
         User,
         on_delete = models.CASCADE,
     )
-    post_ID = models.PositiveIntegerField()
     title = models.CharField(max_length=250)
     body = models.TextField()
     time = models.DateTimeField()
+
+    def __str__(self):
+        return 'Post {}'.format(self.post_ID)
 
 class Comment(models.Model):
     parent = models.ForeignKey(

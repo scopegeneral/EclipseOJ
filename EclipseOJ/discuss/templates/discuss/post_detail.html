@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{%load bootstrap3 %}
 {% block title %}Discuss{% endblock %}
 {% block content %}
 
@@ -11,11 +12,20 @@
     <p>{{ post.body }}</p>
   </section>
 </div>
-<p>COMMENTS:</p><br>
+<h3>COMMENTS: </h3>
 <div class="row box">
+<form method="post" action="{% url 'post_detail' post.pk %}">
+  {% csrf_token %}
+  {% bootstrap_form comment_form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-success pull-right">Add Comment</button>
+  {% endbuttons %}
+</form>
+</div>
   {% for comment in all_comments %}
+  <div class="row box">
     <p>{{ comment.body }}</p>
     <p>Posted by {{ comment.author.profile.first_name }} {{ comment.author.profile.last_name }} on {{ comment.time }}</p>
-  {% endfor %}
 </div>
+  {% endfor %}
 {% endblock %}

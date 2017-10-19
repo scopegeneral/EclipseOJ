@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{% block title %}Add New Post{% endblock %}
+
+{% block content %}
+<form method="post" action="{% url 'add_post' %}">
+  {% csrf_token %}
+  {% bootstrap_form post_form %}
+  {% buttons %}
+    <button type="submit" class="btn btn-success center-block">Add Post</button>
+  {% endbuttons %}
+</form>
+{% endblock %}
