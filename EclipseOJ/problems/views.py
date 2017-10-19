@@ -20,7 +20,7 @@ def problem(request, problemID):
     try:
         problem = Problem.objects.get(problem_ID=problemID)
     except Problem.DoesNotExist:
-        raise Http404("There is no such problem :/ Please check again :P")
+        raise Http404("There is no such problem. Please check again")
 
     if request.method == 'POST':
         submit_form = problems_forms.SubmitForm(request.POST, request.FILES)
