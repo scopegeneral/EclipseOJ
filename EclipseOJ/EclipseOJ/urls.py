@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^contests/', include('contests.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^submissions/',include('judge.urls')),
+    url(r'^leaderboard/',include('leaderboard.urls')),
     url(r'^discuss/', include('discuss.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

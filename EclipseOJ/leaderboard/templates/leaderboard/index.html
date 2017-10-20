@@ -1,0 +1,16 @@
+{% if all_users %}
+  <h1>Here are all the users :D </h1>
+  <form action="/leaderboard/" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Apply" />
+</form>
+</form>
+  <table>
+    {% for user in all_users %}
+    <tr><td><a href="/profile/{{ user.user.username }}/">{{user.user.username}}</a></td><td>{{user.rating}}</td></tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <h1>Umm there are no users, we are so screwed!!!</h1>
+{% endif %}
