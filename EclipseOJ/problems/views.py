@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from judge.models import *
+from judge.models import last_queue
 import threading
 from datetime import datetime
 from django.utils.six.moves.urllib.parse import urlencode
@@ -26,17 +27,23 @@ def problem(request, problemID):
     if request.method == 'POST':
         submit_form = problems_forms.SubmitForm(request.POST, request.FILES)
         if submit_form.is_valid():
+            global last_queue
+            last_queue = (last_queue + 1)%3
             submission = submit_form.save(commit=False)
             submission.user = User.objects.get(username=request.user)
             submission.problem = problem
-            submission.queue = Queue.objects.all()[0]
+            submission.queue = Queue.objects.all()[last_queue]
             submission.save()
             messages.success(request, 'Successfully Submitted')
-            if not grader_running :
+            """if not grader_running :
                 #print('gonna call')
                 t = threading.Thread(target=grader)
                 t.start()
                 #print('probably')
+            """
+            if not grader_running[last_queue]:
+                t = threading.Thread(target=grader,kwargs={'queue_number':last_queue})
+                t.start()
             return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
         else:
             print([(field.label, field.errors) for field in submit_form] )

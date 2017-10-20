@@ -54,19 +54,20 @@ class Submission(models.Model):
         elif self.verdict == 'R':
             return self.problem.problem_ID + ': ' + 'Running'
         else :
-            return self.problem.problem_ID + ': ' + self.verdict
-
+            return self.problem.problem_ID + ': ' + self.verdict + "  " + self.user.username
+"""
 def submission_post_save(sender, instance, created, *args, **kwargs):
     if not created:
         return
     if not grader_running:
         grader()
 signals.post_save.connect(submission_post_save,sender=Submission)
-
-grader_running = False
-def grader():
+"""
+grader_running = [False,False,False]
+last_queue = 2
+def grader(queue_number):
     grader_running = True
-    queue = Queue.objects.all()[0]
+    queue = Queue.objects.all()[queue_number]
     #print('Hey buddy i have been called!')
     #print('before while')
     while(queue.submission_set.filter(verdict='Q').exists()):
