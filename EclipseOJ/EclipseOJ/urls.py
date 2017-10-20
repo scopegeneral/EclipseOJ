@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^contests/', include('contests.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^submissions/',include('judge.urls')),
+    url(r'^leaderboard/',include('leaderboard.urls')),
 ]
