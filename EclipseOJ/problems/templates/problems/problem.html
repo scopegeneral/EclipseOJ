@@ -1,7 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load static %}
+<link rel="stylesheet" href="{{ STATIC_URL }}problem.css>" />
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
-{% block contestactive %}class="active"{% endblock %}
+{% block problemsactive %}class="active"{% endblock %}
 {% block content %}
 
 {% if submit_form.errors %}
@@ -31,7 +33,101 @@
   <div class="col-md-4"></div>
   <div class="col-md-4">
     {% if request.user.is_authenticated %}
-    <h2 align="center">Submit</h2>
+
+    <div id="acesuper">
+
+		<div class="container">
+      You can code here!!
+      <select class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
+          <option value="CPP">C++</option>
+          <option value="C">C</option>
+          <option value="Py2">Python2</option>
+          <option value="Py3">Python3</option>
+          <option value="JAVA">Java</option>
+      </select>
+      <select class="selectpicker" data-style="btn-primary" onchange="test_theme(this);" style="width=20px">
+          <option value="monokai">Dark1</option>
+          <option value="cobalt">Dark2</option>
+          <option value="dracula">Dark3</option>
+          <option value="eclipse">Light1</option>
+          <option value="chrome">Light2</option>
+          <option value="github">Light3</option>
+      </select>
+    </div>
+		<pre id="editor">Height adjust krna! :| </pre>
+	</div>
+
+  <div class="form-group">
+        <label for="Input">Input:</label>
+        <textarea class="form-control" rows="5" id="input"></textarea>
+      </div>
+      <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
+      <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
+	<!-- load ace -->
+	<script src="{% static "problems/src-noconflict/ace.js" %}"></script>
+	<!-- load ace language tools -->
+	<script src="{% static "problems/src-noconflict/ext-language_tools.js" %}"></script>
+	<script>
+	    // trigger extension
+	    ace.require("ace/ext/language_tools");
+	    var editor = ace.edit("editor");
+	    editor.session.setMode("ace/mode/c_cpp");
+	    editor.setTheme("ace/theme/monokai");
+	    // enable autocompletion and snippets
+	    editor.setOptions({
+	        enableBasicAutocompletion: true,
+	        enableSnippets: true,
+	        enableLiveAutocompletion: false,
+	        //fontFamily: "Consolas",-
+  			highlightActiveLine: true,
+  			highlightSelectedWord: true,
+  			fontSize: "11pt",
+  			cursorStyle: "slim",
+  			vScrollBarAlwaysVisible : true,
+	    });
+
+
+	    window.test_lang = function(e) {
+  if (e.value === 'CPP') {
+    editor.session.setMode("ace/mode/c_cpp");
+  }
+  else if (e.value === 'C') {
+    editor.session.setMode("ace/mode/c_cpp");
+  }
+  else if (e.value === 'Py2') {
+	editor.session.setMode("ace/mode/python")  }
+ else if (e.value === 'Py3') {
+    editor.session.setMode("ace/mode/python");
+  }
+  	else if (e.value === 'Java') {
+    editor.session.setMode("ace/mode/java");
+  }
+
+}
+
+window.test_theme = function(e) {
+    if (e.value === 'monokai') {
+      editor.setTheme("ace/theme/monokai");
+    }
+    else if (e.value === 'cobalt') {
+      editor.setTheme("ace/theme/cobalt");
+    }
+    else if (e.value === 'dracula') {
+      editor.setTheme("ace/theme/dracula");
+    }
+    else if (e.value === 'eclipse') {
+      editor.setTheme("ace/theme/eclipse");
+    }
+    else if (e.value === 'chrome') {
+      editor.setTheme("ace/theme/chrome");
+    }
+    else if (e.value === 'github') {
+      editor.setTheme("ace/theme/github");
+    }
+  }
+	</script>
+
+    <h2 align="center">Or Direct file Submit</h2>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
