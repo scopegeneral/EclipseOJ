@@ -59,14 +59,14 @@ class Submission(models.Model):
             return self.problem.problem_ID + ': ' + 'Running on ' + str(testcases_passed + 1)
         else :
             return self.problem.problem_ID + ': ' + self.verdict
-
+"""
 def submission_post_save(sender, instance, created, *args, **kwargs):
     if not created:
         return
     if not grader_running:
         grader()
 signals.post_save.connect(submission_post_save,sender=Submission)
-
+"""
 grader_running = False
 def grader():
     grader_running = True
@@ -77,10 +77,8 @@ def grader():
         submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
         #print(str(submission))
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
-        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()),'cpp',1)
-        #print('uploads/'+submission.uploaded_file.name)
-        #print(testcase)
-        #print(int(TestCase.objects.filter(problem=submission.problem).count()))
+        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()))
+        #print('done')
         submission.status = 'C'
         submission.save()
     grader_running = False

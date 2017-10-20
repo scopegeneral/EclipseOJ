@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'contests',
     'judge',
     'discuss',
-    'leaderboard',
 ]
 
 MIDDLEWARE = [
