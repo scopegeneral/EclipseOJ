@@ -30,12 +30,6 @@ class Submission(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
     uploaded_file = models.FileField(upload_to=upload_to)
     submission_time = models.DateTimeField(auto_now_add=True)
-    status_choices = (
-        ('P' , 'Pending'),
-        ('R' , 'Running'),
-        ('C' , 'Completed')
-    )
-    status = models.CharField(max_length=1,choices=status_choices,default='P')
     lang_choices = (
         ('cpp' , 'C++'),
         ('java', 'Java'),
@@ -46,39 +40,41 @@ class Submission(models.Model):
     language = models.CharField(max_length=4,choices=lang_choices,default='cpp')
     testcases_passed = models.IntegerField(default=0)
     verdict_choices = (
+        ('Q', 'In queue'),
+        ('R', 'Running'),
         ('WA', 'Wrong Answer'),
         ('CE', 'Compilation Error'),
         ('RE', 'Runtime Error'),
         ('AC', 'Accepted'),
     )
-    verdict = models.CharField(max_length=2,choices=verdict_choices, default='AC')
+    verdict = models.CharField(max_length=2,choices=verdict_choices, default='Q')
     def __str__(self):
-        if self.status == 'P':
-            return self.problem.problem_ID + ': ' + 'Pending'
-        elif self.status == 'R':
-            return self.problem.problem_ID + ': ' + 'Running on ' + str(testcases_passed + 1)
+        if self.verdict == 'Q':
+            return self.problem.problem_ID + ': ' + 'In queue'
+        elif self.verdict == 'R':
+            return self.problem.problem_ID + ': ' + 'Running'
         else :
             return self.problem.problem_ID + ': ' + self.verdict
-"""
+
 def submission_post_save(sender, instance, created, *args, **kwargs):
     if not created:
         return
     if not grader_running:
         grader()
 signals.post_save.connect(submission_post_save,sender=Submission)
-"""
+
 grader_running = False
 def grader():
     grader_running = True
     queue = Queue.objects.all()[0]
     #print('Hey buddy i have been called!')
     #print('before while')
-    while(queue.submission_set.filter(status='P').count()):
-        submission = queue.submission_set.filter(status='P').order_by('submission_time')[0]
-        #print(str(submission))
+    while(queue.submission_set.filter(verdict='Q').exists()):
+        submission = queue.submission_set.filter(verdict='Q').order_by('submission_time')[0]
+        submission.verdict = 'R'
+        print(str(submission))
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
-        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()))
+        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, 2)
         #print('done')
-        submission.status = 'C'
         submission.save()
     grader_running = False

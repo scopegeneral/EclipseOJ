@@ -9,15 +9,16 @@
   </div>
 <div class="container-fluid">
   <div class="row box">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
 <table class="table">
   <thead>
     <th>#</th>
+    <th>Submission Time</th>
     <th>User</th>
     <th>Problem</th>
-    <th>Submission Time</th>
+    <th>Language</th>
     <th>Verdict</th>
+    <th>Time</th>
+    <th>Memory</th>
   </thead>
   {% for submission in submission_list %}
     {% if submission.user == request.user %}
@@ -29,23 +30,22 @@
       <tr class="warning">
     {% endif %}
         <td>{{ submission.id }}</td>
+        <td>{{ submission.submission_time }}</td>
         <td>{{ submission.user.username }}</td>
         <td>{{ submission.problem }}</td>
-        <td>{{ submission.submission_time }}</td>
-        <td>{{ submission.verdict }}</td>
+        <td>{{ submission.get_verdict_display }}</td>
       </tr>
     {% else %}
     <tr>
       <td>{{ submission.id }}</td>
+      <td>{{ submission.submission_time }}</td>
       <td>{{ submission.user.username }}</td>
       <td>{{ submission.problem }}</td>
-      <td>{{ submission.submission_time }}</td>
       <td>{{ submission.verdict }}</td>
     </tr>
     {% endif %}
   {% endfor %}
 </table>
-</div>
 </div>
 </div>
 {% endblock %}

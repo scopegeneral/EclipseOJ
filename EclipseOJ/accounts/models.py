@@ -5,9 +5,12 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 import os
 
+def path(instance, filename):
+    return '{}/{}'.format(instance.user.username, filename)
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to=(lambda instance, filename: '{}/{}'.format(instance.user.username, filename)))
+    picture = models.ImageField(upload_to=path)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     country = CountryField(default='IN')
