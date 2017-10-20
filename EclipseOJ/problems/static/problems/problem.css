@@ -3,14 +3,14 @@
     	top: 50px;
     	left: 30px;
     	right: 40px;
-        width: 80%; height: 70%;
+      width: 80%; height: 70%;
     	border-radius: 1px;
-    	border: 4px solid gray;
+    	border: 5px solid red;
     	background-color: gray;
     }
-    #editor {
+#editor {
         border-radius: 3px;
         position: relative;
         width: 100%; height: 100px;
         border: 10px;
-    }
+}
