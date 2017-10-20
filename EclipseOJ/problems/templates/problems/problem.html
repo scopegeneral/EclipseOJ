@@ -125,6 +125,19 @@ window.test_theme = function(e) {
       editor.setTheme("ace/theme/github");
     }
   }
+  function resizeAce() {
+      var h = window.innerHeight;
+      if (h > 360) {
+          $('#editor').css('height', (h - 290).toString() + 'px');
+      }
+      var w = window.innerWidth;
+      $('#editor').css('width', (w * 0.6).toString() + 'px');
+
+  };
+  $(window).on('resize', function () {
+      resizeAce();
+  });
+  resizeAce();
 	</script>
 
     <h2 align="center">Or Direct file Submit</h2>
