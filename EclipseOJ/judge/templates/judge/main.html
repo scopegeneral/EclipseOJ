@@ -33,7 +33,7 @@
         <td>{{ submission.submission_time }}</td>
         <td>{{ submission.user.username }}</td>
         <td>{{ submission.problem }}</td>
-        <td>{{ submission.verdict }}</td>
+        <td>{{ submission.get_verdict_display }}</td>
       </tr>
     {% else %}
     <tr>
