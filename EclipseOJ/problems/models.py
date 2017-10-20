@@ -15,7 +15,7 @@ class Problem(models.Model):
     letter = models.CharField("Problem ID", max_length=1, validators=[RegexValidator(r'^[A-Z]$', 'Only a captial letter is allowed.')])
     name = models.CharField(max_length=40)
     body = models.TextField()
-
+    timelimit = models.FloatField(default=1)
     def save(self):
         self.problem_ID = str(self.contest.id)+str(self.letter)
         super().save()

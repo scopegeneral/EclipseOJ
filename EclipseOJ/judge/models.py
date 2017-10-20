@@ -75,7 +75,7 @@ def grader(queue_number):
         submission.verdict = 'R'
         print(str(submission))
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
-        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, 2)
+        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, submission.problem.timelimit)
         #print('done')
         submission.save()
     grader_running = False
