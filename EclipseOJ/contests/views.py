@@ -4,12 +4,13 @@ from django.http import Http404
 from problems.models import Problem
 from datetime import datetime
 from django.template.context_processors import csrf
+from django.utils import timezone
 
 now = datetime.now()
 def index(request):
-    past_contests = Contest.objects.filter(end_time__lt=datetime.now())
-    current_contests = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now())
-    upcoming_contests = Contest.objects.filter(start_time__gt=datetime.now())
+    past_contests = Contest.objects.filter(end_time__lt=timezone.now())
+    current_contests = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now())
+    upcoming_contests = Contest.objects.filter(start_time__gt=timezone.now())
     return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, })
 
 def contest(request,contestID):
