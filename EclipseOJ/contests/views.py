@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Contest
+from .models import Contest, Score
 from django.http import Http404
 from problems.models import Problem
 from datetime import datetime
@@ -15,6 +15,7 @@ def index(request):
 def contest(request,contestID):
     try:
         contest = Contest.objects.get(pk=contestID)
+        user = request.user
     except Contest.DoesNotExist:
         raise Http404("There is no such contest :/ Please check again :P")
     registered = contest.registered_user.filter(username = request.user.username) ##boolean variable
@@ -27,6 +28,7 @@ def contest(request,contestID):
     else:
         if request.method=='POST':
             contest.registered_user.add(request.user)
+            contest.score_set.create(user=user,score=0)
             print(request.user.username)
         args = {}
         args.update(csrf(request))
