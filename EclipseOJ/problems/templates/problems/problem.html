@@ -36,12 +36,12 @@
     <div id="acesuper">
       <div class="container-fluid">
       You can code here!!
-      <select class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
-          <option value="CPP">C++</option>
-          <option value="C">C</option>
-          <option value="Py2">Python2</option>
-          <option value="Py3">Python3</option>
-          <option value="JAVA">Java</option>
+      <select id="ace_lang" class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
+          <option value="cpp">C++</option>
+          <option value="c">C</option>
+          <option value="py">Python2</option>
+          <option value="py3">Python3</option>
+          <option value="java">Java</option>
       </select>
       <select class="selectpicker" data-style="btn-primary" onchange="test_theme(this);" style="width=20px">
           <option value="monokai">Dark1</option>
@@ -61,6 +61,18 @@
       </div>
       <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
       <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
+
+      <form method="post" action="{% url 'problem' problem.problem_ID %}">
+        {% csrf_token %}
+        {% for field in code_form %}
+        <input name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value }}" style="visibility:hidden;white-space:pre-wrap;
+">
+        {% endfor %}
+        {% buttons %}
+          <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+        {% endbuttons %}
+      </form>
+
 	<!-- load ace -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
@@ -85,18 +97,18 @@
 
 
 	    window.test_lang = function(e) {
-  if (e.value === 'CPP') {
+  if (e.value === 'cpp') {
     editor.session.setMode("ace/mode/c_cpp");
   }
-  else if (e.value === 'C') {
+  else if (e.value === 'c') {
     editor.session.setMode("ace/mode/c_cpp");
   }
-  else if (e.value === 'Py2') {
+  else if (e.value === 'py') {
 	editor.session.setMode("ace/mode/python")  }
- else if (e.value === 'Py3') {
+ else if (e.value === 'py3') {
     editor.session.setMode("ace/mode/python");
   }
-  	else if (e.value === 'Java') {
+  	else if (e.value === 'java') {
     editor.session.setMode("ace/mode/java");
   }
 
@@ -135,6 +147,16 @@ window.test_theme = function(e) {
       resizeAce();
   });
   resizeAce();
+
+
+  function save_code(){
+      document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+      document.getElementById("id_code").value = editor.getValue();
+      alert(editor.getValue());
+      alert(document.getElementById("id_code").value);
+      //document.getElementById("input").value = editor.getValue();
+      //alert("submitted");
+  };
 	</script>
 
     <h2 align="center">Or Direct file Submit</h2>
