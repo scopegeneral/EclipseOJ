@@ -63,10 +63,9 @@
       <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
       <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
 	<!-- load ace -->
-	<script src="{% static "problems/src-noconflict/ace.js" %}"></script>
-	<!-- load ace language tools -->
-	<script src="{% static "problems/src-noconflict/ext-language_tools.js" %}"></script>
-	<script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
+  <script>
 	    // trigger extension
 	    ace.require("ace/ext/language_tools");
 	    var editor = ace.edit("editor");
@@ -112,16 +111,16 @@ window.test_theme = function(e) {
       editor.setTheme("ace/theme/cobalt");
     }
     else if (e.value === 'dracula') {
-      editor.setTheme("ace/theme/dracula");
+      editor.setTheme("ace/theme/clouds_midnight");
     }
     else if (e.value === 'eclipse') {
-      editor.setTheme("ace/theme/eclipse");
+      editor.setTheme("ace/theme/xcode");
     }
     else if (e.value === 'chrome') {
-      editor.setTheme("ace/theme/chrome");
+      editor.setTheme("ace/theme/solarized_light");
     }
     else if (e.value === 'github') {
-      editor.setTheme("ace/theme/github");
+      editor.setTheme("ace/theme/eclipse");
     }
   }
   function resizeAce() {
