@@ -22,20 +22,19 @@
 {% endif %}
 
 <h1 class="text-center">{{ problem.name }}</h1>
-<div class="row">
+<div class="row box">
   <div class="col-md-1"></div>
   <div class="col-md-10">
 {{ problem.body | safe}}
 {% bootstrap_messages %}
   </div>
 </div>
-  <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <div class="row box">
+  <div class="col-md-12">
     {% if request.user.is_authenticated %}
 
     <div id="acesuper">
-      <div class="container">
+      <div class="container-fluid">
       You can code here!!
       <select class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
           <option value="CPP">C++</option>
@@ -79,7 +78,7 @@
 	        //fontFamily: "Consolas",-
   			highlightActiveLine: true,
   			highlightSelectedWord: true,
-  			fontSize: "18pt",
+  			fontSize: "12pt",
   			cursorStyle: "slim",
   			vScrollBarAlwaysVisible : true,
 	    });
@@ -129,7 +128,7 @@ window.test_theme = function(e) {
           $('#editor').css('height', (h - 290).toString() + 'px');
       }
       var w = window.innerWidth;
-      $('#editor').css('width', (w * 0.6).toString() + 'px');
+      $('#editor').css('width', auto);
 
   };
   $(window).on('resize', function () {
