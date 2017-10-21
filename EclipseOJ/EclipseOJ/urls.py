@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^submissions/',include('judge.urls')),
     url(r'^discuss/', include('discuss.urls')),
+    url(r'^leaderboard/', include('leaderboard.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

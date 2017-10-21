@@ -2,7 +2,7 @@
   <h1>Here are all the users :D </h1>
   <table>
     {% for user in all_users %}
-    <tr><td><a href="/profile/{{ user.user.username }}/">{{user.user.username}}</a></td><td>{{user.rating}}</td></tr>
+    <tr><td><a href="{% url 'detail'  user.user.username %}">{{user.user.username}}</a></td><td>{{user.rating}}</td></tr>
     {% endfor %}
   </table>
 {% else %}

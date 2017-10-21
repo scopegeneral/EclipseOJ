@@ -1,0 +1,9 @@
+{% if contest_scores %}
+<table>
+  {% for score in contest_scores %}
+  <tr><td><a href="{% url 'detail'  score.user.username %}">{{score.user.username}}</a></td><td>{{score.score}}</td></tr>
+  {% endfor %}
+</table>
+{% else %}
+  <h1>Umm there are no registered users, we are so screwed!!!</h1>
+{% endif %}

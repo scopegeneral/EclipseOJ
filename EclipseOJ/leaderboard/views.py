@@ -2,6 +2,7 @@ from django.shortcuts import render
 from accounts.models import Profile
 from django.http import HttpResponseRedirect
 from .forms import SearchForm
+from contests.models import Contest, Score
 
 def index(request):
     all_users = Profile.objects.all()
@@ -30,3 +31,8 @@ def search(request,userID,countryID,cityID,instiID):
     if instiID:
         all_users = all_users.filter(institute = instiID)
     return render(request, 'leaderboard/search.html', {'all_users' : all_users})
+
+def contest_ranks(request,contestID):
+    contest=Contest.objects.get(id=contestID)
+    contest_scores=Score.objects.filter(contest=contest)
+    return render(request, 'leaderboard/contest_scores.html',{'contest_scores' : contest_scores})
