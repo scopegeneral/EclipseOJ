@@ -17,21 +17,148 @@
         </div>
     {% endfor %}
 {% endif %}
-<h1>Time remaining (insert a clock here)</h1>
-<h2>All the best ^,,^</h2>
+
 <h1 class="text-center">{{ problem.name }}</h1>
-<div class="row">
+<div class="row box">
   <div class="col-md-1"></div>
   <div class="col-md-10">
 {{ problem.body | safe}}
 {% bootstrap_messages %}
   </div>
 </div>
-  <div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
+  <div class="row box">
+  <div class="col-md-12">
     {% if request.user.is_authenticated %}
-    <h2 align="center">Submit</h2>
+
+    <div id="acesuper">
+      <div class="container-fluid">
+      You can code here!!
+      <select id="ace_lang" class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
+          <option value="cpp">C++</option>
+          <option value="c">C</option>
+          <option value="py">Python2</option>
+          <option value="py3">Python3</option>
+          <option value="java">Java</option>
+      </select>
+      <select class="selectpicker" data-style="btn-primary" onchange="test_theme(this);" style="width=20px">
+          <option value="monokai">Dark1</option>
+          <option value="cobalt">Dark2</option>
+          <option value="dracula">Dark3</option>
+          <option value="eclipse">Light1</option>
+          <option value="chrome">Light2</option>
+          <option value="github">Light3</option>
+      </select>
+    </div>
+		<pre id="editor">int main()</pre>
+	</div>
+
+  <div class="form-group">
+        <label for="Input">Input:</label>
+        <textarea class="form-control" rows="5" id="input"></textarea>
+      </div>
+      <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
+      <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
+
+      <form method="post" action="{% url 'problem' problem.problem_ID %}">
+        {% csrf_token %}
+        {% for field in code_form %}
+        <input name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value }}" style="visibility:hidden;white-space:pre-wrap;
+">
+        {% endfor %}
+        {% buttons %}
+          <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+        {% endbuttons %}
+      </form>
+
+	<!-- load ace -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+
+  <script>
+	    // trigger extension
+	    ace.require("ace/ext/language_tools");
+	    var editor = ace.edit("editor");
+	    editor.session.setMode("ace/mode/c_cpp");
+	    editor.setTheme("ace/theme/monokai");
+	    // enable autocompletion and snippets
+	    editor.setOptions({
+	        enableBasicAutocompletion: true,
+	        enableSnippets: true,
+	        enableLiveAutocompletion: false,
+	        //fontFamily: "Consolas",-
+  			highlightActiveLine: true,
+  			highlightSelectedWord: true,
+  			fontSize: "12pt",
+  			cursorStyle: "slim",
+  			vScrollBarAlwaysVisible : true,
+	    });
+
+
+	    window.test_lang = function(e) {
+  if (e.value === 'cpp') {
+    editor.session.setMode("ace/mode/c_cpp");
+  }
+  else if (e.value === 'c') {
+    editor.session.setMode("ace/mode/c_cpp");
+  }
+  else if (e.value === 'py') {
+	editor.session.setMode("ace/mode/python")  }
+ else if (e.value === 'py3') {
+    editor.session.setMode("ace/mode/python");
+  }
+  	else if (e.value === 'java') {
+    editor.session.setMode("ace/mode/java");
+  }
+
+}
+
+window.test_theme = function(e) {
+    if (e.value === 'monokai') {
+      editor.setTheme("ace/theme/monokai");
+    }
+    else if (e.value === 'cobalt') {
+      editor.setTheme("ace/theme/cobalt");
+    }
+    else if (e.value === 'dracula') {
+      editor.setTheme("ace/theme/clouds_midnight");
+    }
+    else if (e.value === 'eclipse') {
+      editor.setTheme("ace/theme/xcode");
+    }
+    else if (e.value === 'chrome') {
+      editor.setTheme("ace/theme/solarized_light");
+    }
+    else if (e.value === 'github') {
+      editor.setTheme("ace/theme/eclipse");
+    }
+  }
+  function resizeAce() {
+      var h = window.innerHeight;
+      if (h > 360) {
+          $('#editor').css('height', (h - 290).toString() + 'px');
+      }
+      var w = window.innerWidth;
+      $('#editor').css('width', auto);
+
+  };
+  $(window).on('resize', function () {
+      resizeAce();
+  });
+  resizeAce();
+
+
+  function save_code(){
+      document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+      var mytext = editor.getValue();
+      mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
+      document.getElementById("id_code").value = mytext;
+      //alert(editor.getValue());
+      //alert(mytext);
+      //document.getElementById("input").value = editor.getValue();
+      //alert("submitted");
+  };
+	</script>
+
+    <h2 align="center">Or Direct file Submit</h2>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}

@@ -152,7 +152,7 @@ window.test_theme = function(e) {
   function save_code(){
       document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
       var mytext = editor.getValue();
-      mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "?");
+      mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
       document.getElementById("id_code").value = mytext;
       //alert(editor.getValue());
       //alert(mytext);

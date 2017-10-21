@@ -58,7 +58,7 @@ def problem(request, problemID):
             submission.user = User.objects.get(username=request.user)
             submission.problem = problem
             submission.queue = Queue.objects.all()[last_queue]
-            submission.uploaded_file.save('arbit',ContentFile(data['code'].replace('?','\n')))
+            submission.uploaded_file.save('arbit',ContentFile(data['code'].replace('~','\n')))
             submission.save()
             print(data['lang'])
             messages.success(request, 'Successfully Submitted')
