@@ -41,9 +41,9 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('/profile')
+            return redirect('/contests')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Please correct the error(s) below.')
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'profiles/change_password.html', {
@@ -65,6 +65,7 @@ class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         initial['city'] = habit_object.city
         initial['country'] = habit_object.country
         initial['institute'] = habit_object.institute
+        initial['picture'] = habit_object.picture
         return initial
 
     def get_object(self, queryset=None):

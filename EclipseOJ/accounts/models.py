@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.staticfiles.templatetags.staticfiles import static
 import os
 
 def path(instance, filename):
-    return '{}/{}'.format(instance.user.username, filename)
+    return 'users/{}/{}'.format(instance.user.username, 'picture')
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    picture = models.ImageField(upload_to=path)
+    picture = models.ImageField(upload_to=path, default=static('default_picture.jpg'), blank=True)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     country = CountryField(default='IN')

@@ -4,7 +4,7 @@
 {% block content %}
 <!-- <p>Welcome {{ user.username }} !!!</p>
 <p>This is your authenticated view</p> -->
-
+<div class="row box">
 <div class="row">
   <div class="col-sm-3">
     <img class="img-responsive" src="{{ user.profile.picture.url }}"></img>
@@ -35,5 +35,6 @@
       <td>{{ user.profile.email }}</td>
     </tr>
   </table>
+</div>
 </div>
 {% endblock %}
