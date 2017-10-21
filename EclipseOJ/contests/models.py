@@ -21,5 +21,6 @@ class Score(models.Model):
     acceptedD=models.IntegerField(default=0)
     acceptedE=models.IntegerField(default=0)
     acceptedF=models.IntegerField(default=0)
+    wins=models.IntegerField(default=0)
     def __str__(self):
         return 'Contest '+str(self.contest.id)+': User'+str(self.user.username)

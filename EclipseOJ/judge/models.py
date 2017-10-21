@@ -70,13 +70,10 @@ last_queue = 2
 def grader(queue_number):
     grader_running = True
     queue = Queue.objects.all()[queue_number]
-    #print('Hey buddy i have been called!')
-    #print('before while')
     while(queue.submission_set.filter(verdict='Q').exists()):
         submission = queue.submission_set.filter(verdict='Q').order_by('submission_time')[0]
         submission.verdict = 'R'
         print(str(submission))
-        #print(score)
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
         submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, submission.problem.timelimit)
         #print('done')
