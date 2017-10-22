@@ -23,10 +23,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
-# @receiver(post_save, sender=User)
-# def create_user(sender, instance, created, **kwargs):
-#     if not created:
-#         return
-#     # profile = Profile(user=instance)
-#     # profile.save()
-#     os.mkdir(os.path.join(os.path.join(os.getcwd(), 'uploads/users/'), str(instance.get_username())))
+@receiver(post_save, sender=User)
+def create_user(sender, instance, created, **kwargs):
+    if not created:
+        return
+    # profile = Profile(user=instance)
+    # profile.save()
+    os.mkdir(os.path.join(os.path.join(os.getcwd(), 'uploads/users/'), str(instance.get_username())))

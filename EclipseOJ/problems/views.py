@@ -12,11 +12,12 @@ from judge.models import last_queue
 from django.core.files.base import ContentFile
 import threading
 from datetime import datetime
+from django.utils import timezone
 from django.utils.six.moves.urllib.parse import urlencode
 # Create your views here.
 now = datetime.now()
 def index(request):
-    all_problems = Problem.objects.all()
+    all_problems = Problem.objects.filter(contest__start_time__lte = timezone.now())
     return render(request,"problems/index.html", {'all_problems' : all_problems})
 
 def problem(request, problemID):

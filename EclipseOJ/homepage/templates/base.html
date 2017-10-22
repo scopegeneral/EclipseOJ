@@ -42,6 +42,9 @@
   </nav>
   {% bootstrap_messages %}
   <div class="container-fluid" style="margin-left:70px; margin-right:70px;">
+    <div class="row heading">
+      <h1 class="text-center">{% block heading %}{% endblock %}</h1>
+    </div>
     <div class="row">
       <div class="col-sm-9">
           {% block content %}
