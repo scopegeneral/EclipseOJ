@@ -7,6 +7,7 @@ from django.db.models import signals
 from django.dispatch import Signal
 import os, re
 from .check import bashfunc
+from contests.models import Score, Contest
 
 # Create your models here.
 class Queue(models.Model):
@@ -46,6 +47,7 @@ class Submission(models.Model):
         ('CE', 'Compilation Error'),
         ('RE', 'Runtime Error'),
         ('AC', 'Accepted'),
+        ('TLE', 'Time Limit Exceeded'),
     )
     verdict = models.CharField(max_length=2,choices=verdict_choices, default='Q')
     def __str__(self):
@@ -68,8 +70,6 @@ last_queue = 2
 def grader(queue_number):
     grader_running = True
     queue = Queue.objects.all()[queue_number]
-    #print('Hey buddy i have been called!')
-    #print('before while')
     while(queue.submission_set.filter(verdict='Q').exists()):
         submission = queue.submission_set.filter(verdict='Q').order_by('submission_time')[0]
         submission.verdict = 'R'
@@ -77,5 +77,34 @@ def grader(queue_number):
         testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
         submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, submission.problem.timelimit)
         #print('done')
+        if submission.verdict == 'AC':
+            try:
+                score=Score.objects.get(contest=submission.problem.contest,user=submission.user)
+                if ord(submission.problem.letter)-65 == 0 and score.acceptedA == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedA=True
+                    score.save()
+                elif ord(submission.problem.letter)-65 == 1 and score.acceptedB == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedB=True
+                    score.save()
+                elif ord(submission.problem.letter)-65 == 2 and score.acceptedC == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedC=True
+                    score.save()
+                elif ord(submission.problem.letter)-65 == 3 and score.acceptedD == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedD=True
+                    score.save()
+                elif ord(submission.problem.letter)-65 == 4 and score.acceptedE == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedE=True
+                    score.save()
+                elif ord(submission.problem.letter)-65 == 5 and score.acceptedF == 0:
+                    score.score += submission.problem.marks
+                    score.acceptedF=True
+                    score.save()
+            except Score.DoesNotExist:
+                print('something')
         submission.save()
     grader_running = False

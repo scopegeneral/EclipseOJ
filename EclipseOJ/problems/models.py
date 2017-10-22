@@ -16,6 +16,7 @@ class Problem(models.Model):
     name = models.CharField(max_length=40)
     body = models.TextField()
     timelimit = models.FloatField(default=1)
+    marks=models.IntegerField(default=0)
     def save(self):
         self.problem_ID = str(self.contest.id)+str(self.letter)
         super().save()
