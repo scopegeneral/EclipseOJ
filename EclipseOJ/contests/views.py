@@ -5,11 +5,12 @@ from problems.models import Problem
 from datetime import datetime
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
-now = datetime.now()
+from django.utils import timezone
+now = timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc)
 def index(request):
-    past_contests = Contest.objects.filter(end_time__lt=datetime.now())
-    current_contests = Contest.objects.filter(start_time__lt=datetime.now(), end_time__gt=datetime.now())
-    upcoming_contests = Contest.objects.filter(start_time__gt=datetime.now())
+    past_contests = Contest.objects.filter(end_time__lt=timezone.now())
+    current_contests = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now())
+    upcoming_contests = Contest.objects.filter(start_time__gt=timezone.now())
     return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, })
 
 def contest(request,contestID):
@@ -24,6 +25,7 @@ def contest(request,contestID):
         return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered})
     elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
         problems = Problem.objects.filter(contest=contest).order_by('letter')
+        print(2)
         return render(request,"contests/isactive.html", {'contest':contest, 'problems':problems, 'registered':registered})
     else:
         if request.method=='POST':
