@@ -1,16 +1,37 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+{%block title %}Leaderboard{% endblock %}
+{% block leaderboardactive %}class="active"{% endblock %}
+{% block content %}
 {% if all_users %}
-  <h1>Here are all the users :D </h1>
-  <form action="/leaderboard/" method="post">
+<div class="jumbotron text-center">
+  <h1>Leaderboard</h1>
+</div>
+  <form class="form-inline" action="/leaderboard/" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Apply" />
+    {% bootstrap_form form %}
+    <!--<input type="submit" value="Apply" />-->
+    {% buttons %}
+      <button type="submit" class="btn btn-success center-block">Apply</button></td></tr>
+    {% endbuttons %}
 </form>
 </form>
-  <table>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>USER</th>
+        <th>RATING</th>
+      </tr>
+    </thead>
+    <tbody>
     {% for user in all_users %}
-    <tr><td><a href="{% url 'detail'  user.user.username %}">{{user.user.username}}</a></td><td>{{user.rating}}</td></tr>
+      <tr><td><a href="{% url 'detail'  user.user.username %}">{{user.user.username}}</a></td>
+      <td>{{user.rating}}</td></tr>
     {% endfor %}
+    </tbody>
   </table>
 {% else %}
   <h1>Umm there are no users, we are so screwed!!!</h1>
 {% endif %}
+
+{% endblock %}

@@ -5,7 +5,7 @@ from .forms import SearchForm
 from contests.models import Contest, Score
 from leaderboard.models import rating_update
 def index(request):
-    all_users = Profile.objects.all()
+    all_users = Profile.objects.all().order_by('-rating')
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
@@ -34,5 +34,5 @@ def search(request,userID,countryID,cityID,instiID):
 
 def contest_ranks(request,contestID):
     contest=Contest.objects.get(id=contestID)
-    contest_scores=Score.objects.filter(contest=contest)
+    contest_scores=Score.objects.filter(contest=contest).order_by('-score')
     return render(request, 'leaderboard/contest_scores.html',{'contest_scores' : contest_scores})

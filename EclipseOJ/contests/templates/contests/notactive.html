@@ -3,7 +3,7 @@
 {%block title %}Contests{% endblock %}
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
-<h1 style="align:center">{{ contest.id }}</h1>
+<h1 style="align:center">{{ contest.id }} {{contest.name}}</h1>
 <h2>This Contest Begins on {{contest.start_time}}</h2>
 <p>
   Till now {{ contest.registered_user.count }} have participated for the contest!! <br />
@@ -18,7 +18,7 @@
       {% csrf_token %}
         <button name="register" type="submit" onclick="alert(Registered successfully)">Register</button>
     </form>
-  {% endif %}    
+  {% endif %}
 {% else %}
   <p>
     Dude who have to login/signup first for registering
