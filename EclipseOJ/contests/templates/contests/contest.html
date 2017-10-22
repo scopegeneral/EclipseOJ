@@ -4,6 +4,7 @@
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
 <h1 style="text-align:center">{{ contest.id }} {{contest.name}}</h1>
+<button class="btn btn-info center-block"><a style="color:black;text-decoration:none" href="{% url 'contest_ranks' contest.id %}">Go To Contest Ranks</a></button></td></tr>
 <ul>
 {% for problem in problems %}
   <li>

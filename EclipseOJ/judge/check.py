@@ -81,6 +81,7 @@ def bashfunc(filename,testcase,number,lang,timeout):
                 os.system("rm diff.txt tempout.txt runtime_errors.txt time_errors.txt")
                 return "WA"
         os.system("rm tempout.txt runtime_errors.txt time_errors.txt")
+        return "AC"
     elif lang == 'java':
         compilecommand = "javac {0} 2>compile_errors.txt".format(filename)
         os.system(compilecommand)
