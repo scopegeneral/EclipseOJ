@@ -82,27 +82,27 @@ def grader(queue_number):
                 score=Score.objects.get(contest=submission.problem.contest,user=submission.user)
                 if ord(submission.problem.letter)-65 == 0 and score.acceptedA == 0:
                     score.score += submission.problem.marks
-                    score.acceptedA=1
+                    score.acceptedA=True
                     score.save()
                 elif ord(submission.problem.letter)-65 == 1 and score.acceptedB == 0:
                     score.score += submission.problem.marks
-                    score.acceptedB=1
+                    score.acceptedB=True
                     score.save()
                 elif ord(submission.problem.letter)-65 == 2 and score.acceptedC == 0:
                     score.score += submission.problem.marks
-                    score.acceptedC=1
+                    score.acceptedC=True
                     score.save()
                 elif ord(submission.problem.letter)-65 == 3 and score.acceptedD == 0:
                     score.score += submission.problem.marks
-                    score.acceptedD=1
+                    score.acceptedD=True
                     score.save()
                 elif ord(submission.problem.letter)-65 == 4 and score.acceptedE == 0:
                     score.score += submission.problem.marks
-                    score.acceptedE=1
+                    score.acceptedE=True
                     score.save()
                 elif ord(submission.problem.letter)-65 == 5 and score.acceptedF == 0:
                     score.score += submission.problem.marks
-                    score.acceptedF=1
+                    score.acceptedF=True
                     score.save()
             except Score.DoesNotExist:
                 print('something')

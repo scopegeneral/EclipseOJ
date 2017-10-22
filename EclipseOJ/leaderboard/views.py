@@ -6,7 +6,6 @@ from contests.models import Contest, Score
 from leaderboard.models import rating_update
 def index(request):
     all_users = Profile.objects.all()
-    rating_update(1)
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
