@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% load static %}
 <link rel="stylesheet" href="{{ STATIC_URL }}problem.css>" />
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
@@ -83,7 +83,11 @@
 	    // trigger extension
 	    ace.require("ace/ext/language_tools");
 	    var editor = ace.edit("editor");
-	    editor.session.setMode("ace/mode/c_cpp");
+      {% if lang_for_ace == "cpp" %}
+        editor.session.setMode("ace/mode/c_cpp");
+      {% else %}
+        editor.session.setMode("ace/mode/{{ lang_for_ace }}");
+      {% endif %}
 	    editor.setTheme("ace/theme/monokai");
 	    // enable autocompletion and snippets
 	    editor.setOptions({
