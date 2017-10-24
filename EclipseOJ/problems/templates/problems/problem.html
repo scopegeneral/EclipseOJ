@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load bootstrap4 %}
+{% load bootstrap3 %}
 {% load static %}
 <link rel="stylesheet" href="{{ STATIC_URL }}problem.css>" />
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
@@ -52,24 +52,27 @@
           <option value="github">Light3</option>
       </select>
     </div>
-		<pre id="editor">int main()</pre>
+		<pre id="editor">{{ text_on_ace }}</pre>
 	</div>
 
   <div class="form-group">
-        <label for="Input">Input:</label>
-        <textarea class="form-control" rows="5" id="input"></textarea>
+        <label for="Input">Input: (only 800 characters!)</label>
+        <textarea class="form-control" maxlength="50" rows="5" id="input"></textarea>
       </div>
-      <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
-      <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
+<div class="well well-lg" style="visibility:{{ hide_or_not }}">{{ output }}</div>
+      <form method="post" action="{% url 'problem' problem.problem_ID %}">
+        {% csrf_token %}
+        {% bootstrap_form code_form %}
+        {% buttons %}
+          <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit Code on ace</button></td></tr>
+        {% endbuttons %}
+      </form>
 
       <form method="post" action="{% url 'problem' problem.problem_ID %}">
         {% csrf_token %}
-        {% for field in code_form %}
-        <input name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value }}" style="visibility:hidden;white-space:pre-wrap;
-">
-        {% endfor %}
+        {% bootstrap_form test_form %}
         {% buttons %}
-          <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+          <button onclick="test_thecode()" type="submit" class="btn btn-success center-block">Run against custom input</button></td></tr>
         {% endbuttons %}
       </form>
 
@@ -90,7 +93,7 @@
 	        //fontFamily: "Consolas",-
   			highlightActiveLine: true,
   			highlightSelectedWord: true,
-  			fontSize: "12pt",
+  			fontSize: "16pt",
   			cursorStyle: "slim",
   			vScrollBarAlwaysVisible : true,
 	    });
@@ -139,8 +142,8 @@ window.test_theme = function(e) {
       if (h > 360) {
           $('#editor').css('height', (h - 290).toString() + 'px');
       }
-      var w = window.innerWidth;
-      $('#editor').css('width', auto);
+      //var w = window.innerWidth;
+      //$('#editor').css('width', auto);
 
   };
   $(window).on('resize', function () {
@@ -150,12 +153,30 @@ window.test_theme = function(e) {
 
 
   function save_code(){
+      console.log('Called');
       document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
       var mytext = editor.getValue();
-      mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
       document.getElementById("id_code").value = mytext;
+      //mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
+      //document.getElementById("id_code").value = mytext;
       //alert(editor.getValue());
-      //alert(mytext);
+      //alert(document.getElementById("id_code").value);
+      //document.getElementById("input").value = editor.getValue();
+      //alert("submitted");
+  };
+  function test_thecode(){
+      //alert("Called!!!");
+      console.log('Called');
+      //alert(document.getElementById("id_test_lang").value);
+      document.getElementById("id_test_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+      //alert(document.getElementById("id_test_lang").value);
+      var mytext = editor.getValue();
+      document.getElementById("id_test_code").value = mytext;
+      document.getElementById("id_test_input").value = document.getElementById("input").value;
+      //mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
+      //document.getElementById("id_code").value = mytext;
+      //alert(editor.getValue());
+      //alert(document.getElementById("id_code").value);
       //document.getElementById("input").value = editor.getValue();
       //alert("submitted");
   };
