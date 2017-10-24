@@ -1,18 +1,16 @@
 {% extends "base.html" %}
-{%load bootstrap3 %}
-{% block title %}Discuss{% endblock %}
+{% load bootstrap4 %}
+{% block title %}{{ post.title|upper }}{% endblock %}
+{% block title_color %}#428bca{% endblock %}
+{% block title_caption %}Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}{% endblock %}
 {% block content %}
 
-<div class="row box">
+<div class="row">
   <section>
-    <header>
-      <h2>{{ post.title }}</h2>
-      <p>Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}</p>
-    </header>
     <p>{{ post.body }}</p>
   </section>
 </div>
-<h3>COMMENTS: </h3>
+<p class="lead" style="font-size: 28px">COMMENTS</p>
 <div class="row box">
 <form method="post" action="{% url 'post_detail' post.pk %}">
   {% csrf_token %}

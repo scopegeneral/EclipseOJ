@@ -19,13 +19,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    url(r'^$', include('homepage.urls')),
-    url(r'^profile/', include('profiles.urls')),
-    url(r'^accounts/', include('accounts.urls')),
+    url(r'^admin/', admin.site.urls),
     url(r'^problems/', include('problems.urls')),
     url(r'^contests/', include('contests.urls')),
-    url(r'^admin/', admin.site.urls),
     url(r'^submissions/',include('judge.urls')),
     url(r'^discuss/', include('discuss.urls')),
     url(r'^leaderboard/', include('leaderboard.urls')),
+    url(r'^', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

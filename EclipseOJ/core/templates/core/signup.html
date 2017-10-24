@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{%block title %}Signup{% endblock %}
+{% block title_color %}#5cb85c{% endblock %}
+{% block title_caption %}Get | Set | Go {% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-6 mx-auto">
+    <form method="post" action="{% url 'signup' %}">
+      {% csrf_token %}
+      {% bootstrap_form user_form %}
+      {% buttons %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+        <button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
+      {% endbuttons %}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

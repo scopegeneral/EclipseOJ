@@ -6,13 +6,22 @@ from django.utils import timezone
 
 def discuss_index(request):
     all_posts = Post.objects.all()
-    return render(request, "discuss/index.html", {'all_posts' : all_posts})
+    if all_posts:
+        return render(request, "discuss/index.html", {'all_posts' : all_posts})
+    else:
+        args = {}
+        args['warning'] = "No posts at the moment"
+        args['message'] = "Please check again later."
+        return render(request, "warning.html", )
 
 def post_detail(request, postID):
     try:
         post = Post.objects.get(pk = postID)
     except Post.DoesNotExist:
-        raise Http404("There is no post with this ID. Please verify")
+        args = {}
+        args['warning'] = "No such post found"
+        args['message'] = "Please verify your details and try again."
+        return render(request, "warning.html", args)
 
     if request.method == "POST":
         comment_form = CommentForm(request.POST)

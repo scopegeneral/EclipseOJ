@@ -1,6 +1,6 @@
 from django.db import models
 from contests.models import Score, Contest
-from accounts.models import Profile
+from core.models import Profile
 # Create your models here.
 
 def rating_update(contestID):

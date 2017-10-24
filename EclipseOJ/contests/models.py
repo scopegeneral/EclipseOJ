@@ -1,17 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
-from accounts.models import Profile
+from core.models import Profile
 from array import *
 from datetime import datetime
 from django.utils import timezone
+
 class Contest(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    registered_user = models.ManyToManyField(User, blank = True, null = True)
+    registered_user = models.ManyToManyField(User, blank = True)
     name = models.CharField(max_length=200,blank=True)
     completed = models.BooleanField(default=False)
     def __str__(self):
-        return 'Contest '+str(self.id)
+        return 'Contest {}: {}'.format(str(self.id), self.name)
 
 
 class Score(models.Model):

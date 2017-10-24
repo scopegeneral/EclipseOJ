@@ -1,0 +1,56 @@
+div.box {
+    background: #fff;
+    border-radius: 5px;
+    border-style: dashed;
+    border-width: thin;
+    border-color: #AAAAAA;
+    box-shadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19);
+    padding: 1.67em;
+    margin: 4.6em auto;
+}
+
+.navbar {
+    -webkit-transition: all 0.6s ease-out;
+    -moz-transition: all 0.6s ease-out;
+    -o-transition: all 0.6s ease-out;
+    -ms-transition: all 0.6s ease-out;
+    transition: all 0.6s ease-out;
+}
+
+a.nav-link {
+  height:2.6em;
+	text-decoration: none;
+	color: white;
+}
+
+a.nav-link:hover {
+	border-bottom: 2px solid white;
+	text-decoration: none;
+	color: white;
+}
+
+header {
+  padding: 100px 0 70px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 130px 0 95px;
+  }
+}
+
+section {
+  padding: 4.3em 0;
+}
+
+div.row > section {
+  padding: 2em 0;
+}
+
+div.row > section > header {
+  padding: 0px;
+}
+
+a:hover {
+    text-decoration: none;
+}

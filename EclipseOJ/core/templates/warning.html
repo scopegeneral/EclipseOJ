@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+{% block title_color %}#c9302c{% endblock %}
+{% block title_caption %}Oops! This is embrassing :({% endblock %}
+{% block content %}
+
+  <div class="row">
+    <h3>{{ warning }}</h3>
+  </div>
+  <div class="row">
+  <p class="lead">{{ message }} <a href={{ next }}> Click here</a> to go to previous page.</p>
+</div>
+{% endblock %}

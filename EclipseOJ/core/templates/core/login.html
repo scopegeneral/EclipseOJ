@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Login{% endblock %}
+{% block title_color %}#5cb85c{% endblock %}
+{% block title_caption %}Get | Set | Go{% endblock %}
+
+{% block loginactive %}class="active"{% endblock %}
+{% block content %}
+
+  <div class="col-lg-5 mx-auto">
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <div class="text-center">
+        <button type="submit" class="btn btn-success">Log In</button></td></tr>
+      </div>
+      <input type="hidden" name="next" value="{{ next }}" />
+    {% endbuttons %}
+  </form>
+</div>
+{% endblock %}

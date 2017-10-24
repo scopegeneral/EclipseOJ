@@ -1,24 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Discuss{% endblock %}
+{% block title_color %}#428bca{% endblock %}
+{% block title_caption %}Ask | Answer | Learn{% endblock %}
 {% block content %}
 
-<div class="row" style="padding-right:18px">
-<div class="jumbotron text-center">
-  <h2>DISCUSSION FORUM</h2>
+{% if request.user.is_authenticated %}
+<div class="row float-right">
+<a href="{% url 'add_post' %}" class="btn btn-success">Add new post</a>
 </div>
-<a href="{% url 'add_post' %}" class="btn btn-success pull-right">Add new post</a>
+{% else %}
+<div class="alert alert-info">
+  <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to add a post.
 </div>
+{% endif %}
 {% for post in all_posts %}
 <div class="row box">
   <section>
     <header>
-      <h2><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h2>
-      <p>Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}</p>
+      <h3><a href="{% url 'post_detail' post.pk %}">{{ post.title }}</a></h3>
+      <p class="lead" style="font-size: 0.86em;">Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}</p>
     </header>
     <p>{{ post.body|truncatechars:250 }}</p>
   </section>
 </div>
-{% empty %}
-  <p>Sorry! No posts Found</p>
 {% endfor %}
 {% endblock %}

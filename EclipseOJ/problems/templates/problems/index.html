@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {%block title %}Problems{% endblock %}
+{% block title_color %}green {% endblock %}
+{% block title_caption %}Code | Practice | Achieve{% endblock %}
+
 {% block problemsactive %}class="active"{% endblock %}
 {% block content %}
 
-<div class="jumbotron text-center">
-  <h2>Problemset</h1>
-</div>
-{% if all_problems %}
 <div class="datatable" style="width:60%;align:center;">
   <table class="table table-hover">
     <thead>
@@ -30,10 +29,4 @@
     </tbody>
   </table>
 </div>
-{% else %}
-what
-  <div class="jumbotron text-center">
-    <h1>Currently we don't have any problems with us  but soon we'll keep you informed if we update problemset</h1>
-  </div>
-{% endif %}
 {% endblock %}

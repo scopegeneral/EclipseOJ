@@ -1,7 +1,7 @@
 from .models import Problem, TestCase
 from . import forms as problems_forms
 from django.http import Http404
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.core.urlresolvers import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -18,7 +18,10 @@ from django.utils.six.moves.urllib.parse import urlencode
 now = datetime.now()
 def index(request):
     all_problems = Problem.objects.filter(contest__start_time__lte = timezone.now())
-    return render(request,"problems/index.html", {'all_problems' : all_problems})
+    if all_problems:
+        return render(request,"problems/index.html", {'all_problems' : all_problems})
+    else:
+        return render(request, "warning.html", {'warning': 'No problems were found in the database', 'message': 'The database seems to be empty. Please try again later.'})
 
 def problem(request, problemID):
     try:

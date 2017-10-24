@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from accounts.models import Profile
+from core.models import Profile
 from django.http import HttpResponseRedirect
 from .forms import SearchForm
 from contests.models import Contest, Score
 from leaderboard.models import rating_update
+from django.template.context_processors import csrf
+
 def index(request):
     all_users = Profile.objects.all().order_by('-rating')
     if request.method == 'POST':
@@ -13,24 +15,42 @@ def index(request):
             countryID = form.cleaned_data['countryID']
             cityID = form.cleaned_data['cityID']
             instiID = form.cleaned_data['instiID']
-            return HttpResponseRedirect("search/{0}/{1}/{2}/{3}/".format(userID, countryID, cityID, instiID))
-
+            params = ('userID', 'countryID', 'cityID', 'instiID')
+            args = {}
+            if userID:
+                all_users = all_users.filter(user__username = userID)
+            if countryID:
+                all_users = all_users.filter(country = countryID)
+            if cityID:
+                all_users = all_users.filter(city = cityID)
+            if instiID:
+                all_users = all_users.filter(institute = instiID)
+            for param in params:
+                args[param] = eval(param)
+            if all_users:
+                form = SearchForm()
+                args['all_users'] = all_users
+                args['form'] = form
+                args.update(csrf(request))
+                return render(request, 'leaderboard/index.html', args)
+            else:
+                args = {}
+                args['warning'] = "No match for the query found"
+                args['message'] = "Please verify your details and try again."
+                return render(request, 'warning.html', args)
     else:
         form = SearchForm()
-        return render(request, 'leaderboard/index.html', {'all_users' : all_users,'form': form})
-
-
-def search(request,userID,countryID,cityID,instiID):
-    all_users = Profile.objects.all()
-    if userID:
-        all_users = all_users.filter(user__username = userID)
-    if countryID:
-        all_users = all_users.filter(country = countryID)
-    if cityID:
-        all_users = all_users.filter(city = cityID)
-    if instiID:
-        all_users = all_users.filter(institute = instiID)
-    return render(request, 'leaderboard/search.html', {'all_users' : all_users})
+        if all_users:
+            args = {}
+            args.update(csrf(request))
+            args['all_users'] = all_users
+            args['form'] = form
+            return render(request, 'leaderboard/index.html', args)
+        else:
+            args = {}
+            args['warning'] = 'No Users were found in the database.'
+            args['next'] = request.GET["next"]
+            return render(request, 'warning.html', args)
 
 def contest_ranks(request,contestID):
     contest=Contest.objects.get(id=contestID)

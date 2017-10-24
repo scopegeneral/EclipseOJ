@@ -1,5 +1,7 @@
 from django.contrib import admin
-from . import models as contests_models
+from .models import *
 
-admin.site.register(contests_models.Contest)
-admin.site.register(contests_models.Score)
+@admin.register(Contest)
+class ProblemAdmin(admin.ModelAdmin):
+    exclude = ('completed', )
+admin.site.register(Score)

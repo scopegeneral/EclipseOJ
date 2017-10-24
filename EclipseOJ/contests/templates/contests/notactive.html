@@ -1,6 +1,9 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
-{%block title %}Contests{% endblock %}
+{% load bootstrap4 %}
+{%block title %}Contest #{{ contest.id }}{% endblock %}
+{% block title_color %}#7d1dd6{% endblock %}
+{% block title_caption %}{{contest.name}}{% endblock %}
+
 {% block contestactive %}class="active"{% endblock %}
 {% block content %}
 <h1 style="align:center">{{ contest.id }} {{contest.name}}</h1>

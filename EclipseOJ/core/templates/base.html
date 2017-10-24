@@ -1,0 +1,102 @@
+{% load bootstrap4 %}
+{% load static %}
+{% load macros %}
+
+{% macro title %}
+    {% block title %}{% endblock %}
+{% endmacro %}
+
+<!DOCTYPE html>
+<!-- saved from url=(0064)https://blackrockdigital.github.io/startbootstrap-scrolling-nav/ -->
+<html lang="en" class="gr__blackrockdigital_github_io"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title> {% use_macro title %} | EclipseOJ</title>
+
+    <!-- Bootstrap core CSS -->
+        <link href="{% static 'base.css' %}" rel="stylesheet">
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+  </head>
+
+  <body style="background: #F3F3F3">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
+      <div class="container-fluid" style="height: 3.7em">
+        <a class="navbar-brand" href="{% url 'contests_index' %}">
+          EclipseOJ
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'contests_index' %}?next={{ request.path|urlencode }}">Contests</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'problems_index' %}?next={{ request.path|urlencode }}">Problems</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'judge_index' %}?next={{ request.path|urlencode }}">Submissions</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}?next={{ request.path|urlencode }}">Leaderboard</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}?next={{ request.path|urlencode }}">Discuss</a></li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'other_profile' request.user.username %}?next={{ request.path|urlencode }}">Profile</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'logout' %}?next={{ request.path|urlencode }}">Log Out</a></li>
+            {% else %}
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="text-white" style="background-color: {% block title_color %}black{% endblock %};">
+      <div class="container text-center">
+        <h1 class="heading text-uppercase" style="font-size: 4.4em">{% use_macro title %}</h1>
+        <p class="lead" style="font-size: 1.6em">{% block title_caption %}{% endblock %}</p>
+      </div>
+    </header>
+
+    <section>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-11 mx-auto">
+            <div class="row">
+            <div class="col-lg-8 mx-auto">
+              {% bootstrap_javascript jquery=1 %}
+              {% bootstrap_messages %}
+              {% block content %}{% endblock %}
+            </div>
+            <div class="col-lg-offset-1 col-lg-3 mx-auto">
+              <div class="box">
+            <h2>About this page</h2>
+            <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
+          </div>
+        </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 bg-dark">
+      <div class="container-fluid">
+        <p class="m-0 text-center text-white">Copyright © Team Eclipse</p>
+        <p class="m-0 text-center text-white">With ❤ using Django</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'base.js'%}"></script>
+
+
+
+
+</body></html>

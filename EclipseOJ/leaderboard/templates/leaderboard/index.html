@@ -1,21 +1,32 @@
 {% extends "base.html" %}
-{% load bootstrap3 %}
-{%block title %}Leaderboard{% endblock %}
-{% block leaderboardactive %}class="active"{% endblock %}
+{% load bootstrap4 %}
+
+{% block title %}Leaderboard{% endblock %}
+{% block title_color %}#eea236{% endblock %}
+{% block title_caption %}Get | Set | Go{% endblock %}
 {% block content %}
-{% if all_users %}
-<div class="jumbotron text-center">
-  <h1>Leaderboard</h1>
-</div>
-  <form class="form-inline" action="/leaderboard/" method="post">
+<div class="box">
+  <form class="form" action="{% url 'leaderboard_index' %}" method="post">
     {% csrf_token %}
-    {% bootstrap_form form %}
+    <div class="form-row">
+    {% bootstrap_form form layout='horizontal' exclude='cityID,instiID' %}
+    </div>
+    <div class="col-lg-10">
+      <div class="float-right">
+  {% buttons %}
+    <button type="submit" class="btn btn-success">Search</button></td></tr>
+  {% endbuttons %}
+</div>
+</div>
+    <div class="form-row">
+    {% bootstrap_form form layout='horizontal' exclude='userID,countryID' %}
+  </div>
     <!--<input type="submit" value="Apply" />-->
-    {% buttons %}
-      <button type="submit" class="btn btn-success center-block">Apply</button></td></tr>
-    {% endbuttons %}
 </form>
 </form>
+</div>
+<div class="box">
+<div class="col-lg-8 mx-auto">
   <table class="table">
     <thead>
       <tr>
@@ -25,13 +36,11 @@
     </thead>
     <tbody>
     {% for user in all_users %}
-      <tr><td><a href="{% url 'detail'  user.user.username %}">{{user.user.username}}</a></td>
+      <tr><td><a href="{% url 'other_profile'  user.user.username %}">{{user.user.username}}</a></td>
       <td>{{user.rating}}</td></tr>
     {% endfor %}
     </tbody>
   </table>
-{% else %}
-  <h1>Umm there are no users, we are so screwed!!!</h1>
-{% endif %}
-
+</div>
+</div>
 {% endblock %}

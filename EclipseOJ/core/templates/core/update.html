@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Update Profile{% endblock %}
+{% block profileactive %}class="active"{% endblock %}
+{% block content %}
+<div class="row box">
+<h2 align="center">Update Profile</h2>
+  <div class="col-md-offset-2 col-md-8">
+  <form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+      <button type="submit" class="btn btn-success center-block">Update</button>
+    {% endbuttons %}
+  </form>
+</div>
+</div>
+{% endblock %}
