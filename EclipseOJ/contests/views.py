@@ -19,23 +19,15 @@ def contest(request,contestID):
         user = request.user
     except Contest.DoesNotExist:
         raise Http404("There is no such contest :/ Please check again :P")
-    registered = contest.registered_user.filter(username = request.user.username) ##boolean variable
-    print(timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M'))
-    print(contest.start_time.strftime('%Y-%m-%d %H:%M'))
+    registered = contest.registered_user.filter(username = request.user.username)
     if contest.end_time.strftime('%Y-%m-%d %H:%M') <= timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M'):
         problems = Problem.objects.filter(contest=contest).order_by('letter')
         if contest.completed == False:
             contest.completed=True
             rating_update(contest.id)
             contest.save()
-        print('past')
         return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered})
-    elif timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M') >= contest.start_time.strftime('%Y-%m-%d %H:%M'):
-        problems = Problem.objects.filter(contest=contest).order_by('letter')
-        print('present')
-        return render(request,"contests/isactive.html", {'contest':contest, 'problems':problems, 'registered':registered})
     else:
-        print('future')
         if request.method=='POST':
             contest.registered_user.add(request.user)
             contest.score_set.create(user=user,score=0)

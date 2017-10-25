@@ -9,19 +9,13 @@
   <form class="form" action="{% url 'leaderboard_index' %}" method="post">
     {% csrf_token %}
     <div class="form-row">
-    {% bootstrap_form form layout='horizontal' exclude='cityID,instiID' %}
-    </div>
-    <div class="col-lg-10">
-      <div class="float-right">
+    {% bootstrap_form form layout='horizontal' %}
+      <div class="float-right my-auto">
   {% buttons %}
     <button type="submit" class="btn btn-success">Search</button></td></tr>
   {% endbuttons %}
 </div>
 </div>
-    <div class="form-row">
-    {% bootstrap_form form layout='horizontal' exclude='userID,countryID' %}
-  </div>
-    <!--<input type="submit" value="Apply" />-->
 </form>
 </form>
 </div>
