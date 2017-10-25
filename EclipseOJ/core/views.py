@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.views.generic import UpdateView
@@ -9,7 +9,7 @@ from .models import *
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseRedirect
 
 
 def signup(request):
@@ -28,6 +28,8 @@ def signup(request):
                         messages.error(request, str(e)[2:-2])
                     else:
                         messages.error(request, '{}: {}'.format(form_error, str(e)[2:-2]))
+    if request.user.is_authenticated():
+        return render(request, "warning.html", {'warning': "User already logged in", 'message': "Kindly logout to create another user. Also to review our policy, every person is allowed to have atmost one account only."})
     args = {}
     args.update(csrf(request))
     args['user_form'] = UserForm()
@@ -39,7 +41,10 @@ def home(request):
     return render(request, 'core/home.html')
 
 def profile(request):
-    return redirect('other_profile', username=request.user.username)
+    if request.user.is_authenticated():
+        return redirect('other_profile', username=request.user.username)
+    else:
+        return HttpResponseRedirect(reverse('login') + "?{}".format(request.path))
 
 def other_profile(request, username):
     try:

@@ -7,7 +7,9 @@
 
 {% block content %}
 <div class="container-fluid">
+    {% if submission_list %}
   <div class="row box">
+    <h4 class="mx-auto" style="padding-bottom: 0.7em;">Submission List</h4>
 <table class="table">
   <thead>
     <th>#</th>
@@ -16,8 +18,6 @@
     <th>Problem</th>
     <th>Language</th>
     <th>Verdict</th>
-    <th>Time</th>
-    <th>Memory</th>
   </thead>
   {% for submission in submission_list %}
     {% if submission.user == request.user %}
@@ -30,21 +30,27 @@
     {% endif %}
         <td>{{ submission.id }}</td>
         <td>{{ submission.submission_time }}</td>
-        <td>{{ submission.user.username }}</td>
-        <td>{{ submission.problem }}</td>
+        <td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
+        <td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
+        <td>{{ submission.get_language_display }}</td>
         <td>{{ submission.get_verdict_display }}</td>
       </tr>
     {% else %}
     <tr>
       <td>{{ submission.id }}</td>
       <td>{{ submission.submission_time }}</td>
-      <td>{{ submission.user.username }}</td>
-      <td>{{ submission.problem }}</td>
-      <td>{{ submission.verdict }}</td>
+      <td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
+      <td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
+      <td>{{ submission.get_language_display }}</td>
+      <td>{{ submission.get_verdict_display }}</td>
     </tr>
     {% endif %}
   {% endfor %}
 </table>
 </div>
+{% else %}
+<div class="row"><h3>No submissions found from the user</h3></div>
+<div class="row"><p class="lead">{{ username }} doesn't seem to have made any submissions yet.</p></div>
+{% endif %}
 </div>
 {% endblock %}

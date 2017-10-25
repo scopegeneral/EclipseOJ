@@ -4,8 +4,8 @@ div.box {
     border-style: dashed;
     border-width: thin;
     border-color: #AAAAAA;
-    box-shadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 3px 0 rgba(0, 0, 0, 0.19);
-    padding: 1.67em;
+    box-shadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19);
+    padding: 1.67em 1.67em 1.2em 3em;
     margin: 4.6em auto;
 }
 
@@ -44,7 +44,7 @@ section {
 }
 
 div.row > section {
-  padding: 2em 0;
+  padding: 10px 0 0 0;
 }
 
 div.row > section > header {
