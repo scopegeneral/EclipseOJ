@@ -45,12 +45,14 @@
       <th>#</th>
       <th>NAME</th>
       <th>POINTS</th>
+      <th>SOLVED</th>
     </tr>
     {% for problem in problems %}
     <tr>
       <td><a href="{% url 'problem' problem.problem_ID %}">{{ problem.problem_ID }}</a></td>
       <td><a href="{% url 'problem' problem.problem_ID %}">{{ problem.name }}</a></td>
       <td>{{ problem.marks }}</td>
+      <td>{{ problem.solved }}</td>
     </tr>
     {% endfor %}
   </thead>
