@@ -6,12 +6,14 @@ from datetime import datetime
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.utils import timezone
+from core.models import Profile
 #now = timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc)
 def index(request):
     past_contests = Contest.objects.filter(end_time__lt=timezone.now())
     current_contests = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now())
     upcoming_contests = Contest.objects.filter(start_time__gt=timezone.now())
-    return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, })
+    top_rated = Profile.objects.order_by('-rating')[:5]
+    return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, 'toprated':top_rated })
 
 def contest(request,contestID):
     try:
