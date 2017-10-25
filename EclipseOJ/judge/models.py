@@ -6,8 +6,13 @@ from django.contrib.auth.models import User
 from django.db.models import signals
 from django.dispatch import Signal
 import os, re
-from .check import bashfunc
 from contests.models import Score, Contest
+import docker
+from subprocess import Popen, PIPE
+client = docker.from_env()
+container = client.containers.get('dock_container')
+os.system("docker cp check.py " + container.short_id + ":/")
+os.system("docker cp sandbox.sh " + container.short_id + ":/")
 
 # Create your models here.
 class Queue(models.Model):
@@ -74,9 +79,22 @@ def grader(queue_number):
         submission = queue.submission_set.filter(verdict='Q').order_by('submission_time')[0]
         submission.verdict = 'R'
         print(str(submission))
-        testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)
-        submission.verdict = bashfunc('uploads/'+submission.uploaded_file.name, testcase, int(TestCase.objects.filter(problem=submission.problem).count()), submission.language, submission.problem.timelimit)
-        #print('done')
+        testcase = "uploads/testcases/{0}/".format(submission.problem.problem_ID)+" "
+        filename='uploads/'+submission.uploaded_file.name+' '
+        number=TestCase.objects.filter(problem=submission.problem).count()
+        os.system("docker exec -it dock_container mkdir -p "+ os.path.dirname(filename))
+        os.system("docker cp "+ filename + container.short_id + ":/"+os.path.dirname(filename))
+        os.system("docker cp " + testcase + container.short_id + ":/uploads/testcases/")
+        os.system("echo "+filename+ " > inputs")
+        os.system("echo "+testcase+" >> inputs ")
+        os.system("echo "+str(number)+" >> inputs")
+        os.system("echo "+submission.language+" >> inputs")
+        os.system("echo "+str(submission.problem.timelimit)+" >> inputs")
+        os.system("docker cp inputs " + container.short_id + ":/")
+        process=Popen("docker exec -i dock_container sh -c './sandbox.sh'",shell=True,stdout=PIPE)
+        os.system('rm inputs')
+        submission.verdict=process.stdout.read().decode("utf-8")
+        print(submission)
         if submission.verdict == 'AC':
             try:
                 score=Score.objects.get(contest=submission.problem.contest,user=submission.user)

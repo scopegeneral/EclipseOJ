@@ -1,7 +1,7 @@
 {% if contest_scores %}
 <table>
   {% for score in contest_scores %}
-  <tr><td><a href="{% url 'detail'  score.user.username %}">{{score.user.username}}</a></td><td>{{score.score}}</td></tr>
+  <tr><td><a href="{% url 'other_profile' score.user.username %}">{{score.user.username}}</a></td><td>{{score.score}}</td></tr>
   {% endfor %}
 </table>
 {% else %}
