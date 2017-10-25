@@ -10,6 +10,29 @@
 <p class="lead">Contest Status: {% if contest.completed %}Completed{% else %} Ongoing {% endif %}</p>
 <p class="lead">Registration Status: {% if registered %}Registered{% else %}Not Registered{% endif %}</p>
 </div>
+{% if topscores %}
+<div class="box">
+  <h2>Top Rated</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User</th>
+        <th>Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for score in topscores %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td><a href="{% url 'other_profile' score.user.username %}">{{ score.user.username }}</a></td>
+        <td>{{ score.score }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
 {%endblock%}
 {% block content %}
 <button class="btn btn-info center-block"><a style="color:black;text-decoration:none" href="{% url 'contest_ranks' contest.id %}">Go To Contest Ranks</a></button></td></tr>

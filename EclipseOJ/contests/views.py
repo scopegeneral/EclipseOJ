@@ -6,12 +6,14 @@ from datetime import datetime
 from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from django.utils import timezone
+from core.models import Profile
 #now = timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc)
 def index(request):
     past_contests = Contest.objects.filter(end_time__lt=timezone.now())
     current_contests = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now())
     upcoming_contests = Contest.objects.filter(start_time__gt=timezone.now())
-    return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, })
+    top_rated = Profile.objects.order_by('-rating')[:5]
+    return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, 'toprated':top_rated })
 
 def contest(request,contestID):
     try:
@@ -20,16 +22,17 @@ def contest(request,contestID):
     except Contest.DoesNotExist:
         raise Http404("There is no such contest :/ Please check again :P")
     registered = contest.registered_user.filter(username = request.user.username)
+    top_scores=Score.objects.filter(contest=contest).order_by('-score')[:5]
     if contest.end_time.strftime('%Y-%m-%d %H:%M') <= timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M'):
         problems = Problem.objects.filter(contest=contest).order_by('letter')
         if contest.completed == False:
             contest.completed=True
             rating_update(contest.id)
             contest.save()
-        return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered})
+        return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered, 'topscores':top_scores})
     elif timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M') >= contest.start_time.strftime('%Y-%m-%d %H:%M'):
         problems = Problem.objects.filter(contest=contest).order_by('letter')
-        return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered})
+        return render(request,"contests/contest.html", {'contest':contest, 'problems':problems, 'registered':registered, 'topscores':top_scores})
     else:
         if request.method=='POST':
             contest.registered_user.add(request.user)
