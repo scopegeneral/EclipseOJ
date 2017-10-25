@@ -9,7 +9,7 @@ from django.template.context_processors import csrf
 from django.contrib.auth.models import User
 from judge.models import *
 from judge.models import last_queue
-from judge.check import bashoutput
+from judge.oldcheck import bashoutput
 from django.core.files.base import ContentFile
 import threading
 from datetime import datetime
