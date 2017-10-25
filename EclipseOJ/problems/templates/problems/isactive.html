@@ -1,6 +1,11 @@
+{% extends "base.html" %}
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
 {% block contestactive %}class="active"{% endblock %}
 {% if registered %}
+{% load bootstrap4 %}
+{% block rightcontent%}
+<div class="clock" style="zoom: 0.5;-moz-transform: scale(0.5);"></div>
+{% endblock %}
 {% block content %}
 
 {% if submit_form.errors %}
@@ -173,6 +178,51 @@ window.test_theme = function(e) {
 {% endif %}
 </div>
 </div>
+
+<script type="text/javascript">
+var clock;
+
+$(document).ready(function() {
+      console.log("Hi There!!");
+      var clock;
+			clock = $('.clock').FlipClock({
+		        clockFace: 'HourlyCounter',
+		        autoStart: false,
+		        countdown: true,
+		        callbacks: {
+		        	stop: function() {
+		        		$('.clock').html("");
+		        		setTimeout(function(){alert("The Contest is Over!!!");}, 500);
+		        		setTimeout(function(){ location.reload(); }, 900);
+		        	}
+		        }
+		    });
+
+      var current = new Date();
+ 			var hours = current.getHours();
+ 			var min = current.getMinutes();
+ 			var sec = current.getSeconds();
+ 			var contest = new Date("{{ contest.end_time.isoformat }}");
+ 			hours = contest.getHours() - hours;
+ 			min = contest.getMinutes() - min;
+ 			sec = contest.getSeconds() - sec;
+ 			//console.log(time);	*/
+
+ 		  clock.setTime(hours*3600+min*60+sec);
+ 		  clock.start();
+      myfunc();
+		});
+
+    function myfunc(){
+      var clock_labels = document.getElementsByClassName("flip-clock-label");
+      //alert(clock_labels.length);
+      for (i = 0; i < clock_labels.length; i++) {
+        console.log("Yo");
+        clock_labels[i].innerHTML = "";
+      }
+    }
+</script>
+
 {% endblock %}
 {% else %}
 <h1 class="text-center">{{ problem.name }}</h1>
@@ -183,4 +233,6 @@ window.test_theme = function(e) {
 {% bootstrap_messages %}
   </div>
 </div>
+
+
 {% endif %}

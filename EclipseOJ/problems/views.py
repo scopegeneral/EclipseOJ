@@ -27,13 +27,13 @@ def problem(request, problemID):
 	except Problem.DoesNotExist:
 		raise Http404("There is no such problem. Please check again")
 	if request.method == 'POST':
-		print("Hello World!!\n")
+		#print("Hello World!!\n")
 		submit_form = problems_forms.SubmitForm(request.POST, request.FILES)
 		code_form = problems_forms.CodeForm(request.POST)
 		test_form = problems_forms.TestForm(request.POST)
 		print("\n")
 		if submit_form.is_valid():
-			print("File submit")
+			#print("File submit")
 			global last_queue
 			last_queue = (last_queue + 1)%3
 			submission = Submission()
@@ -49,7 +49,7 @@ def problem(request, problemID):
 			return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
 		elif code_form.is_valid():
 			#print(2)
-			print("Ace code")
+			#print("Ace code")
 			def process():
 				global last_queue
 				last_queue = (last_queue + 1)%3
@@ -68,7 +68,7 @@ def problem(request, problemID):
 				t.start()
 			return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
 		elif test_form.is_valid():
-			print("He doesnt terminal")
+			#print("He doesnt terminal")
 			data = test_form.cleaned_data
 			test_lang = data['test_lang']
 			test_code = data['test_code']
@@ -94,9 +94,9 @@ def problem(request, problemID):
 			args['hide_or_not'] = "visible"
 			args['text_on_ace'] = test_code
 			args['lang_for_ace'] = test_lang
-			if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+			if contest.start_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 				return render(request,"problems/problem.html", args)
-			elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+			elif contest.end_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 				registered = contest.registered_user.filter(username = request.user.username)
 				args['registered'] = registered
 				return render(request,"problems/isactive.html", args)
@@ -116,9 +116,9 @@ def problem(request, problemID):
 	args['output']=""
 	args['lang_for_ace']="cpp"
 	args['hide_or_not']= "hidden"
-	if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	if contest.start_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 		return render(request,"problems/problem.html", args)
-	elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	elif contest.end_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 		registered = contest.registered_user.filter(username = request.user.username)
 		args['registered'] = registered
 		return render(request,"problems/isactive.html", args)
