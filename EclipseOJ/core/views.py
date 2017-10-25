@@ -9,6 +9,8 @@ from .models import *
 from django.db.models import Q
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+
 
 def signup(request):
     if request.method == 'POST':
@@ -68,6 +70,12 @@ class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
         return get_object_or_404(self.model, user=self.request.user)
 
 
+def validate_username(request):
+    username = request.GET.get('username', None)
+    data = {
+        'is_taken': User.objects.filter(username__iexact=username).exists()
+    }
+    return JsonResponse(data)
 # def change_password(request):
 #     if request.method == 'POST':
 #         form = PasswordChangeForm(request.user, request.POST)

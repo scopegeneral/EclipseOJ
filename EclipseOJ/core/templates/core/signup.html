@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
-
+{% load static %}
 {%block title %}Signup{% endblock %}
 {% block title_color %}#5cb85c{% endblock %}
 {% block title_caption %}Get | Set | Go {% endblock %}
+<script src="{% static 'core/signup.js' %}"></script>
 {% block content %}
 
 <div class="row">

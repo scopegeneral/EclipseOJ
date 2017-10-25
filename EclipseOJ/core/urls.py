@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^change_password/$', auth_views.PasswordChangeView.as_view(template_name='core/change_password.html', success_url='profile'), name='change_password'),
     url(r'^profile/(?P<username>[a-zA-Z0-9_@.+-]+)/$', other_profile, name='other_profile'),
     url(r'^profile/', profile, name='profile'),
+    url(r'^ajax/validate_username/$', validate_username, name='validate_username'),
 ]

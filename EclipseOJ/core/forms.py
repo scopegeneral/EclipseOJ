@@ -20,6 +20,7 @@ class UserForm(UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
+        self.fields['username'].help_text = "This will be your identification"    
 
     def save(self, commit=True):
         newuser = super(UserForm, self).save(commit=False)
