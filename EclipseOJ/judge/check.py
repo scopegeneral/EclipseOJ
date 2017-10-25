@@ -4,7 +4,7 @@ from pathlib import Path
 
 def bashoutput(filename,inpi,lang):
     if lang == 'cpp':
-        compilecommand = "g++ -std=c++14 {0} 2>compile_errors.txt".format(filename)
+        compilecommand = "g++ -std=c++11 {0} 2>compile_errors.txt".format(filename)
         os.system(compilecommand)
         if os.stat("compile_errors.txt").st_size:
             contents = Path('compile_errors.txt').read_text()
@@ -51,7 +51,7 @@ def bashoutput(filename,inpi,lang):
         os.system("rm tempout.txt runtime_errors.txt time_errors.txt")
         return contents
     if lang == 'c':
-        compilecommand = "gcc -std=c++14 {0} 2>compile_errors.txt".format(filename)
+        compilecommand = "gcc {0} 2>compile_errors.txt".format(filename)
         os.system(compilecommand)
         if os.stat("compile_errors.txt").st_size:
             contents = Path('compile_errors.txt').read_text()
@@ -97,7 +97,7 @@ def bashoutput(filename,inpi,lang):
 
 def bashfunc(filename,testcase,number,lang,timeout):
     if lang == 'cpp':
-        compilecommand = "g++ -std=c++14 {0} 2>compile_errors.txt".format(filename)
+        compilecommand = "g++ -std=c++11 {0} 2>compile_errors.txt".format(filename)
         os.system(compilecommand)
         if os.stat("compile_errors.txt").st_size:
             os.system("rm compile_errors.txt")
