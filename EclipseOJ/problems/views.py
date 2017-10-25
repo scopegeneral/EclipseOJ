@@ -94,9 +94,9 @@ def problem(request, problemID):
 			args['hide_or_not'] = "visible"
 			args['text_on_ace'] = test_code
 			args['lang_for_ace'] = test_lang
-			if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+			if contest.start_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 				return render(request,"problems/problem.html", args)
-			elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+			elif contest.end_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 				registered = contest.registered_user.filter(username = request.user.username)
 				args['registered'] = registered
 				return render(request,"problems/isactive.html", args)
@@ -116,9 +116,9 @@ def problem(request, problemID):
 	args['output']=""
 	args['lang_for_ace']="cpp"
 	args['hide_or_not']= "hidden"
-	if contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	if contest.start_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 		return render(request,"problems/problem.html", args)
-	elif contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	elif contest.end_time.strftime('%Y-%m-%d %H:%M') >= now.strftime('%Y-%m-%d %H:%M'):
 		registered = contest.registered_user.filter(username = request.user.username)
 		args['registered'] = registered
 		return render(request,"problems/isactive.html", args)

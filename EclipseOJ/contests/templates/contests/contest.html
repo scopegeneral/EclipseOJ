@@ -52,7 +52,7 @@ $(document).ready(function() {
 		        countdown: true,
 		        callbacks: {
 		        	stop: function() {
-		        		$('.clock').html("Done!");
+		        		$('.clock').html("");
 		        		setTimeout(function(){alert("The Contest is Over!!!");}, 500);
 		        		setTimeout(function(){ location.reload(); }, 900);
 		        	}
