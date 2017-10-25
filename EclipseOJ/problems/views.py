@@ -27,13 +27,13 @@ def problem(request, problemID):
 	except Problem.DoesNotExist:
 		raise Http404("There is no such problem. Please check again")
 	if request.method == 'POST':
-		print("Hello World!!\n")
+		#print("Hello World!!\n")
 		submit_form = problems_forms.SubmitForm(request.POST, request.FILES)
 		code_form = problems_forms.CodeForm(request.POST)
 		test_form = problems_forms.TestForm(request.POST)
 		print("\n")
 		if submit_form.is_valid():
-			print("File submit")
+			#print("File submit")
 			global last_queue
 			last_queue = (last_queue + 1)%3
 			submission = Submission()
@@ -49,7 +49,7 @@ def problem(request, problemID):
 			return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
 		elif code_form.is_valid():
 			#print(2)
-			print("Ace code")
+			#print("Ace code")
 			def process():
 				global last_queue
 				last_queue = (last_queue + 1)%3
@@ -68,7 +68,7 @@ def problem(request, problemID):
 				t.start()
 			return redirect(reverse('mysubmissions', kwargs={'username':request.user}))
 		elif test_form.is_valid():
-			print("He doesnt terminal")
+			#print("He doesnt terminal")
 			data = test_form.cleaned_data
 			test_lang = data['test_lang']
 			test_code = data['test_code']
