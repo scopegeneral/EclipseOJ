@@ -47,6 +47,7 @@
   <div class="row box">
   <div class="col-md-12">
     {% if request.user.is_authenticated %}
+    <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Editor</h4>
 
 <div id="acesuper">
 <div class="form-group">
@@ -81,14 +82,14 @@
   {% csrf_token %}
   {% bootstrap_form test_form %}
   {% buttons %}
-    <button onclick="test_thecode()" type="submit" class="btn btn-success center-block">Test Code</button></td></tr>
+    <button onclick="test_thecode()" type="submit" class="btn btn-outline-primary">Test Code</button></td></tr>
   {% endbuttons %}
 </form>
 <form method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form code_form %}
   {% buttons %}
-    <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit Code</button></td></tr>
+    <button onclick="save_code()" type="submit" class="btn btn-outline-primary">Submit Code</button></td></tr>
   {% endbuttons %}
 </form>
 </div>
@@ -160,21 +161,20 @@ function test_thecode(){
   document.getElementById("id_test_input").value = document.getElementById("input").value;
 };
 </script>
-
-<h2 align="center">Or Submit the file directly</h2>
+</div>
+</div>
+<div class="row box">
+  <div class="col-lg-7 mx-auto">
+  <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Direct File Submit</h4>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
   {% buttons %}
-    <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+  <div class="text-center">
+    <button type="submit" class="btn btn-outline-primary center-block">Submit</button></td></tr>
+  </div>
   {% endbuttons %}
 </form>
-{% else %}
-<div class="alert alert-info">
-  <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
-</div>
-{% endif %}
-</div>
 </div>
 {% else %}
 <div class="alert alert-info">
@@ -182,52 +182,6 @@ function test_thecode(){
 </div>
 {% endif %}
 </div>
-</div>
-
-<script type="text/javascript">
-var clock;
-
-$(document).ready(function() {
-      console.log("Hi There!!");
-      var clock;
-			clock = $('.clock').FlipClock({
-		        clockFace: 'HourlyCounter',
-		        autoStart: false,
-		        countdown: true,
-		        callbacks: {
-		        	stop: function() {
-		        		$('.clock').html("");
-		        		setTimeout(function(){$('#myModal').modal('show');}, 800);
-		        		setTimeout(function(){ location.reload(); }, 2700);
-		        	}
-		        }
-		    });
-
-      var current = new Date();
- 			var hours = current.getHours();
- 			var min = current.getMinutes();
- 			var sec = current.getSeconds();
- 			var contest = new Date("{{ contest.end_time.isoformat }}");
- 			hours = contest.getHours() - hours;
- 			min = contest.getMinutes() - min;
- 			sec = contest.getSeconds() - sec;
- 			//console.log(time);	*/
-
- 		  clock.setTime(hours*3600+min*60+sec);
- 		  clock.start();
-      myfunc();
-		});
-
-    function myfunc(){
-      var clock_labels = document.getElementsByClassName("flip-clock-label");
-      //alert(clock_labels.length);
-      for (i = 0; i < clock_labels.length; i++) {
-        console.log("Yo");
-        clock_labels[i].innerHTML = "";
-      }
-    }
-</script>
-
 {% endblock %}
 {% else %}
 <h1 class="text-center">{{ problem.name }}</h1>

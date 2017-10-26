@@ -35,6 +35,7 @@
   <div class="row box">
   <div class="col-md-12">
     {% if request.user.is_authenticated %}
+    <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Editor</h4>
 
 <div id="acesuper">
 <div class="form-group">
@@ -69,14 +70,14 @@
   {% csrf_token %}
   {% bootstrap_form test_form %}
   {% buttons %}
-    <button onclick="test_thecode()" type="submit" class="btn btn-success center-block">Test Code</button></td></tr>
+    <button onclick="test_thecode()" type="submit" class="btn btn-outline-primary">Test Code</button></td></tr>
   {% endbuttons %}
 </form>
 <form method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form code_form %}
   {% buttons %}
-    <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit Code</button></td></tr>
+    <button onclick="save_code()" type="submit" class="btn btn-outline-primary">Submit Code</button></td></tr>
   {% endbuttons %}
 </form>
 </div>
@@ -148,20 +149,25 @@ function test_thecode(){
   document.getElementById("id_test_input").value = document.getElementById("input").value;
 };
 </script>
-
-<h2 align="center">Or Submit the file directly</h2>
+</div>
+</div>
+<div class="row box">
+  <div class="col-lg-7 mx-auto">
+  <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Direct File Submit</h4>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
   {% buttons %}
-    <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+  <div class="text-center">
+    <button type="submit" class="btn btn-outline-primary center-block">Submit</button></td></tr>
+  </div>
   {% endbuttons %}
 </form>
+</div>
 {% else %}
 <div class="alert alert-info">
   <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
 </div>
 {% endif %}
-</div>
 </div>
 {% endblock %}
