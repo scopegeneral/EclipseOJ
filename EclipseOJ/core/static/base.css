@@ -29,6 +29,10 @@ a.nav-link:hover {
 	color: white;
 }
 
+.dropdown-item {
+  color : black; 
+}
+
 header {
   padding: 100px 0 70px;
 }
