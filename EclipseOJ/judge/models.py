@@ -93,8 +93,7 @@ def grader(queue_number):
         os.system("docker cp inputs " + container.short_id + ":/")
         process=Popen("docker exec -i dock_container sh -c './sandbox.sh'",shell=True,stdout=PIPE)
         os.system('rm inputs')
-        submission.verdict=process.stdout.read().decode("utf-8")
-        print(submission)
+        submission.verdict=process.stdout.read().strip().decode("utf-8")
         if submission.verdict == 'AC':
             try:
                 score=Score.objects.get(contest=submission.problem.contest,user=submission.user)
@@ -102,31 +101,37 @@ def grader(queue_number):
                     score.score += submission.problem.marks
                     score.acceptedA=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
                 elif ord(submission.problem.letter)-65 == 1 and score.acceptedB == 0:
                     score.score += submission.problem.marks
                     score.acceptedB=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
                 elif ord(submission.problem.letter)-65 == 2 and score.acceptedC == 0:
                     score.score += submission.problem.marks
                     score.acceptedC=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
                 elif ord(submission.problem.letter)-65 == 3 and score.acceptedD == 0:
                     score.score += submission.problem.marks
                     score.acceptedD=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
                 elif ord(submission.problem.letter)-65 == 4 and score.acceptedE == 0:
                     score.score += submission.problem.marks
                     score.acceptedE=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
                 elif ord(submission.problem.letter)-65 == 5 and score.acceptedF == 0:
                     score.score += submission.problem.marks
                     score.acceptedF=True
                     submission.problem.solved += 1
+                    submission.problem.save()
                     score.save()
             except Score.DoesNotExist:
                 print('something')
