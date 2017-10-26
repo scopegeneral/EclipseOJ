@@ -3,6 +3,6 @@ from .models import Problem, TestCase
 
 @admin.register(Problem)
 class ProblemAdmin(admin.ModelAdmin):
-    exclude = ('problem_ID', )
+    exclude = ('problem_ID', 'solved', )
 
 admin.site.register(TestCase)
