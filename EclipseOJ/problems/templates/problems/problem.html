@@ -4,6 +4,15 @@
 <link rel="stylesheet" href="{{ STATIC_URL }}problem.css" />
 {% block title %}Problem {{ problem.problem_ID }}{% endblock %}
 {% block problemsactive %}class="active"{% endblock %}
+
+
+{% block rightcontent %}
+<div class="box">
+  <h2>Instructions</h2>
+  <p>Time Limit: {{ problem.timelimit}}s</p>
+  <p>While submitting the code in java please name your public class as <b>solution{{problem.problem_ID}}</b></p>
+  <p>While using the editor for giving custom inputs name your public class as <b>test</b></p>
+{% endblock %}
 {% block content %}
 
 {% if submit_form.errors %}
