@@ -14,7 +14,7 @@
     <h3>{{ user.profile.first_name }} {{user.profile.last_name }}</h1>
     <h3>(@{{user.username}})</h3>
     {% if request.user.is_authenticated and request.user == user %}
-    <span><a href="{% url 'change_password' %}" class="btn btn-primary" role="button">Change Password</a></span>
+    <span><a href="{% url 'change_password' %}" class="btn btn-outline-primary" role="button">Change Password</a></span>
     <span><a href="{% url 'update_profile' %}" class="btn btn-primary" role="button">Edit Profile</a></span>
     {% endif %}
   </div>

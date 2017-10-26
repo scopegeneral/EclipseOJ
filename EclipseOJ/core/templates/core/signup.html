@@ -8,14 +8,17 @@
 <script src="{% static 'core/signup.js' %}"></script>
 {% block content %}
 
-<div class="row">
-  <div class="col-lg-6 mx-auto">
-    <form method="post" action="{% url 'signup' %}">
+<div class="row box">
+  <div class="col-lg-8 mx-auto">
+    <h4 class="text-center" style="padding-bottom: 0.7em;">Sign Up</h4>
+    <form method="post" action="{% url 'signup' %}?next={{ request.GET.next }}">
       {% csrf_token %}
-      {% bootstrap_form user_form %}
+      {% bootstrap_form user_form show_help=False %}
       {% buttons %}
         <input type="hidden" name="next" value="{{ request.GET.next }}">
+        <div class="text-center mx-auto">
         <button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
+      </div>
       {% endbuttons %}
     </form>
   </div>

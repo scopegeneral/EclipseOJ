@@ -4,4 +4,3 @@ from .models import *
 @admin.register(Contest)
 class ProblemAdmin(admin.ModelAdmin):
     exclude = ('completed', )
-admin.site.register(Score)

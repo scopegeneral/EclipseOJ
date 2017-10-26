@@ -5,19 +5,20 @@
 {% block title_color %}#5cb85c{% endblock %}
 {% block title_caption %}Get | Set | Go{% endblock %}
 
-{% block loginactive %}class="active"{% endblock %}
 {% block content %}
-
-  <div class="col-lg-5 mx-auto">
-  <form method="post" action="{% url 'login' %}">
+<div class="box">
+  <div class="col-lg-6 mx-auto">
+    <h4 class="mx-auto text-center" style="padding-bottom: 0.7em;">Login</h4>
+  <form method="post" action="{% url 'login' %}?next={{ next }}">
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
       <div class="text-center">
-        <button type="submit" class="btn btn-success">Log In</button></td></tr>
+        <button type="submit" class="btn btn-success">Login</button></td></tr>
       </div>
       <input type="hidden" name="next" value="{{ next }}" />
     {% endbuttons %}
   </form>
+</div>
 </div>
 {% endblock %}

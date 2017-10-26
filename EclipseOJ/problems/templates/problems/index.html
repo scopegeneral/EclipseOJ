@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+
 {%block title %}Problems{% endblock %}
 {% block title_color %}green {% endblock %}
 {% block title_caption %}Code | Practice | Achieve{% endblock %}
 
-{% block problemsactive %}class="active"{% endblock %}
 {% block content %}
 
-<div class="datatable" style="width:60%;align:center;">
+<div class="row box">
+  <div class="col-lg-10 mx-auto">
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Problem ID</th>
         <th>Problem Name</th>
-        <th>Tags</th>
-        <th>Users submitted</th>
       </tr>
     </thead>
     <tbody>
@@ -22,11 +21,10 @@
         <tr>
           <td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.problem_ID }}</a></td>
           <td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.name }}</a></td>
-          <td>a_problem.tags</td>
-          <td>a_problem.users.filter(if correct!).count</td>
         </tr>
       {% endfor %}
     </tbody>
   </table>
+</div>
 </div>
 {% endblock %}

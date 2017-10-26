@@ -17,10 +17,8 @@ os.system("docker cp sandbox.sh " + container.short_id + ":/")
 # Create your models here.
 class Queue(models.Model):
     name = models.CharField(max_length=20)
-    """
-        this is the central queue
-        only 1 queue will be created and submissions will be foreign_key linked to it
-    """
+    def __str__(self):
+        return 'Queue {}: {}'.format(self.id, self.name)
 
 
 def upload_to(instance, filename):
@@ -56,12 +54,7 @@ class Submission(models.Model):
     )
     verdict = models.CharField(max_length=2,choices=verdict_choices, default='Q')
     def __str__(self):
-        if self.verdict == 'Q':
-            return self.problem.problem_ID + ': ' + 'In queue'
-        elif self.verdict == 'R':
-            return self.problem.problem_ID + ': ' + 'Running'
-        else :
-            return self.problem.problem_ID + ': ' + self.verdict + "  " + self.user.username
+        return self.problem.problem_ID + ': ' + self.verdict
 """
 def submission_post_save(sender, instance, created, *args, **kwargs):
     if not created:
