@@ -42,6 +42,7 @@
         </div>
     {% endfor %}
 {% endif %}
+
 <h1 class="text-center">{{ problem.name }}</h1>
 <div class="row box">
   <div class="col-md-1"></div>
@@ -99,6 +100,49 @@
   {% endbuttons %}
 </form>
 </div>
+<script type="text/javascript">
+var clock;
+
+$(document).ready(function() {
+      console.log("Hi There!!");
+      var clock;
+      clock = $('.clock').FlipClock({
+            clockFace: 'HourlyCounter',
+            autoStart: false,
+            countdown: true,
+            callbacks: {
+              stop: function() {
+                $('.clock').html("");
+                setTimeout(function(){$('#myModal').modal('show');}, 800);
+                setTimeout(function(){ location.reload(); }, 2700);
+              }
+            }
+        });
+
+      var current = new Date();
+      var hours = current.getHours();
+      var min = current.getMinutes();
+      var sec = current.getSeconds();
+      var contest = new Date("{{ contest.end_time.isoformat }}");
+      hours = contest.getHours() - hours;
+      min = contest.getMinutes() - min;
+      sec = contest.getSeconds() - sec;
+      //console.log(time);	*/
+      console.log(hours*3600+min*60+sec);
+      clock.setTime(hours*3600+min*60+sec);
+      clock.start();
+      myfunc();
+    });
+
+    function myfunc(){
+      var clock_labels = document.getElementsByClassName("flip-clock-label");
+      //alert(clock_labels.length);
+      for (i = 0; i < clock_labels.length; i++) {
+        console.log("Yo");
+        clock_labels[i].innerHTML = "";
+      }
+    }
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
