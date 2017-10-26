@@ -55,4 +55,4 @@ def index(request):
 def contest_ranks(request,contestID):
     contest=Contest.objects.get(id=contestID)
     contest_scores=Score.objects.filter(contest=contest).order_by('-score')
-    return render(request, 'leaderboard/contest_scores.html',{'contest_scores' : contest_scores})
+    return render(request, 'leaderboard/contest_scores.html',{'contest_ID':contestID,'contest_scores' : contest_scores})

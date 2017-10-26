@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
 
-{% block title %}Contest #{{ score.contest.contest_ID }} | Leaderboard{% endblock %}
+{% block title %}Contest #{{ contest_ID }} | Leaderboard{% endblock %}
 {% block title_color %}#eea236{% endblock %}
 {% block title_caption %}Get | Set | Go{% endblock %}
 
@@ -42,17 +42,5 @@
 <div class="row">
 <p class="lead">That's sad. We hope for a better participation next time.</p>
 </div>
-{% endif %}
-{% endblock %}
-
-
-{% if contest_scores %}
-<table>
-  {% for score in contest_scores %}
-  <tr><td><a href="{% url 'other_profile' score.user.username %}">{{score.user.username}}</a></td><td>{{score.score}}</td></tr>
-  {% endfor %}
-</table>
-{% else %}
-  <h1>Umm there are no registered users, we are so screwed!!!</h1>
 {% endif %}
 {% endblock %}
