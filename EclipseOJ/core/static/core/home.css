@@ -1,3 +1,67 @@
+header {
+  padding: 154px 0 100px;
+}
+
+@media (min-width: 992px) {
+  header {
+    padding: 156px 0 100px;
+  }
+}
+
+section {
+  padding: 150px 0;
+}
+
+.full-page {
+  height: 100vh;
+}
+
+.navbar {
+    -webkit-transition: all 0.6s ease-out;
+    -moz-transition: all 0.6s ease-out;
+    -o-transition: all 0.6s ease-out;
+    -ms-transition: all 0.6s ease-out;
+    transition: all 0.6s ease-out;
+}
+
+.white, .white a {
+  color: #fff;
+}
+
+a.nav-link {
+  height:2.6em;
+	text-decoration: none;
+	color: white;
+}
+
+a.nav-link:hover {
+	border-bottom: 2px solid white;
+	text-decoration: none;
+	color: white;
+}
+
+.header {
+  background-color: black;
+  margin-top: 5em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @import url(https://fonts.googleapis.com/css?family=Martel+Sans:200,300,400,800,900);
 *, *:before, *:after {
   -webkit-box-sizing: border-box;
@@ -5,14 +69,11 @@
   box-sizing: border-box; }
 
 body {
-  position: fixed;
   left:0;
 	top:0;
 	width:100%;
 	height:100%;
-	background-color: #a6a9ad;
-  font-family: 'Martel Sans', sans-serif;
-  background-color: black; }
+ }
 
 div.logo-container {
   height: 350px;
@@ -257,4 +318,3 @@ div.logo {
     background-color: white;
     text-decoration: none;
 }
-/*# sourceMappingURL=main.css.map */
