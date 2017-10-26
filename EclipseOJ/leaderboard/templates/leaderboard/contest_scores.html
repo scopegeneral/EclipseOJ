@@ -1,9 +1,33 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block title %}Leaderboard{% endblock %}
+{% block title_color %}#eea236{% endblock %}
+{% block title_caption %}Get | Set | Go{% endblock %}
+
+{% block content %}
 {% if contest_scores %}
-<table>
-  {% for score in contest_scores %}
-  <tr><td><a href="{% url 'other_profile' score.user.username %}">{{score.user.username}}</a></td><td>{{score.score}}</td></tr>
-  {% endfor %}
-</table>
+<div class="box">
+<div class="col-lg-8 mx-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>RANK</th>
+        <th>USER</th>
+        <th>SCORE</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for score in contest_scores %}
+      <tr><td>{{ forloop.counter }}</td>
+      <td><a href="{% url 'other_profile'  score.user.username %}">{{score.user.username}}</a></td>
+      <td>{{score.score}}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+</div>
+</div>
 {% else %}
   <h1>Umm there are no registered users, we are so screwed!!!</h1>
 {% endif %}
+{% endblock %}
