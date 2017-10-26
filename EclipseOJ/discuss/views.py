@@ -6,13 +6,7 @@ from django.utils import timezone
 
 def discuss_index(request):
     all_posts = Post.objects.all()
-    if all_posts:
-        return render(request, "discuss/index.html", {'all_posts' : all_posts})
-    else:
-        args = {}
-        args['warning'] = "No posts at the moment"
-        args['message'] = "Please check again later."
-        return render(request, "warning.html", )
+    return render(request, "discuss/index.html", {'all_posts' : all_posts})
 
 def post_detail(request, postID):
     try:

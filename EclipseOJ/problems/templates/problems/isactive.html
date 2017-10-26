@@ -48,77 +48,79 @@
   <div class="col-md-10">
       <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Problem Statement</h4>
 {{ problem.body | safe}}
-{% bootstrap_messages %}
   </div>
 </div>
   <div class="row box">
   <div class="col-md-12">
     {% if request.user.is_authenticated %}
+    <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Editor</h4>
 
-    <div id="acesuper">
-      <div class="container-fluid">
-      You can code here!!
-      <select id="ace_lang" class="selectpicker" data-style="btn-primary" onchange="test_lang(this);">
-          <option value="cpp">C++</option>
-          <option value="c">C</option>
-          <option value="py">Python2</option>
-          <option value="py3">Python3</option>
-          <option value="java">Java</option>
-      </select>
-      <select class="selectpicker" data-style="btn-primary" onchange="test_theme(this);" style="width=20px">
-          <option value="monokai">Dark1</option>
-          <option value="cobalt">Dark2</option>
-          <option value="dracula">Dark3</option>
-          <option value="eclipse">Light1</option>
-          <option value="chrome">Light2</option>
-          <option value="github">Light3</option>
-      </select>
-    </div>
-		<pre id="editor">int main()</pre>
-	</div>
+<div id="acesuper">
+<div class="form-group">
+    <label for="Language">Language</label>
+    <select id="ace_lang" class="custom-select" onchange="test_lang(this);">
+      <option value="cpp">C++</option>
+      <option value="c">C</option>
+      <option value="py">Python2</option>
+      <option value="py3">Python3</option>
+      <option value="java">Java</option>
+    </select>
+    <label for="Language">Theme</label>
+    <select id="ace_test" class="custom-select" onchange="test_theme(this);">
+      <option value="monokai">Dark</option>
+      <option value="eclipse">Light</option>
+    </select>
+</div>
+<pre id="editor">{{ text_on_ace }}</pre>
+</div>
 
-  <div class="form-group">
-        <label for="Input">Input:</label>
-        <textarea class="form-control" rows="5" id="input"></textarea>
-      </div>
-      <button type="button" class="btn btn-info">Run code and test for input (extract code from editor)</button>
-      <button type="button" class="btn btn-info">Submit (take code and cosntruct submission object)</button>
+<div class="form-group">
+  <label for="Input">Input: (only 800 characters!)</label>
+  <textarea class="form-control" maxlength="50" rows="5" id="input"></textarea>
+</div>
+<div class="card" style="visibility:{{ hide_or_not }}">
+  <div class="card-block">
+    {{ output }}
+  </div>
+</div>
+<div class="text-center">
+<form method="post" action="{% url 'problem' problem.problem_ID %}">
+  {% csrf_token %}
+  {% bootstrap_form test_form %}
+  {% buttons %}
+    <button onclick="test_thecode()" type="submit" class="btn btn-outline-primary">Test Code</button></td></tr>
+  {% endbuttons %}
+</form>
+<form method="post" action="{% url 'problem' problem.problem_ID %}">
+  {% csrf_token %}
+  {% bootstrap_form code_form %}
+  {% buttons %}
+    <button onclick="save_code()" type="submit" class="btn btn-outline-primary">Submit Code</button></td></tr>
+  {% endbuttons %}
+</form>
+</div>
 
-      <form method="post" action="{% url 'problem' problem.problem_ID %}">
-        {% csrf_token %}
-        {% for field in code_form %}
-        <input name="{{ field.html_name }}" id="{{ field.id_for_label }}" value="{{ field.value }}" style="visibility:hidden;white-space:pre-wrap;
-">
-        {% endfor %}
-        {% buttons %}
-          <button onclick="save_code()" type="submit" class="btn btn-success center-block">Submit</button></td></tr>
-        {% endbuttons %}
-      </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 
-	<!-- load ace -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-
-  <script>
-	    // trigger extension
-	    ace.require("ace/ext/language_tools");
-	    var editor = ace.edit("editor");
-	    editor.session.setMode("ace/mode/c_cpp");
-	    editor.setTheme("ace/theme/monokai");
-	    // enable autocompletion and snippets
-	    editor.setOptions({
-	        enableBasicAutocompletion: true,
-	        enableSnippets: true,
-	        enableLiveAutocompletion: false,
-	        //fontFamily: "Consolas",-
-  			highlightActiveLine: true,
-  			highlightSelectedWord: true,
-  			fontSize: "12pt",
-  			cursorStyle: "slim",
-  			vScrollBarAlwaysVisible : true,
-	    });
-
-
-	    window.test_lang = function(e) {
+<script>
+ace.require("ace/ext/language_tools");
+var editor = ace.edit("editor");
+{% if lang_for_ace == "cpp" %}
+  editor.session.setMode("ace/mode/c_cpp");
+{% else %}
+  editor.session.setMode("ace/mode/{{ lang_for_ace }}");
+{% endif %}
+editor.setTheme("ace/theme/monokai");
+editor.setOptions({
+	 enableBasicAutocompletion: true,
+	 enableSnippets: true,
+	 enableLiveAutocompletion: false,
+	 highlightActiveLine: true,
+   highlightSelectedWord: true,
+   fontSize: "16pt",
+   cursorStyle: "slim",
+});
+window.test_lang = function(e) {
   if (e.value === 'cpp') {
     editor.session.setMode("ace/mode/c_cpp");
   }
@@ -126,124 +128,66 @@
     editor.session.setMode("ace/mode/c_cpp");
   }
   else if (e.value === 'py') {
-	editor.session.setMode("ace/mode/python")  }
- else if (e.value === 'py3') {
+    editor.session.setMode("ace/mode/python")
+  }
+  else if (e.value === 'py3') {
     editor.session.setMode("ace/mode/python");
   }
-  	else if (e.value === 'java') {
+  else if (e.value === 'java') {
     editor.session.setMode("ace/mode/java");
   }
-
+}
+window.test_theme = function(e) {
+  if (e.value === 'monokai') {
+    editor.setTheme("ace/theme/monokai");
+  }
+  else if (e.value === 'eclipse') {
+    editor.setTheme("ace/theme/xcode");
+  }
 }
 
-window.test_theme = function(e) {
-  console.log("Pressed");
-    if (e.value === 'monokai') {
-      editor.setTheme("ace/theme/monokai");
-    }
-    else if (e.value === 'cobalt') {
-      editor.setTheme("ace/theme/cobalt");
-    }
-    else if (e.value === 'dracula') {
-      editor.setTheme("ace/theme/clouds_midnight");
-    }
-    else if (e.value === 'eclipse') {
-      editor.setTheme("ace/theme/xcode");
-    }
-    else if (e.value === 'chrome') {
-      editor.setTheme("ace/theme/solarized_light");
-    }
-    else if (e.value === 'github') {
-      editor.setTheme("ace/theme/eclipse");
-    }
+function resizeAce() {
+  var h = window.innerHeight;
+  if (h > 360) {
+    $('#editor').css('height', (h - 290).toString() + 'px');
   }
-  function resizeAce() {
-      var h = window.innerHeight;
-      if (h > 360) {
-          $('#editor').css('height', (h - 290).toString() + 'px');
-      }
-      var w = window.innerWidth;
-      $('#editor').css('width', auto);
-
-  };
-  $(window).on('resize', function () {
-      resizeAce();
-  });
-  resizeAce();
+};
+resizeAce();
 
 
-  function save_code(){
-      document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
-      var mytext = editor.getValue();
-      mytext = mytext.replace(/(?:\r\n|\r|\n)/g, "~");
-      document.getElementById("id_code").value = mytext;
-      //alert(editor.getValue());
-      //alert(mytext);
-      //document.getElementById("input").value = editor.getValue();
-      //alert("submitted");
-  };
-	</script>
-
-    <h2 align="center">Or Direct file Submit</h2>
+function save_code(){
+  document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+  var mytext = editor.getValue();
+  document.getElementById("id_code").value = mytext;
+};
+function test_thecode(){
+  document.getElementById("id_test_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+  var mytext = editor.getValue();
+  document.getElementById("id_test_code").value = mytext;
+  document.getElementById("id_test_input").value = document.getElementById("input").value;
+};
+</script>
+</div>
+</div>
+<div class="row box">
+  <div class="col-lg-7 mx-auto">
+  <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Direct File Submit</h4>
 <form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
   {% csrf_token %}
   {% bootstrap_form submit_form %}
   {% buttons %}
-    <button type="submit" class="btn btn-success center-block">Submit</button></td></tr>
+  <div class="text-center">
+    <button type="submit" class="btn btn-outline-primary center-block">Submit</button></td></tr>
+  </div>
   {% endbuttons %}
 </form>
+</div>
 {% else %}
 <div class="alert alert-info">
   <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
 </div>
 {% endif %}
 </div>
-</div>
-
-<script type="text/javascript">
-var clock;
-
-$(document).ready(function() {
-      console.log("Hi There!!");
-      var clock;
-			clock = $('.clock').FlipClock({
-		        clockFace: 'HourlyCounter',
-		        autoStart: false,
-		        countdown: true,
-		        callbacks: {
-		        	stop: function() {
-		        		$('.clock').html("");
-		        		setTimeout(function(){$('#myModal').modal('show');}, 800);
-		        		setTimeout(function(){ location.reload(); }, 2700);
-		        	}
-		        }
-		    });
-
-      var current = new Date();
- 			var hours = current.getHours();
- 			var min = current.getMinutes();
- 			var sec = current.getSeconds();
- 			var contest = new Date("{{ contest.end_time.isoformat }}");
- 			hours = contest.getHours() - hours;
- 			min = contest.getMinutes() - min;
- 			sec = contest.getSeconds() - sec;
- 			//console.log(time);	*/
-
- 		  clock.setTime(hours*3600+min*60+sec);
- 		  clock.start();
-      myfunc();
-		});
-
-    function myfunc(){
-      var clock_labels = document.getElementsByClassName("flip-clock-label");
-      //alert(clock_labels.length);
-      for (i = 0; i < clock_labels.length; i++) {
-        console.log("Yo");
-        clock_labels[i].innerHTML = "";
-      }
-    }
-</script>
-
 {% endblock %}
 {% else %}
 <h1 class="text-center">{{ problem.name }}</h1>
