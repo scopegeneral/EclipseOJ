@@ -14,6 +14,7 @@
       <tr>
         <th>Problem ID</th>
         <th>Problem Name</th>
+        <th>Solved</th>
       </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
         <tr>
           <td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.problem_ID }}</a></td>
           <td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.name }}</a></td>
+          <td>{{ a_problem.solved }}</td>
         </tr>
       {% endfor %}
     </tbody>

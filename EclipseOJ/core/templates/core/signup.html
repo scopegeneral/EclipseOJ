@@ -6,6 +6,12 @@
 {% block title_caption %}Get | Set | Go {% endblock %}
 
 <script src="{% static 'core/signup.js' %}"></script>
+{% block rightcontent %}
+<div class="box">
+  <h2>Instructions</h2>
+  <p>Your password must contain at least 8 characters, can't be entirely numeric and should contain only letters, numbers and symbols including _ @ . + -</p>
+</div>
+{% endblock %}
 {% block content %}
 
 <div class="row box">
