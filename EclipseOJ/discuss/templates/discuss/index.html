@@ -23,5 +23,12 @@
     <p>{{ post.body|truncatechars:250 }}</p>
   </section>
 </div>
+{% empty %}
+<div class="row">
+  <h3>No posts at the moment</h3>
+</div>
+<div class="row">
+<p class="lead">Please check again later.</p>
+</div>
 {% endfor %}
 {% endblock %}

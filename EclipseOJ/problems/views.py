@@ -90,7 +90,7 @@ def problem(request, problemID):
 			args['problem'] = problem
 			contest = problem.contest
 			args['contest'] = contest
-			args['output'] = output
+			args['output'] = "Output :\n" + output
 			args['hide_or_not'] = "visible"
 			args['text_on_ace'] = test_code
 			args['lang_for_ace'] = test_lang
