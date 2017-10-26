@@ -18,10 +18,10 @@
     <title> {% use_macro title %} | EclipseOJ</title>
 
     <!-- Bootstrap core CSS -->
-        <link href="{% static 'base.css' %}" rel="stylesheet">
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css" />
+    <link href="{% static 'base.css' %}" rel="stylesheet">
     <!-- Custom styles for this template -->
   </head>
 
@@ -31,7 +31,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
       <div class="container-fluid" style="height: 3.7em">
         <a class="navbar-brand" href="{% url 'contests_index' %}">
-          EclipseOJ
+          <img height="55px" src="{% static 'logo-transparent.png' %}"></img>
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -44,8 +44,8 @@
             <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}">Leaderboard</a></li>
             <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}">Discuss</a></li>
             {% if request.user.is_authenticated %}
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'other_profile' request.user.username %}">Profile</a></li>
             <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'logout' %}?next={{ request.path|urlencode }}">Log Out</a></li>
+            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'other_profile' request.user.username %}">Profile</a></li>
             {% else %}
             <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
             <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>

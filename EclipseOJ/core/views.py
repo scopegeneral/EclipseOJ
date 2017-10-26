@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib.auth.signals import user_logged_in
 from django.contrib.auth.models import User
 from django.template.context_processors import csrf
 from django.views.generic import UpdateView
@@ -29,11 +30,16 @@ def signup(request):
                     else:
                         messages.error(request, '{}: {}'.format(form_error, str(e)[2:-2]))
     if request.user.is_authenticated():
-        return render(request, "warning.html", {'warning': "User already logged in", 'message': "Kindly logout to create another user. Also to review our policy, every person is allowed to have atmost one account only."})
+        return redirect('contests_index')
     args = {}
     args.update(csrf(request))
     args['user_form'] = UserForm()
     return render(request, 'core/signup.html', args)
+
+def logged_in_message(sender, user, request, **kwargs):
+    messages.success(request, "Welcome {}!".format(user.username))
+
+user_logged_in.connect(logged_in_message)
 
 def home(request):
     if request.user.is_authenticated():
@@ -48,9 +54,11 @@ def profile(request):
 
 def other_profile(request, username):
     try:
-        user = User.objects.filter(Q(is_superuser=False)).get(username=username)
+        user = User.objects.get(username=username)
     except User.DoesNotExist:
         return render(request, 'warning.html', {'warning': 'No such user found. Please verify.'})
+    if user.is_superuser:
+        return redirect('contests_index')
     return render(request, 'core/detail.html', {'user': user})
 
 class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
