@@ -49,7 +49,7 @@ def index(request):
         else:
             args = {}
             args['warning'] = 'No Users were found in the database.'
-            args['next'] = request.GET["next"]
+            args['next'] = request.GET.get("next", False)
             return render(request, 'warning.html', args)
 
 def contest_ranks(request,contestID):

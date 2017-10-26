@@ -116,9 +116,9 @@ def problem(request, problemID):
 	args['output']=""
 	args['lang_for_ace']="cpp"
 	args['hide_or_not']= "hidden"
-	if contest.end_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	if contest.end_time.strftime('%Y-%m-%d %H:%M:%S') <= timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M:%S'):
 		return render(request,"problems/problem.html", args)
-	elif contest.start_time.strftime('%Y-%m-%d %H:%M') <= now.strftime('%Y-%m-%d %H:%M'):
+	elif timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc).strftime('%Y-%m-%d %H:%M:%S') >= contest.start_time.strftime('%Y-%m-%d %H:%M:%S'):
 		registered = contest.registered_user.filter(username = request.user.username)
 		args['registered'] = registered
 		return render(request,"problems/isactive.html", args)

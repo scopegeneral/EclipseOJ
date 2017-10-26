@@ -39,6 +39,21 @@
 {% endif %}
 {%endblock%}
 {% block content %}
+<div id="myModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="mySmallModalLabel">Attention</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        The contest is now over!!!
+      </div>
+    </div>
+  </div>
+</div>
 <button class="btn btn-info center-block"><a style="color:black;text-decoration:none" href="{% url 'contest_ranks' contest.id %}">Go To Contest Ranks</a></button></td></tr>
 <button class="btn btn-info center-block"><a style="color:black;text-decoration:none" href="{% url 'registered' contest.id %}">Registered Users</a></button></td></tr>
 <div class="box">
@@ -65,6 +80,14 @@
 </table>
 </div>
 
+<div class="modal fade bs-example-modal-sm" id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+  <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-content">
+      Attention Contest is over now!!
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">
 var clock;
 
@@ -78,8 +101,8 @@ $(document).ready(function() {
 		        callbacks: {
 		        	stop: function() {
 		        		$('.clock').html("");
-		        		setTimeout(function(){alert("The Contest is Over!!!");}, 500);
-		        		setTimeout(function(){ location.reload(); }, 900);
+		        		setTimeout(function(){$('#myModal').modal('show');}, 800);
+		        		setTimeout(function(){ location.reload(); }, 2700);
 		        	}
 		        }
 		    });
@@ -93,7 +116,7 @@ $(document).ready(function() {
  			min = contest.getMinutes() - min;
  			sec = contest.getSeconds() - sec;
  			//console.log(time);	*/
-
+      console.log(hours*3600+min*60+sec);
  		  clock.setTime(hours*3600+min*60+sec);
  		  clock.start();
       myfunc();
