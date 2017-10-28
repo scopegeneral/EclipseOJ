@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'contests',
     'judge',
     'leaderboard',
+    'django.contrib.admindocs',
 ]
 
 MIDDLEWARE = [

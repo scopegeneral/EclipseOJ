@@ -25,5 +25,6 @@ urlpatterns = [
     url(r'^submissions/',include('judge.urls')),
     url(r'^discuss/', include('discuss.urls')),
     url(r'^leaderboard/', include('leaderboard.urls')),
+    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^', include('core.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

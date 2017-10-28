@@ -29,6 +29,10 @@ def upload_to(instance, filename):
     return 'users/%s/%s.%s' % (instance.user.username, 'solution' + instance.problem.problem_ID, instance.language)
 
 class Submission(models.Model):
+    """
+    A submission object is a reference to the solution of user. So it has a file object and a :model:`auth.User` object inside it. Each submission is linked to a problem and belongs to a :model:`judge.Queue`
+    It alse stores the user submission time and other important properties like language,verdict.
+    """
     queue = models.ForeignKey(Queue,on_delete=models.CASCADE)
     problem = models.ForeignKey(Problem,on_delete=models.CASCADE)
     user = models.ForeignKey(User,on_delete=models.CASCADE)
