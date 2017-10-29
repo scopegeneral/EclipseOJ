@@ -4,26 +4,25 @@
 {% block title_color %}#428bca{% endblock %}
 {% block title_caption %}Posted by {{ post.author.profile.first_name }} {{ post.author.profile.last_name }} on {{ post.time }}{% endblock %}
 {% block content %}
-
 <div class="row">
-  <section>
-    <p>{{ post.body }}</p>
-  </section>
+	<section>
+		<p>{{ post.body }}</p>
+	</section>
 </div>
 <p class="lead" style="font-size: 28px">COMMENTS</p>
 <div class="row box">
-<form method="post" action="{% url 'post_detail' post.pk %}">
-  {% csrf_token %}
-  {% bootstrap_form comment_form %}
-  {% buttons %}
-    <button type="submit" class="btn btn-success pull-right">Add Comment</button>
-  {% endbuttons %}
-</form>
+	<form method="post" action="{% url 'post_detail' post.pk %}">
+		{% csrf_token %}
+		{% bootstrap_form comment_form %}
+		{% buttons %}
+		<button type="submit" class="btn btn-success pull-right">Add Comment</button>
+		{% endbuttons %}
+	</form>
 </div>
-  {% for comment in all_comments %}
-  <div class="row box">
-    <p>{{ comment.body }}</p>
-    <p>Posted by {{ comment.author.profile.first_name }} {{ comment.author.profile.last_name }} on {{ comment.time }}</p>
+{% for comment in all_comments %}
+<div class="row box">
+	<p>{{ comment.body }}</p>
+	<p>Posted by {{ comment.author.profile.first_name }} {{ comment.author.profile.last_name }} on {{ comment.time }}</p>
 </div>
-  {% endfor %}
+{% endfor %}
 {% endblock %}

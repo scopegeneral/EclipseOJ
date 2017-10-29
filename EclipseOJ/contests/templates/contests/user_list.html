@@ -1,12 +1,27 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{%block title %}Contest #{{ contest.id }}{% endblock %}
+{% block title_color %}#6317aa{% endblock %}
+{% block title_caption %}{{contest.name}}{% endblock %}
+{% block rightcontent%}
+{% if not contest.completed %}
+<div class="clock" style="zoom: 0.5;-moz-transform: scale(0.5);"></div>
+{% endif %}
+<div class="box">
+	<h2>About</h2>
+	<p class="lead">Contest Status: {% if contest.completed %}Completed{% else %} Ongoing {% endif %}</p>
+	<p class="lead">Registration Status: {% if registered %}Registered{% else %}Not Registered{% endif %}</p>
+</div>
+{% endblock %}
+{% block content %}
 Here are registerd users for {{ contest }}
-
 <ul>
-
-{% for user in registerd_user_list %}
-  {% if user == request.user %}
-    <li style="color:blue">{{ user }}</li>
-  {% else %}
-    <li>{{ user }}</li>
-  {% endif %}
-{% endfor %}
+	{% for user in registerd_user_list %}
+	{% if user == request.user %}
+	<li style="color:blue">{{ user }}</li>
+	{% else %}
+	<li>{{ user }}</li>
+	{% endif %}
+	{% endfor %}
 </ul>
+{% endblock %}

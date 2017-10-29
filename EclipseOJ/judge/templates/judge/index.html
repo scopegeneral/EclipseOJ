@@ -1,56 +1,58 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
-
 {%block title %}Submissions{% endblock %}
 {% block title_color %}#31b0d5{% endblock %}
 {% block title_caption %}Code | Submit | Repeat{% endblock %}
-
 {% block content %}
 <div class="box">
-    {% if submission_list %}
-  <div class="row">
-    <h4 class="mx-auto" style="padding-bottom: 0.7em;">Submission List</h4>
-<table class="table">
-  <thead>
-    <th>#</th>
-    <th>Submission Time</th>
-    <th>User</th>
-    <th>Problem</th>
-    <th>Language</th>
-    <th>Verdict</th>
-  </thead>
-  {% for submission in submission_list %}
-    {% if submission.user == request.user %}
-    {% if submission.verdict == "AC" %}
-      <tr class="success">
-    {% elif submission.verdict == "WA" %}
-      <tr class="danger">
-    {% elif submission.verdict == "CE" or submission.verdict == "RE" %}
-      <tr class="warning">
-    {% endif %}
-        <td>{{ submission.id }}</td>
-        <td>{{ submission.submission_time }}</td>
-        <td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
-        <td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
-        <td>{{ submission.get_language_display }}</td>
-        <td>{{ submission.get_verdict_display }}</td>
-      </tr>
-    {% else %}
-    <tr>
-      <td>{{ submission.id }}</td>
-      <td>{{ submission.submission_time }}</td>
-      <td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
-      <td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
-      <td>{{ submission.get_language_display }}</td>
-      <td>{{ submission.get_verdict_display }}</td>
-    </tr>
-    {% endif %}
-  {% endfor %}
-</table>
-</div>
-{% else %}
-<div class="row"><h3>No submissions found from the user</h3></div>
-<div class="row"><p class="lead">{{ username }} doesn't seem to have made any submissions yet.</p></div>
-{% endif %}
+	{% if submission_list %}
+	<div class="row">
+		<h4 class="mx-auto" style="padding-bottom: 0.7em;">Submission List</h4>
+		<table class="table">
+			<thead>
+				<th>#</th>
+				<th>Submission Time</th>
+				<th>User</th>
+				<th>Problem</th>
+				<th>Language</th>
+				<th>Verdict</th>
+			</thead>
+			{% for submission in submission_list %}
+			{% if submission.user == request.user %}
+			{% if submission.verdict == "AC" %}
+			<tr class="success">
+				{% elif submission.verdict == "WA" %}
+			<tr class="danger">
+				{% elif submission.verdict == "CE" or submission.verdict == "RE" %}
+			<tr class="warning">
+				{% endif %}
+				<td>{{ submission.id }}</td>
+				<td>{{ submission.submission_time }}</td>
+				<td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
+				<td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
+				<td>{{ submission.get_language_display }}</td>
+				<td>{{ submission.get_verdict_display }}</td>
+			</tr>
+			{% else %}
+			<tr>
+				<td>{{ submission.id }}</td>
+				<td>{{ submission.submission_time }}</td>
+				<td><a href="{% url 'other_profile' submission.user.username %}">{{ submission.user.username }}</a></td>
+				<td><a href="{% url 'problem' submission.problem.problem_ID %}">{{ submission.problem }}</a></td>
+				<td>{{ submission.get_language_display }}</td>
+				<td>{{ submission.get_verdict_display }}</td>
+			</tr>
+			{% endif %}
+			{% endfor %}
+		</table>
+	</div>
+	{% else %}
+	<div class="row">
+		<h3>No submissions found from the user</h3>
+	</div>
+	<div class="row">
+		<p class="lead">{{ username }} doesn't seem to have made any submissions yet.</p>
+	</div>
+	{% endif %}
 </div>
 {% endblock %}

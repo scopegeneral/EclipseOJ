@@ -3,14 +3,13 @@
 {% block title_color %}#c9302c{% endblock %}
 {% block title_caption %}Oops! This is embrassing :({% endblock %}
 {% block content %}
-
-  <div class="row">
-    <h3>{{ warning }}</h3>
-  </div>
-  <div class="row">
-  <p class="lead">{{ message }}</p>
-    {% if next %}
-      <p class="lead"><a href={{ next }}>Click here</a> to go back to the previous page.</p>
-    {% endif %}
+<div class="row">
+  <h3>{{ warning }}</h3>
+</div>
+<div class="row">
+	<p class="lead">{{ message }}</p>
+	{% if next %}
+	<p class="lead"><a href={{ next }}>Click here</a> to go back to the previous page.</p>
+	{% endif %}
 </div>
 {% endblock %}

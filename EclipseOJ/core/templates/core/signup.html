@@ -4,31 +4,28 @@
 {%block title %}Signup{% endblock %}
 {% block title_color %}#5cb85c{% endblock %}
 {% block title_caption %}Get | Set | Go {% endblock %}
-
 <script src="{% static 'core/signup.js' %}"></script>
 {% block rightcontent %}
 <div class="box">
-  <h2>Instructions</h2>
-  <p>Your password must contain at least 8 characters, can't be entirely numeric and should contain only letters, numbers and symbols including _ @ . + -</p>
+	<h2>Instructions</h2>
+	<p>Your password must contain at least 8 characters, can't be entirely numeric and should contain only letters, numbers and symbols including _ @ . + -</p>
 </div>
 {% endblock %}
 {% block content %}
-
 <div class="row box">
-  <div class="col-lg-8 mx-auto">
-    <h4 class="text-center" style="padding-bottom: 0.7em;">Sign Up</h4>
-    <form method="post" action="{% url 'signup' %}?next={{ request.GET.next }}">
-      {% csrf_token %}
-      {% bootstrap_form user_form %}
-      {% buttons %}
-        <input type="hidden" name="next" value="{{ request.GET.next }}">
-        <div class="text-center mx-auto">
-        <button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
-      </div>
-      {% endbuttons %}
-    </form>
-  </div>
+	<div class="col-lg-8 mx-auto">
+		<h4 class="text-center" style="padding-bottom: 0.7em;">Sign Up</h4>
+		<form method="post" action="{% url 'signup' %}?next={{ request.GET.next }}">
+			{% csrf_token %}
+			{% bootstrap_form user_form %}
+			{% buttons %}
+			<input type="hidden" name="next" value="{{ request.GET.next }}">
+			<div class="text-center mx-auto">
+				<button type="submit" class="btn btn-success center-block">Sign Up</button></td></tr>
+			</div>
+			{% endbuttons %}
+		</form>
+	</div>
 </div>
-
 <script src="{% static 'core/signup.js' %}"></script>
 {% endblock %}
