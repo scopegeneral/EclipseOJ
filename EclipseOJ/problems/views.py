@@ -18,10 +18,40 @@ from django.utils.six.moves.urllib.parse import urlencode
 # Create your views here.
 now = datetime.now()
 def index(request):
+	"""
+    Display list of all :model:`problems.Problem` objects.
+
+    This view enables the user to access all problems the problems from single page.
+
+
+    **Template:**
+
+    :template:`problems/index.html`
+    """
 	all_problems = Problem.objects.filter(contest__start_time__lte = timezone.now())
 	return render(request,"problems/index.html", {'all_problems' : all_problems})
 
 def problem(request, problemID):
+	"""
+    It is the detailed view for a particular problem.  This views enables you to access all problems in a particular contests. It has been divided into three parts and three different templates have been created for each of them
+
+    1. Problem belonging to Past contests
+    2. Problem belonging to Present contests
+
+	The details of these views are as follows
+
+	- If a user tries to access a problem which is stored in database but as a problem belong to future contest a 404 error page is displayed
+	- For a user solving problem belonging to a past contest, he can submit his solution and get verdict on his solution. To submit his solution either he can attempt the problem on the inbuilt editor provided on the website which supports syntax highightening of multiple languages and submit or he can directly submit solution from his system. He can also run solution against custom input and get to know wether his solution is working as expected or not (when he is using the inbuilt editor)
+	- For a current contest, if the user registered for the contest then he can access problems from the website. Apart from normal problem view, we have provided a countdown timer on website.
+
+
+
+
+	**Template:**
+
+    1. :template:`contests/notactive.html`
+    2. :template:`contests/contest.html`
+    """
 	try:
 		problem = Problem.objects.get(problem_ID=problemID)
 	except Problem.DoesNotExist:

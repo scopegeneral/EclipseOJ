@@ -7,6 +7,13 @@ from leaderboard.models import rating_update
 from django.template.context_processors import csrf
 
 def index(request):
+    """
+    Displays the leaderboard, the ranking of users based on their ratings. Users are sorted based on here ratings in decreasing order, i.e. highest rating first. You can also search for any class of users according to their insitution country cirty etc.
+
+    **Template:**
+
+    :template:`leaderboard/index.html`
+    """
     all_users = Profile.objects.all().order_by('-rating')
     if request.method == 'POST':
         form = SearchForm(request.POST)
@@ -53,6 +60,13 @@ def index(request):
             return render(request, 'warning.html', args)
 
 def contest_ranks(request,contestID):
+    """
+    This is the ranking based on the performance of users in particular contest. The contests scores are calculated and ranking is created.
+
+    **Template:**
+
+    :template:`leaderboard/contest_scores.html`
+    """
     contest=Contest.objects.get(id=contestID)
     contest_scores=Score.objects.filter(contest=contest).order_by('-score')
     return render(request, 'leaderboard/contest_scores.html',{'contest_ID':contestID,'contest_scores' : contest_scores})

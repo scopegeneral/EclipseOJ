@@ -9,6 +9,19 @@ from django.utils import timezone
 from core.models import Profile
 #now = timezone.make_aware(datetime.now(),timezone.get_default_timezone()).astimezone(timezone.utc)
 def index(request):
+    """
+    Display list of all :model:`contests.Contest` objects. The contests are divided into two parts :
+
+    1. Future contests
+    2. Past contests
+
+    This view enables the user to access all contests from one page and keeps him informed about upcoming contests as well.
+
+
+    **Template:**
+
+    :template:`contests/index.html`
+    """
     past_contests = Contest.objects.filter(end_time__lt=timezone.now())
     current_contests = Contest.objects.filter(start_time__lt=timezone.now(), end_time__gt=timezone.now())
     upcoming_contests = Contest.objects.filter(start_time__gt=timezone.now())
@@ -16,6 +29,21 @@ def index(request):
     return render(request,"contests/index.html", {'past_contests':past_contests, 'current_contests':current_contests, 'upcoming_contests':upcoming_contests, 'toprated':top_rated })
 
 def contest(request,contestID):
+    """
+    It is the detailed view for a particular contests.  This views enables you to access all problems in a particular contests. It has been divided into three parts and three different templates have been created for each of them
+
+    1. Future contests
+    2. Past contests
+    3. Current contests
+
+    Future contests allow user to register for the contest, past contests show the user list of problems while the current contests show the user the the problems in the contests with a onsite countdown clock, which when time finishes refreshes the contest page into past contests.
+
+
+    **Template:**
+
+    1. :template:`contests/notactive.html`
+    2. :template:`contests/contest.html`
+    """
     try:
         contest = Contest.objects.get(pk=contestID)
         user = request.user
@@ -45,6 +73,13 @@ def contest(request,contestID):
         return render(request,"contests/notactive.html", args)
 
 def contest_registered(request,contestID):
+    """
+    This view provides the list of registered users in a particular contests
+
+    **Template:**
+
+    :template:`contests/user_list.html`
+    """
     try:
         contest = Contest.objects.get(pk=contestID)
     except Contest.DoesNotExist:

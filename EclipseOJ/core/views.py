@@ -14,6 +14,15 @@ from django.http import JsonResponse, HttpResponseRedirect
 
 
 def signup(request):
+    """
+    This is basically a django form view for registering into the website and creating profile of user.
+    All relevant fields related to profile are set up by the user.
+
+
+    **Template:**
+    :template:`core/signup.html`
+
+    """
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         if user_form.is_valid():
@@ -42,17 +51,35 @@ def logged_in_message(sender, user, request, **kwargs):
 user_logged_in.connect(logged_in_message)
 
 def home(request):
+    """
+    This is the homepage of our website. For users not logged in this is set to homepage containing links to signup and login forms and set to profile view for logged in users.
+
+    **Template:**
+
+    :template:`core/profile.html`
+    :template:`core/home.html`
+    """
     if request.user.is_authenticated():
         return redirect('/profile/')
     return render(request, 'core/home.html')
 
 def profile(request):
+    """
+    This is the profile view of users. This further either redirects to other_profile view or the login view.
+    """
     if request.user.is_authenticated():
         return redirect('other_profile', username=request.user.username)
     else:
         return HttpResponseRedirect(reverse('login') + "?{}".format(request.path))
 
 def other_profile(request, username):
+    """
+    This view is the detailed view of user. It shows all details about a particular user. Any valid regex matching the URL pattern allows you to see the profile of user. If the request.user is the one whose profile has been visited then it allows to edit details through update profile link.
+
+    **Template:**
+
+    :template:`core/detail.html`
+    """
     try:
         user = User.objects.get(username=username)
     except User.DoesNotExist:
@@ -62,6 +89,9 @@ def other_profile(request, username):
     return render(request, 'core/detail.html', {'user': user})
 
 class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
+    """
+    This is the update profile option for user, where user can update his old setting and change them. He can change his city, country, institute, and profile picture.
+    """
     model = Profile
     form_class = ProfileUpdateForm
     template_name = 'core/update.html'
@@ -84,23 +114,13 @@ class ProfileUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
 
 
 def validate_username(request):
+    """
+    This view is used in the dynamic asynchronous AJAX verification of username in the signup form.
+    When user types in the username and shifts focus from the usernamr box, a post request is created which calls this view and checks whether the username is available or not.
+    This views is a JSONdata file consisting of usernames
+    """
     username = request.GET.get('username', None)
     data = {
         'is_taken': User.objects.filter(username__iexact=username).exists()
     }
     return JsonResponse(data)
-# def change_password(request):
-#     if request.method == 'POST':
-#         form = PasswordChangeForm(request.user, request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             update_session_auth_hash(request, user)  # Important!
-#             messages.success(request, 'Your password was successfully updated!')
-#             return redirect('/contests')
-#         else:
-#             messages.error(request, 'Please correct the error(s) below.')
-#     else:
-#         form = PasswordChangeForm(request.user)
-#     return render(request, 'profiles/change_password.html', {
-#         'form': form
-#     })

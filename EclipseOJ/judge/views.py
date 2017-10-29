@@ -6,11 +6,24 @@ from django.shortcuts import render
 
 # Create your views here.
 def main(request):
-    # main_queue = Queue.objects.all()[0].submission_set.order_by('submission_time')
+    """
+    This is the submissions view. You can see the latest submissions inserted into submission queue of system. This displays list of submission of all users sorted via time. The submissions of logged in user are highlighted
+
+    **Template:**
+
+    :template:`judge/index.html`
+    """
     submission_list = Submission.objects.order_by('-submission_time')
     return render(request,'judge/index.html',{'submission_list' : submission_list})
 
 def userspecific(request,username):
+    """
+    This is the submissions view for a particular user. You can see the latest submissions by user inserted into submission queue of system. This displays list of submission of particular users sorted via time. The submissions are highlighted based on verdicts provided to submissions
+
+    **Template:**
+
+    :template:`judge/index.html`
+    """
     if User.objects.filter(username = username).exists():
         submission_list = Submission.objects.filter(user__username = username).order_by('-submission_time')
         return render(request, 'judge/index.html', {'submission_list' : submission_list, 'username' : username})

@@ -5,10 +5,25 @@ from django.template.context_processors import csrf
 from django.utils import timezone
 
 def discuss_index(request):
+    """
+    Display all the discussion threads present in the server. The are put sequentially based on time of creation of post.
+
+    **Template:**
+
+    :template:`discuss/index.html`
+    """
     all_posts = Post.objects.all()
     return render(request, "discuss/index.html", {'all_posts' : all_posts})
 
 def post_detail(request, postID):
+    """
+    Display the detailed view for a post. In general a post may be truncated to shorter length in the index view. So this view shows the complete post.
+    It also displays the comments made by people on the post, Users can comment on a post by generating a post-request rendered through a django form.
+
+    **Template:**
+
+    :template:`discuss/post_detail.html`
+    """
     try:
         post = Post.objects.get(pk = postID)
     except Post.DoesNotExist:
@@ -35,6 +50,13 @@ def post_detail(request, postID):
     return render(request, "discuss/post_detail.html", args)
 
 def add_post(request):
+    """
+    This view is basically a form through which user can create a post/discussion thread. Appropirate text fields have been provided to a django form
+     
+    **Template:**
+
+    :template:`discuss/add_post.html`
+    """
     if request.method == "POST":
         post_form = PostForm(request.POST)
         if post_form.is_valid():
