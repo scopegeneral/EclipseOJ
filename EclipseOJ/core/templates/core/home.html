@@ -1,144 +1,125 @@
 {% load bootstrap4 %}
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
-
   <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="An Online Judge designed with simplicity">
-    <meta name="author" content="Team Eclipse">
-
-    <title>EclipseOJ</title>
-
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'core/home.css' %}">
-  </head>
-
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
-      <div class="container-fluid" style="height: 2.5em">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'contests_index' %}">Contests</a></li>
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'problems_index' %}">Problems</a></li>
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'judge_index' %}">Submissions</a></li>
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}">Leaderboard</a></li>
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}">Discuss</a></li>
-            {% if request.user.is_authenticated %}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <img width=25px height=25px class="img-responsive" src="{{ user.profile.picture.url }}"></img>
-              {{ request.user.username }}
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item"  href="{% url 'other_profile' request.user.username %}">Profile</a>
-                <a class="dropdown-item"  href="{% url 'update_profile' %}">Update profile</a>
-                <a class="dropdown-item"  href="{% url 'logout' %}?next={{ request.path|urlencode }}">Logout</a>
-              </div>
-            </li>
-            {% else %}
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
-            <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>
-            {% endif %}
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="text-white full-page" style="background-color: black;">
-      <div class="container text-center">
-
-
-
-
-
-      <div id="loader-wrapper">
-        <div id="loader"></div>
-        <div class="loader-section section-left"></div>
-        <div class="loader-section section-right"></div>
-    </div>
-       <div id="logo-container" class="logo-container">
-             <div class="logo">
-                 <div class="main-text">ECLIPSE</div>
-                 <div class="sub-text">ONLINE JUDGE</div>
-            </div>
-       </div>
-       <div id="button-container" class="button-container">
-            <a id="bt1" class="button" href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in</a>
-            <a id="bt2" class="button" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Sign Up</a>
-       </div>
-
-        <i class="fa fa-chevron-circle-down" style="font-size: 4.5em; position: relative; top: 35vh;" aria-hidden="true"></i>
-      </div>
-    </header>
-
-    <section class="bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-10 mx-auto">
-            <h2>EclipseOJ is here!</h2>
-            <p class="lead">EclipseOJ is a convenient platform to organize, run and discuss programming contests.</p>
-            <ul>
-              <li>Designed with simplicity. :)</li>
-              <li>Ask, discuss, and learn using the discussion arena.</li>
-              <li>Problems section to practice and improve your skills.</li>
-              <li>Challenge yourself! Head to the Contests arena.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-11 mx-auto">
-            <h2 class="text-center" style='padding-bottom:1em'>Made with ❤ by</h2>
-            <p class="lead text-center">Vighnesh Reddy Konda --- Naman Jain --- Vamsi Krishna Reddy Satti</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="py-5 bg-dark">
-      <div class="container-fluid">
-        <p class="m-0 text-center text-white">Copyright © Team Eclipse</p>
-        <p class="m-0 text-center text-white">With ❤ using Django</p>
-      </div>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'base.js'%}"></script>
-    <script>
-    		$(document).ready(function() {
-
-                function f1() {
-                    setTimeout(function(){
-    		        $('body').addClass('loaded');
-              }, 800);
-                }
-                function f2() {
-                    $('#logo-container').delay(800).animate({top: '30%'},2000);
-                }
-                function f3() {
-                    $('#button-container').delay(800).animate({top: '30%'},2000);
-                    $('#bt1').delay(800).animate({left: '35%'},2000);
-                    $('#bt2').delay(800).animate({right: '34.5%'},2000);
-                }
-
-    		    f1();
-            f2();
-            f3();
-    		});
-    	</script>
-  </body>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="An Online Judge designed with simplicity">
+		<meta name="author" content="Team Eclipse">
+		<title>EclipseOJ</title>
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="{% static 'core/home.css' %}">
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+			<div class="container-fluid" style="height: 2.5em">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'contests_index' %}">Contests</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'problems_index' %}">Problems</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'judge_index' %}">Submissions</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}">Leaderboard</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}">Discuss</a></li>
+						{% if request.user.is_authenticated %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img width=25px height=25px class="img-responsive" src="{{ user.profile.picture.url }}"></img>
+							{{ request.user.username }}
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item"  href="{% url 'other_profile' request.user.username %}">Profile</a>
+								<a class="dropdown-item"  href="{% url 'update_profile' %}">Update profile</a>
+								<a class="dropdown-item"  href="{% url 'logout' %}?next={{ request.path|urlencode }}">Logout</a>
+							</div>
+						</li>
+						{% else %}
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<header class="text-white full-page" style="background-color: black;">
+			<div class="container text-center">
+				<div id="loader-wrapper">
+					<div id="loader"></div>
+					<div class="loader-section section-left"></div>
+					<div class="loader-section section-right"></div>
+				</div>
+				<div id="logo-container" class="logo-container">
+					<div class="logo">
+						<div class="main-text">ECLIPSE</div>
+						<div class="sub-text">ONLINE JUDGE</div>
+					</div>
+				</div>
+				<div id="button-container" class="button-container">
+					<a id="bt1" class="button" href="{% url 'login' %}?next={{ request.path|urlencode }}">Log in</a>
+					<a id="bt2" class="button" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Sign Up</a>
+				</div>
+				<i class="fa fa-chevron-circle-down" style="font-size: 4.5em; position: relative; top: 35vh;" aria-hidden="true"></i>
+			</div>
+		</header>
+		<section class="bg-light">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 mx-auto">
+						<h2>EclipseOJ is here!</h2>
+						<p class="lead">EclipseOJ is a convenient platform to organize, run and discuss programming contests.</p>
+						<ul>
+							<li>Designed with simplicity. :)</li>
+							<li>Ask, discuss, and learn using the discussion arena.</li>
+							<li>Problems section to practice and improve your skills.</li>
+							<li>Challenge yourself! Head to the Contests arena.</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-11 mx-auto">
+						<h2 class="text-center" style='padding-bottom:1em'>Made with ❤ by</h2>
+						<p class="lead text-center">Vighnesh Reddy Konda --- Naman Jain --- Vamsi Krishna Reddy Satti</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="py-5 bg-dark">
+			<div class="container-fluid">
+				<p class="m-0 text-center text-white">Copyright © Team Eclipse</p>
+				<p class="m-0 text-center text-white">With ❤ using Django</p>
+			</div>
+		</footer>
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="{% static 'base.js'%}"></script>
+		<script>
+    $(document).ready(function() {
+      function f1() {
+        setTimeout(function(){
+          $('body').addClass('loaded');
+        }, 800);
+      }
+      function f2() {
+        $('#logo-container').delay(800).animate({top: '30%'},2000);
+      }
+      function f3() {
+        $('#button-container').delay(800).animate({top: '30%'},2000);
+        $('#bt1').delay(800).animate({left: '35%'},2000);
+        $('#bt2').delay(800).animate({right: '34.5%'},2000);
+      }
+      f1();
+      f2();
+      f3();
+    });
+		</script>
+	</body>
 </html>

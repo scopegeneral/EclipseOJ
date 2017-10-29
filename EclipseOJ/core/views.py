@@ -14,6 +14,18 @@ from django.http import JsonResponse, HttpResponseRedirect
 
 
 def signup(request):
+    """
+    Creates a new account for a new user i.e. an instance of :model:`django.contrib.auth.models.User` and :model:``.
+
+    **Context**
+
+    ``user_form``
+        An instance of :model:`myapp.MyModel`.
+
+    **Template:**
+
+    :template:`myapp/my_template.html`
+    """
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         if user_form.is_valid():

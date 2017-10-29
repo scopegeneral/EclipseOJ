@@ -1,103 +1,98 @@
 {% load bootstrap4 %}
 {% load static %}
 {% load macros %}
-
 {% macro title %}
-    {% block title %}{% endblock %}
+{% block title %}{% endblock %}
 {% endmacro %}
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="An Online Judge designed with simplicity">
-  <meta name="author" content="Team Eclipse">
-  <title> {% use_macro title %} | EclipseOJ</title>
-  <link href="{% static 'base.css' %}" rel="stylesheet">
-  {% if request.user.is_authenticated %}
-  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-  {% endif %}
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css" />
-  <link href="{% static 'base.css' %}" rel="stylesheet">
-</head>
-
-<body style="background: #F3F3F3">
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
-    <div class="container-fluid" style="height: 3.7em">
-      <a class="navbar-brand" href="{% url 'contests_index' %}">
-      <img height="55px" src="{% static 'logo-transparent.png' %}"></img>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'contests_index' %}">Contests</a></li>
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'problems_index' %}">Problems</a></li>
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'judge_index' %}">Submissions</a></li>
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}">Leaderboard</a></li>
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}">Discuss</a></li>
-          {% if request.user.is_authenticated %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img width=25px height=25px class="img-responsive" src="{{ user.profile.picture.url }}"></img>
-            {{ request.user.username }}
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item"  href="{% url 'other_profile' request.user.username %}">Profile</a>
-              <a class="dropdown-item"  href="{% url 'update_profile' %}">Update profile</a>
-              <a class="dropdown-item"  href="{% url 'logout' %}?next={{ request.path|urlencode }}">Logout</a>
-            </div>
-          </li>
-          {% else %}
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
-          <li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>
-          {% endif %}
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <header class="text-white" style="background-color: {% block title_color %}black{% endblock %};">
-    <div class="container text-center">
-      <h1 class="heading text-uppercase" style="font-size: 4.4em">{% use_macro title %}</h1>
-      <p class="lead" style="font-size: 1.6em">{% block title_caption %}{% endblock %}</p>
-    </div>
-  </header>
-  <section>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-11 mx-auto">
-          <div class="row">
-            <div class="col-lg-8 mx-auto">
-              {% bootstrap_javascript jquery=1 %}
-              {% bootstrap_messages %}
-              {% block content %}{% endblock %}
-            </div>
-            <div class="col-lg-3 mx-auto">
-              {% block rightcontent %}{%endblock%}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <footer class="py-5 bg-dark">
-    <div class="container-fluid">
-      <p class="m-0 text-center text-white">Copyright © Team Eclipse</p>
-      <p class="m-0 text-center text-white">With ❤ using Django</p>
-    </div>
-  </footer>
-  {% if not request.user.is_authenticated %}
-  <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
-  {% endif %}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-    <script src="{% static 'base.js'%}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
-
-
-
-</body></html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="An Online Judge designed with simplicity">
+		<meta name="author" content="Team Eclipse">
+		<title> {% use_macro title %} | EclipseOJ</title>
+		<link href="{% static 'base.css' %}" rel="stylesheet">
+		{% if request.user.is_authenticated %}
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		{% endif %}
+		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.css" />
+		<link href="{% static 'base.css' %}" rel="stylesheet">
+	</head>
+	<body style="background: #F3F3F3">
+		<nav class="navbar navbar-expand-lg navbar-dark fixed-top ">
+			<div class="container-fluid" style="height: 3.7em">
+				<a class="navbar-brand" href="{% url 'contests_index' %}">
+				<img height="55px" src="{% static 'logo-transparent.png' %}"></img>
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarResponsive">
+					<ul class="navbar-nav ml-auto">
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'contests_index' %}">Contests</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'problems_index' %}">Problems</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'judge_index' %}">Submissions</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'leaderboard_index' %}">Leaderboard</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'discuss_index' %}">Discuss</a></li>
+						{% if request.user.is_authenticated %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" style="color:white;" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img width=25px height=25px class="img-responsive" src="{{ user.profile.picture.url }}"></img>
+							{{ request.user.username }}
+							</a>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item"  href="{% url 'other_profile' request.user.username %}">Profile</a>
+								<a class="dropdown-item"  href="{% url 'update_profile' %}">Update profile</a>
+								<a class="dropdown-item"  href="{% url 'logout' %}?next={{ request.path|urlencode }}">Logout</a>
+							</div>
+						</li>
+						{% else %}
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'signup' %}?next={{ request.path|urlencode }}">Signup</a></li>
+						<li class="nav-item" ><a class="nav-link" style="color:white;" href="{% url 'login' %}?next={{ request.path|urlencode }}">Login</a></li>
+						{% endif %}
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<header class="text-white" style="background-color: {% block title_color %}black{% endblock %};">
+			<div class="container text-center">
+				<h1 class="heading text-uppercase" style="font-size: 4.4em">{% use_macro title %}</h1>
+				<p class="lead" style="font-size: 1.6em">{% block title_caption %}{% endblock %}</p>
+			</div>
+		</header>
+		<section>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-11 mx-auto">
+						<div class="row">
+							<div class="col-lg-8 mx-auto">
+								{% bootstrap_javascript jquery=1 %}
+								{% bootstrap_messages %}
+								{% block content %}{% endblock %}
+							</div>
+							<div class="col-lg-3 mx-auto">
+								{% block rightcontent %}{%endblock%}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer class="py-5 bg-dark">
+			<div class="container-fluid">
+				<p class="m-0 text-center text-white">Copyright © Team Eclipse</p>
+				<p class="m-0 text-center text-white">With ❤ using Django</p>
+			</div>
+		</footer>
+		{% if not request.user.is_authenticated %}
+		<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+		{% endif %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+		<script src="{% static 'base.js'%}"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/flipclock/0.7.8/flipclock.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_HTMLorMML"></script>
+	</body>
+</html>

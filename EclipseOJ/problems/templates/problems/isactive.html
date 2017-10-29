@@ -6,242 +6,235 @@
 {% block rightcontent%}
 <div class="clock" style="zoom: 0.5;-moz-transform: scale(0.5);"></div>
 <div class="box">
-  <h2>Instructions</h2>
-  <p>Time Limit: {{ problem.timelimit}}s</p>
-  <p>While submitting the code in java please name your public class as <b>solution{{problem.problem_ID}}</b></p>
-  <p>While using the editor for giving custom inputs name your public class as <b>test</b></p>
+	<h2>Instructions</h2>
+	<p>Time Limit: {{ problem.timelimit}}s</p>
+	<p>While submitting the code in java please name your public class as <b>solution{{problem.problem_ID}}</b></p>
+	<p>While using the editor for giving custom inputs name your public class as <b>test</b></p>
 </div>
 {% endblock %}
 {% block content %}
 <div id="myModal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
-  <div class="modal-dialog modal-sm">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="mySmallModalLabel">Attention</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        The contest is now over!!!
-      </div>
-    </div>
-  </div>
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="mySmallModalLabel">Attention</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				The contest is now over!!!
+			</div>
+		</div>
+	</div>
 </div>
 {% if submit_form.errors %}
-    {% for field in submit_form %}
-        {% for error in field.errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endfor %}
-    {% for error in submit_form.non_field_errors %}
-        <div class="alert alert-danger">
-            <strong>{{ error|escape }}</strong>
-        </div>
-    {% endfor %}
+{% for field in submit_form %}
+{% for error in field.errors %}
+<div class="alert alert-danger">
+	<strong>{{ error|escape }}</strong>
+</div>
+{% endfor %}
+{% endfor %}
+{% for error in submit_form.non_field_errors %}
+<div class="alert alert-danger">
+	<strong>{{ error|escape }}</strong>
+</div>
+{% endfor %}
 {% endif %}
-
 <h1 class="text-center">{{ problem.name }}</h1>
 <div class="row box">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
-      <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Problem Statement</h4>
-{{ problem.body | safe}}
-  </div>
-</div>
-  <div class="row box">
-  <div class="col-md-12">
-    {% if request.user.is_authenticated %}
-    <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Editor</h4>
-
-<div id="acesuper">
-<div class="form-group">
-    <label for="Language">Language</label>
-    <select id="ace_lang" class="custom-select" onchange="test_lang(this);">
-      <option value="cpp">C++</option>
-      <option value="c">C</option>
-      <option value="py">Python2</option>
-      <option value="py3">Python3</option>
-      <option value="java">Java</option>
-    </select>
-    <label for="Language">Theme</label>
-    <select id="ace_test" class="custom-select" onchange="test_theme(this);">
-      <option value="monokai">Dark</option>
-      <option value="eclipse">Light</option>
-    </select>
-</div>
-<pre id="editor">{{ text_on_ace }}</pre>
-</div>
-
-<div class="form-group">
-  <label for="Input">Input: (only 800 characters!)</label>
-  <textarea class="form-control" maxlength="50" rows="5" id="input"></textarea>
-</div>
-<div class="card" style="visibility:{{ hide_or_not }}">
-  <div class="card-block">
-    {{ output }}
-  </div>
-</div>
-<div class="text-center">
-<form method="post" action="{% url 'problem' problem.problem_ID %}">
-  {% csrf_token %}
-  {% bootstrap_form test_form %}
-  {% buttons %}
-    <button onclick="test_thecode()" type="submit" class="btn btn-outline-primary">Test Code</button></td></tr>
-  {% endbuttons %}
-</form>
-<form method="post" action="{% url 'problem' problem.problem_ID %}">
-  {% csrf_token %}
-  {% bootstrap_form code_form %}
-  {% buttons %}
-    <button onclick="save_code()" type="submit" class="btn btn-outline-primary">Submit Code</button></td></tr>
-  {% endbuttons %}
-</form>
-</div>
-<script type="text/javascript">
-var clock;
-
-$(document).ready(function() {
-      console.log("Hi There!!");
-      var clock;
-      clock = $('.clock').FlipClock({
-            clockFace: 'HourlyCounter',
-            autoStart: false,
-            countdown: true,
-            callbacks: {
-              stop: function() {
-                $('.clock').html("");
-                setTimeout(function(){$('#myModal').modal('show');}, 800);
-                setTimeout(function(){ location.reload(); }, 2700);
-              }
-            }
-        });
-
-      var current = new Date();
-      var hours = current.getHours();
-      var min = current.getMinutes();
-      var sec = current.getSeconds();
-      var contest = new Date("{{ contest.end_time.isoformat }}");
-      hours = contest.getHours() - hours;
-      min = contest.getMinutes() - min;
-      sec = contest.getSeconds() - sec;
-      //console.log(time);	*/
-      console.log(hours*3600+min*60+sec);
-      clock.setTime(hours*3600+min*60+sec);
-      clock.start();
-      myfunc();
-    });
-
-    function myfunc(){
-      var clock_labels = document.getElementsByClassName("flip-clock-label");
-      //alert(clock_labels.length);
-      for (i = 0; i < clock_labels.length; i++) {
-        console.log("Yo");
-        clock_labels[i].innerHTML = "";
-      }
-    }
-</script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
-
-<script>
-ace.require("ace/ext/language_tools");
-var editor = ace.edit("editor");
-{% if lang_for_ace == "cpp" %}
-  editor.session.setMode("ace/mode/c_cpp");
-{% else %}
-  editor.session.setMode("ace/mode/{{ lang_for_ace }}");
-{% endif %}
-editor.setTheme("ace/theme/monokai");
-editor.setOptions({
-	 enableBasicAutocompletion: true,
-	 enableSnippets: true,
-	 enableLiveAutocompletion: false,
-	 highlightActiveLine: true,
-   highlightSelectedWord: true,
-   fontSize: "16pt",
-   cursorStyle: "slim",
-});
-window.test_lang = function(e) {
-  if (e.value === 'cpp') {
-    editor.session.setMode("ace/mode/c_cpp");
-  }
-  else if (e.value === 'c') {
-    editor.session.setMode("ace/mode/c_cpp");
-  }
-  else if (e.value === 'py') {
-    editor.session.setMode("ace/mode/python")
-  }
-  else if (e.value === 'py3') {
-    editor.session.setMode("ace/mode/python");
-  }
-  else if (e.value === 'java') {
-    editor.session.setMode("ace/mode/java");
-  }
-}
-window.test_theme = function(e) {
-  if (e.value === 'monokai') {
-    editor.setTheme("ace/theme/monokai");
-  }
-  else if (e.value === 'eclipse') {
-    editor.setTheme("ace/theme/xcode");
-  }
-}
-
-function resizeAce() {
-  var h = window.innerHeight;
-  if (h > 360) {
-    $('#editor').css('height', (h - 290).toString() + 'px');
-  }
-};
-resizeAce();
-
-
-function save_code(){
-  document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
-  var mytext = editor.getValue();
-  document.getElementById("id_code").value = mytext;
-};
-function test_thecode(){
-  document.getElementById("id_test_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
-  var mytext = editor.getValue();
-  document.getElementById("id_test_code").value = mytext;
-  document.getElementById("id_test_input").value = document.getElementById("input").value;
-};
-</script>
-</div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		<h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Problem Statement</h4>
+		{{ problem.body | safe}}
+	</div>
 </div>
 <div class="row box">
-  <div class="col-lg-7 mx-auto">
-  <h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Direct File Submit</h4>
-<form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
-  {% csrf_token %}
-  {% bootstrap_form submit_form %}
-  {% buttons %}
-  <div class="text-center">
-    <button type="submit" class="btn btn-outline-primary center-block">Submit</button></td></tr>
-  </div>
-  {% endbuttons %}
-</form>
+	<div class="col-md-12">
+		{% if request.user.is_authenticated %}
+		<h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Editor</h4>
+		<div id="acesuper">
+			<div class="form-group">
+				<label for="Language">Language</label>
+				<select id="ace_lang" class="custom-select" onchange="test_lang(this);">
+					<option value="cpp">C++</option>
+					<option value="c">C</option>
+					<option value="py">Python2</option>
+					<option value="py3">Python3</option>
+					<option value="java">Java</option>
+				</select>
+				<label for="Language">Theme</label>
+				<select id="ace_test" class="custom-select" onchange="test_theme(this);">
+					<option value="monokai">Dark</option>
+					<option value="eclipse">Light</option>
+				</select>
+			</div>
+			<pre id="editor">{{ text_on_ace }}</pre>
+		</div>
+		<div class="form-group">
+			<label for="Input">Input: (only 800 characters!)</label>
+			<textarea class="form-control" maxlength="50" rows="5" id="input"></textarea>
+		</div>
+		<div class="card" style="visibility:{{ hide_or_not }}">
+			<div class="card-block">
+				{{ output }}
+			</div>
+		</div>
+		<div class="text-center">
+			<form method="post" action="{% url 'problem' problem.problem_ID %}">
+				{% csrf_token %}
+				{% bootstrap_form test_form %}
+				{% buttons %}
+				<button onclick="test_thecode()" type="submit" class="btn btn-outline-primary">Test Code</button></td></tr>
+				{% endbuttons %}
+			</form>
+			<form method="post" action="{% url 'problem' problem.problem_ID %}">
+				{% csrf_token %}
+				{% bootstrap_form code_form %}
+				{% buttons %}
+				<button onclick="save_code()" type="submit" class="btn btn-outline-primary">Submit Code</button></td></tr>
+				{% endbuttons %}
+			</form>
+		</div>
+		<script type="text/javascript">
+			var clock;
+
+			$(document).ready(function() {
+			      console.log("Hi There!!");
+			      var clock;
+			      clock = $('.clock').FlipClock({
+			            clockFace: 'HourlyCounter',
+			            autoStart: false,
+			            countdown: true,
+			            callbacks: {
+			              stop: function() {
+			                $('.clock').html("");
+			                setTimeout(function(){$('#myModal').modal('show');}, 800);
+			                setTimeout(function(){ location.reload(); }, 2700);
+			              }
+			            }
+			        });
+
+			      var current = new Date();
+			      var hours = current.getHours();
+			      var min = current.getMinutes();
+			      var sec = current.getSeconds();
+			      var contest = new Date("{{ contest.end_time.isoformat }}");
+			      hours = contest.getHours() - hours;
+			      min = contest.getMinutes() - min;
+			      sec = contest.getSeconds() - sec;
+			      //console.log(time);	*/
+			      console.log(hours*3600+min*60+sec);
+			      clock.setTime(hours*3600+min*60+sec);
+			      clock.start();
+			      myfunc();
+			    });
+
+			    function myfunc(){
+			      var clock_labels = document.getElementsByClassName("flip-clock-label");
+			      //alert(clock_labels.length);
+			      for (i = 0; i < clock_labels.length; i++) {
+			        console.log("Yo");
+			        clock_labels[i].innerHTML = "";
+			      }
+			    }
+		</script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			ace.require("ace/ext/language_tools");
+			var editor = ace.edit("editor");
+			{% if lang_for_ace == "cpp" %}
+			  editor.session.setMode("ace/mode/c_cpp");
+			{% else %}
+			  editor.session.setMode("ace/mode/{{ lang_for_ace }}");
+			{% endif %}
+			editor.setTheme("ace/theme/monokai");
+			editor.setOptions({
+				 enableBasicAutocompletion: true,
+				 enableSnippets: true,
+				 enableLiveAutocompletion: false,
+				 highlightActiveLine: true,
+			   highlightSelectedWord: true,
+			   fontSize: "16pt",
+			   cursorStyle: "slim",
+			});
+			window.test_lang = function(e) {
+			  if (e.value === 'cpp') {
+			    editor.session.setMode("ace/mode/c_cpp");
+			  }
+			  else if (e.value === 'c') {
+			    editor.session.setMode("ace/mode/c_cpp");
+			  }
+			  else if (e.value === 'py') {
+			    editor.session.setMode("ace/mode/python")
+			  }
+			  else if (e.value === 'py3') {
+			    editor.session.setMode("ace/mode/python");
+			  }
+			  else if (e.value === 'java') {
+			    editor.session.setMode("ace/mode/java");
+			  }
+			}
+			window.test_theme = function(e) {
+			  if (e.value === 'monokai') {
+			    editor.setTheme("ace/theme/monokai");
+			  }
+			  else if (e.value === 'eclipse') {
+			    editor.setTheme("ace/theme/xcode");
+			  }
+			}
+
+			function resizeAce() {
+			  var h = window.innerHeight;
+			  if (h > 360) {
+			    $('#editor').css('height', (h - 290).toString() + 'px');
+			  }
+			};
+			resizeAce();
+
+
+			function save_code(){
+			  document.getElementById("id_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+			  var mytext = editor.getValue();
+			  document.getElementById("id_code").value = mytext;
+			};
+			function test_thecode(){
+			  document.getElementById("id_test_lang").value = document.getElementById("ace_lang").options[document.getElementById("ace_lang").selectedIndex].value;
+			  var mytext = editor.getValue();
+			  document.getElementById("id_test_code").value = mytext;
+			  document.getElementById("id_test_input").value = document.getElementById("input").value;
+			};
+		</script>
+	</div>
 </div>
-{% else %}
-<div class="alert alert-info">
-  <strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
-</div>
-{% endif %}
+<div class="row box">
+	<div class="col-lg-7 mx-auto">
+		<h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Direct File Submit</h4>
+		<form enctype="multipart/form-data" method="post" action="{% url 'problem' problem.problem_ID %}">
+			{% csrf_token %}
+			{% bootstrap_form submit_form %}
+			{% buttons %}
+			<div class="text-center">
+				<button type="submit" class="btn btn-outline-primary center-block">Submit</button></td></tr>
+			</div>
+			{% endbuttons %}
+		</form>
+	</div>
+	{% else %}
+	<div class="alert alert-info">
+		<strong><a href="{% url 'login' %}?next={{ request.path }}">Login</a></strong> to submit and verify your solution!!
+	</div>
+	{% endif %}
 </div>
 {% endblock %}
 {% else %}
 <h1 class="text-center">{{ problem.name }}</h1>
 <div class="row">
-  <div class="col-md-1"></div>
-  <div class="col-md-10">
-{{ problem.body | safe}}
-{% bootstrap_messages %}
-  </div>
+	<div class="col-md-1"></div>
+	<div class="col-md-10">
+		{{ problem.body | safe}}
+		{% bootstrap_messages %}
+	</div>
 </div>
-
-
 {% endif %}
