@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Profile{% endblock %}
+{% block title_color %}#0e2f44{% endblock %}
+{% block title_caption %}Friends | Coders | Learners{% endblock %}
+{% block content %}
+<div class="row box">
+	<div class="col-lg-6 mx-auto">
+		<h4 class="text-center" style="padding-bottom: 0.7em;">Update Profile</h4>
+		<form method="post" action="{% url 'update_profile' %}" enctype="multipart/form-data">
+			{% csrf_token %}
+			{% bootstrap_form form %}
+			{% buttons %}
+			<div class="text-center">
+				<button type="submit" class="btn btn-success center-block">Update</button>
+			</div>
+			{% endbuttons %}
+		</form>
+	</div>
+</div>
+{% endblock %}

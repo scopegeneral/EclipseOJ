@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{%block title %}Problems{% endblock %}
+{% block title_color %}green {% endblock %}
+{% block title_caption %}Code | Practice | Achieve{% endblock %}
+{% block content %}
+<div class="row box">
+	<div class="col-lg-10 mx-auto">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Problem ID</th>
+					<th>Problem Name</th>
+					<th>Solved</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a_problem in all_problems %}
+				<tr>
+					<td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.problem_ID }}</a></td>
+					<td><a href="{% url 'problem' a_problem.problem_ID %}">{{ a_problem.name }}</a></td>
+					<td>{{ a_problem.solved }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

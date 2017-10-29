@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% block title %}Leaderboard{% endblock %}
+{% block title_color %}#eea236{% endblock %}
+{% block title_caption %}Get | Set | Go{% endblock %}
+{% block content %}
+<div class="mx-auto box">
+	<h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Filter</h4>
+	<form class="form" action="{% url 'leaderboard_index' %}" method="post">
+		{% csrf_token %}
+		<div class="form-row">
+			{% bootstrap_form form layout='horizontal' %}
+		</div>
+		<div class="form-row">
+			<div class="text-center mx-auto">
+				{% buttons %}
+				<button type="submit" class="btn btn-success">Search</button></td></tr>
+				{% endbuttons %}
+			</div>
+		</div>
+	</form>
+</div>
+<div class="box">
+	<div class="col-lg-11 mx-auto">
+		<h4 class="text-center mx-auto" style="padding-bottom: 0.7em;">Leaderboard</h4>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>RANK</th>
+					<th>USERNAME</th>
+					<th>COUNTRY</th>
+					<th>CITY</th>
+					<th>INSTITUTE</th>
+					<th>RATING</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for user in all_users %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td><a href="{% url 'other_profile'  user.user.username %}">{{user.user.username}}</a></td>
+					<td><img src="{{ user.country.flag }}" style="height:17px"></img> {{ user.country.name }}</td>
+					<td>{{ user.city }}</td>
+					<td>{{ user.institute }}</td>
+					<td>{{user.rating}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}
