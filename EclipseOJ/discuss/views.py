@@ -8,6 +8,12 @@ def discuss_index(request):
     """
     Display all the discussion threads present in the server. The are put sequentially based on time of creation of post.
 
+    **Args:**
+
+    1. ``all_posts``
+            It's a query-set of all the :model:`discuss.Post` in the server
+
+
     **Template:**
 
     :template:`discuss/index.html`
@@ -19,6 +25,15 @@ def post_detail(request, postID):
     """
     Display the detailed view for a post. In general a post may be truncated to shorter length in the index view. So this view shows the complete post.
     It also displays the comments made by people on the post, Users can comment on a post by generating a post-request rendered through a django form.
+
+    **Args:**
+
+    1. ``post``
+            It is an instant of :model:`discuss.Post` for which we want to show detailed information
+    2. ``all_comments``
+            It's a query-set of all the :model:`discuss.Comment` in the server related to the particular discussion thread
+    3. ``comment_form``
+            It is a django form, an instance of the CommentForm.
 
     **Template:**
 
@@ -52,7 +67,12 @@ def post_detail(request, postID):
 def add_post(request):
     """
     This view is basically a form through which user can create a post/discussion thread. Appropirate text fields have been provided to a django form
-     
+
+    **Args:**
+
+    1. ``post_form``
+            It is a django form, an instance of the PostForm.
+
     **Template:**
 
     :template:`discuss/add_post.html`

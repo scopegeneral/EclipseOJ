@@ -10,6 +10,13 @@ def index(request):
     """
     Displays the leaderboard, the ranking of users based on their ratings. Users are sorted based on here ratings in decreasing order, i.e. highest rating first. You can also search for any class of users according to their insitution country cirty etc.
 
+    **Args:**
+
+    1. ``all_users``
+            It's set of query-set of all the users in the system sorted on their rating
+    2. ``form``
+            It's a django form, an instance of the SearchForm
+
     **Template:**
 
     :template:`leaderboard/index.html`
@@ -62,6 +69,13 @@ def index(request):
 def contest_ranks(request,contestID):
     """
     This is the ranking based on the performance of users in particular contest. The contests scores are calculated and ranking is created.
+
+    **Args:**
+
+    1. ``contest_ID``
+            It's the inbuilt django id for the contest object whose ranks have to be seen.
+    2. ``contest_scores``
+            It's a query-set of :model:`contests.Score` sorted on the score field of model.
 
     **Template:**
 

@@ -5,6 +5,9 @@ from django_countries import countries
 from .models import *
 
 class UserForm(UserCreationForm):
+    """
+    IT is the user creation form called be the signup page
+    """
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=100)
     email = forms.EmailField(max_length=70)
@@ -20,7 +23,7 @@ class UserForm(UserCreationForm):
         super(UserCreationForm, self).__init__(*args, **kwargs)
         for fieldname in ['username', 'password1', 'password2']:
             self.fields[fieldname].help_text = None
-        self.fields['username'].help_text = "Your username should contain only letters, numbers and symbols including _ @ . + -"    
+        self.fields['username'].help_text = "Your username should contain only letters, numbers and symbols including _ @ . + -"
 
     def save(self, commit=True):
         newuser = super(UserForm, self).save(commit=False)

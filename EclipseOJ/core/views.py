@@ -18,8 +18,13 @@ def signup(request):
     This is basically a django form view for registering into the website and creating profile of user.
     All relevant fields related to profile are set up by the user.
 
+    **Args:**
+
+    1. ``user_form``
+            User form is a django form. It's an instance of UserForm.
 
     **Template:**
+
     :template:`core/signup.html`
 
     """
@@ -75,6 +80,12 @@ def profile(request):
 def other_profile(request, username):
     """
     This view is the detailed view of user. It shows all details about a particular user. Any valid regex matching the URL pattern allows you to see the profile of user. If the request.user is the one whose profile has been visited then it allows to edit details through update profile link.
+
+    **Args:**
+
+    1. ``user``
+            user is an instance of :model:`auth.User`.
+
 
     **Template:**
 

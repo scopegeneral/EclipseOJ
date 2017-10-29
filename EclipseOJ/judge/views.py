@@ -9,6 +9,11 @@ def main(request):
     """
     This is the submissions view. You can see the latest submissions inserted into submission queue of system. This displays list of submission of all users sorted via time. The submissions of logged in user are highlighted
 
+    **Args:**
+
+    1. submission_list
+        It is a query set of all the submissions present in the system.
+
     **Template:**
 
     :template:`judge/index.html`
@@ -19,6 +24,13 @@ def main(request):
 def userspecific(request,username):
     """
     This is the submissions view for a particular user. You can see the latest submissions by user inserted into submission queue of system. This displays list of submission of particular users sorted via time. The submissions are highlighted based on verdicts provided to submissions
+
+    **Args:**
+
+    1. submission_list
+        It is a query set of all the submissions present in the system.
+    2. username
+        It is username of user for which personalized submission-list has to seen    
 
     **Template:**
 

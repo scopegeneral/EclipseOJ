@@ -23,6 +23,10 @@ def index(request):
 
     This view enables the user to access all problems the problems from single page.
 
+	**Args:**
+
+    1. ``all_problems``
+            It is a query-set of :model:`problems.Problem` constisting of all problems in the database
 
     **Template:**
 
@@ -44,8 +48,26 @@ def problem(request, problemID):
 	- For a user solving problem belonging to a past contest, he can submit his solution and get verdict on his solution. To submit his solution either he can attempt the problem on the inbuilt editor provided on the website which supports syntax highightening of multiple languages and submit or he can directly submit solution from his system. He can also run solution against custom input and get to know wether his solution is working as expected or not (when he is using the inbuilt editor)
 	- For a current contest, if the user registered for the contest then he can access problems from the website. Apart from normal problem view, we have provided a countdown timer on website.
 
+	**Args:**
 
-
+    1. ``submit_form``
+            It's a django form instance of SubmitForm
+    2. ``code_form``
+            It's a django form instance of CodeForm
+	3. ``test_form``
+            It's a django form instance of TestForm
+	4. ``problem``
+            It's an instance of the :model:`problems.Problem` object
+	5. ``contest``
+			It's an instance of the :model:`problems.Problem` object	6. ``text_on_ace``
+	6. ``text_on_ace``
+			It's the default text that appears on the ace editor
+	7. ``lang_for_ace``
+			It's the default language that appears in the ace editor
+	8. ``output``
+			It's the verdict which user gets when he tests code against custom input
+	9. ``hide_or_not``
+			It tells wether to show to output cardboard or not
 
 	**Template:**
 
@@ -61,7 +83,7 @@ def problem(request, problemID):
 		submit_form = problems_forms.SubmitForm(request.POST, request.FILES)
 		code_form = problems_forms.CodeForm(request.POST)
 		test_form = problems_forms.TestForm(request.POST)
-		print("\n")
+		#print("\n")
 		if submit_form.is_valid():
 			#print("File submit")
 			global last_queue

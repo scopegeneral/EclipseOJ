@@ -17,6 +17,16 @@ def index(request):
 
     This view enables the user to access all contests from one page and keeps him informed about upcoming contests as well.
 
+    **Args:**
+
+    1. ``past_contests``
+            A query-set of contests. Stores contests that have been finished
+    2. ``current_contests``
+            A query-set of contests. Stores contests that are currently running
+    3. ``upcoming_contests``
+            Aa query-set of contests. Stores contests that will occur in future
+    4. ``top_rated``
+            A query-set of profiles. Stores users sorted by user ratings
 
     **Template:**
 
@@ -37,6 +47,13 @@ def contest(request,contestID):
     3. Current contests
 
     Future contests allow user to register for the contest, past contests show the user list of problems while the current contests show the user the the problems in the contests with a onsite countdown clock, which when time finishes refreshes the contest page into past contests.
+
+    **Args:**
+
+    1. ``contest``
+            An instance of a contest. Stores the properties cotnained by contest like problems, scores etc
+    2. ``registered``
+            A query-set of users. Stores the lsit of users registered for the contest.
 
 
     **Template:**
@@ -64,7 +81,7 @@ def contest(request,contestID):
     else:
         if request.method=='POST':
             contest.registered_user.add(request.user)
-            contest.score_set.create(user=user,score=0)
+            contest.score_query-set.create(user=user,score=0)
             print(request.user.username)
         args = {}
         args.update(csrf(request))
@@ -75,6 +92,13 @@ def contest(request,contestID):
 def contest_registered(request,contestID):
     """
     This view provides the list of registered users in a particular contests
+
+    **Args:**
+
+    1. ``contest``
+            An instance of a contest. Stores the properties cotnained by contest like problems, scores etc
+    2. ``registerd_user_list``
+            A query-set of users. Stores the list of users registered for the contest.
 
     **Template:**
 
